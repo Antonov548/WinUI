@@ -8,7 +8,7 @@ class WidgetMap;
 class Widget
 {
 public:
-	Widget();
+	Widget(Widget* parent = nullptr);
 
 	void setGeometry(int x, int y, int width, int height);
 	int x();

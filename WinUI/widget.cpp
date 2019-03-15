@@ -2,7 +2,7 @@
 
 WidgetMap Widget::widget_map;
 
-Widget::Widget() : m_hwnd(nullptr)
+Widget::Widget(Widget * parent) : m_parent(parent), m_hwnd(nullptr)
 {
 }
 

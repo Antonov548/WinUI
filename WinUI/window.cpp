@@ -2,9 +2,8 @@
 
 int Window::window_count = 0;
 
-Window::Window(Window* parent) : Widget()
+Window::Window(Window* parent) : Widget(parent)
 {
-	m_parent = parent;
 	createWidget();
 	Widget::widget_map.addWidget(m_hwnd, this);
 	Window::window_count++;

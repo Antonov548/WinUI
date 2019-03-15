@@ -1,8 +1,7 @@
 #include "lineedit.h"
 
-LineEdit::LineEdit(Window* parent) : Widget()
+LineEdit::LineEdit(Window* parent) : Widget(parent)
 {
-	m_parent = parent;
 	createWidget();
 }
 
@@ -34,6 +33,24 @@ void LineEdit::setText(const char * text)
 {
 	m_text = text;
 	SetWindowTextA(m_hwnd, m_text.c_str());
+}
+
+void LineEdit::setFont(const char* font_family, int font_size)
+{
+	const TCHAR* fontName = str_to_wstr(font_family).c_str();
+	const long nFontSize = font_size;
+
+	HDC hdc = GetDC(m_hwnd);
+
+	LOGFONT logFont = { 0 };
+	logFont.lfHeight = -MulDiv(nFontSize, GetDeviceCaps(hdc, LOGPIXELSY), 72);
+	logFont.lfWeight = FW_EXTRABOLD;
+
+	HFONT s_hFont = CreateFontIndirect(&logFont);
+
+	ReleaseDC(m_hwnd, hdc);
+
+	SendMessage(m_hwnd, WM_SETFONT, (WPARAM)s_hFont, TRUE);
 }
 
 void LineEdit::createWidget()

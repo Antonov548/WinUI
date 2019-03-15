@@ -15,8 +15,7 @@ int main()
 
 	LineEdit lineedit(&wnd_2);
 	lineedit.setText("Hello nothing");
-
-	Button btn(&wnd_2, "Hello world");
+	lineedit.setFont("Calibri", 8);
 
 	wnd_2.show();
 

@@ -1,8 +1,7 @@
 #include "button.h"
 
-Button::Button(Window * parent,const char * text) : Widget(), m_text(text)
+Button::Button(Window * parent,const char * text) : Widget(parent), m_text(text)
 {
-	m_parent = parent;
 	createWidget();
 }
 
