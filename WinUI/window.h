@@ -15,8 +15,5 @@ public:
 
 protected:
 	virtual void createWidget() override;
-
-private:
-	Window* m_parent;
 };
 

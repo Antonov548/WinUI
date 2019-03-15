@@ -1,6 +1,7 @@
 ﻿#include "application.h"
 #include "window.h"
 #include "button.h"
+#include "lineedit.h"
 
 int main()
 {
@@ -12,8 +13,10 @@ int main()
 	Window wnd_2;
 	wnd_2.setWindowTitle("Hello world");
 
-	Button btn(&wnd_2, "Ok");
-	btn.setText("Not okey");
+	LineEdit lineedit(&wnd_2);
+	lineedit.setText("Hello nothing");
+
+	Button btn(&wnd_2, "Hello world");
 
 	wnd_2.show();
 

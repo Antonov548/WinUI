@@ -1,23 +1,23 @@
 #pragma once
 
 #include <windows.h>
+#include <string.h>
 #include "widget.h"
 #include "window.h"
-#include "string.h"
 
-class Button : public Widget
+class LineEdit : public Widget
 {
 public:
-	Button(Window* parent,const char* text);
-	~Button();
+	LineEdit(Window* parent);
+	~LineEdit();
 
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 	void setText(const char* text);
 
-protected:
-	virtual void createWidget();
-
 private:
 	std::string m_text;
+
+protected:
+	virtual void createWidget() override;
 };
 

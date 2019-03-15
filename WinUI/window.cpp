@@ -2,8 +2,9 @@
 
 int Window::window_count = 0;
 
-Window::Window(Window* parent) : Widget(), m_parent(parent)
+Window::Window(Window* parent) : Widget()
 {
+	m_parent = parent;
 	createWidget();
 	Widget::widget_map.addWidget(m_hwnd, this);
 	Window::window_count++;
@@ -62,7 +63,7 @@ void Window::createWidget()
 	windowClass.hInstance = (HINSTANCE)GetModuleHandle(NULL);
 	windowClass.lpfnWndProc = WndProcStatic;
 	windowClass.lpszClassName = CLASS_NAME;
-	windowClass.style = CS_DBLCLKS;
+	windowClass.style = CS_HREDRAW | CS_VREDRAW;
 	windowClass.hIcon = NULL;
 	windowClass.hIconSm = NULL;
 	windowClass.lpszMenuName = NULL;

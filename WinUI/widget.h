@@ -23,6 +23,7 @@ public:
 
 protected:
 	HWND m_hwnd; 
+	Widget* m_parent;
 	virtual void createWidget() = 0;
 };
 

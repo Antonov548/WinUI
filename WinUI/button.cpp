@@ -1,7 +1,8 @@
 #include "button.h"
 
-Button::Button(Window * parent,const char * text) : Widget(), m_parent(parent), m_text(text)
+Button::Button(Window * parent,const char * text) : Widget(), m_text(text)
 {
+	m_parent = parent;
 	createWidget();
 }
 
@@ -40,15 +41,7 @@ LRESULT Button::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_DESTROY:
 		Widget::widget_map.removeWidget(hwnd);
-		Window::window_count--;
-		if (Window::window_count == 0)
-		{
-			PostQuitMessage(0);
-		}
-		else
-		{
-			DestroyWindow(hwnd);
-		}
+		DestroyWindow(hwnd);
 		break;
 	default:
 		return DefWindowProc(hwnd, message, wParam, lParam);
