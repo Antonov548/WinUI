@@ -4,6 +4,7 @@ WidgetMap Widget::widget_map;
 
 Widget::Widget(const char* class_name, Widget * parent) : m_parent(parent), m_hwnd(nullptr)
 {
+	registerClass();
 	createWidget(class_name);
 	Widget::widget_map.addWidget(m_hwnd, this);
 }
@@ -57,6 +58,10 @@ LRESULT CALLBACK Widget::GlobalWndProc(HWND hwnd, UINT message, WPARAM wParam, L
 	{
 		return DefWindowProc(hwnd, message, wParam, lParam);
 	}
+}
+
+void Widget::registerClass()
+{
 }
 
 void Widget::createWidget(const char* class_name)

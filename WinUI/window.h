@@ -2,8 +2,9 @@
 
 #include "application.h"
 #include "widget.h"
+#include "registeredwidget.h"
 
-class Window : public Widget
+class Window : public RegisteredWidget, public Widget
 {
 public:
 	Window(Window* parent = nullptr);

@@ -4,11 +4,10 @@
 #include "widgetmap.h"
 #include "application.h"
 #include "string.h"
-#include "registeredwidget.h"
 
 class WidgetMap;
 
-class Widget : public RegisteredWidget
+class Widget
 {
 public:
 	Widget(const char* class_name, Widget* parent = nullptr);
@@ -27,6 +26,9 @@ public:
 protected:
 	HWND m_hwnd; 
 	Widget* m_parent;
+
+private:
 	void createWidget(const char* class_name);
+	void registerClass();
 };
 
