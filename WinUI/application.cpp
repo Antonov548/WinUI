@@ -1,7 +1,8 @@
 #include "Application.h"
 
-Application::Application() : m_instance((HINSTANCE)GetModuleHandle(NULL)),
-							 m_haccel(LoadAccelerators(m_instance, L"WINAPPLICATION"))
+HINSTANCE Application::m_instance = (HINSTANCE)GetModuleHandle(NULL);
+
+Application::Application() : m_haccel(LoadAccelerators(m_instance, L"WINAPPLICATION"))
 {
 }
 
@@ -20,4 +21,9 @@ int Application::exec()
 		}
 	}
 	return (int)m_msg.wParam;
+}
+
+HINSTANCE Application::getInstance()
+{
+	return m_instance;
 }

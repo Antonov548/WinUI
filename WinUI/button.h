@@ -14,9 +14,6 @@ public:
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 	void setText(const char* text);
 
-protected:
-	virtual void createWidget();
-
 private:
 	std::string m_text;
 };

@@ -18,8 +18,5 @@ public:
 
 private:
 	std::string m_text;
-
-protected:
-	virtual void createWidget() override;
 };
 

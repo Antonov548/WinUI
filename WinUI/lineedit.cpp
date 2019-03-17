@@ -1,8 +1,7 @@
 #include "lineedit.h"
 
-LineEdit::LineEdit(Window* parent) : Widget(parent)
+LineEdit::LineEdit(Window* parent) : Widget("Edit", parent)
 {
-	createWidget();
 }
 
 LineEdit::~LineEdit()
@@ -53,12 +52,12 @@ void LineEdit::setFont(const char* font_family, int font_size)
 	SendMessage(m_hwnd, WM_SETFONT, (WPARAM)s_hFont, TRUE);
 }
 
-void LineEdit::createWidget()
-{
-	wchar_t CLASS_NAME[] = L"EDIT";
-
-	m_hwnd = CreateWindow(CLASS_NAME, L"", WS_BORDER | WS_CHILD | WS_VISIBLE, 
-		10, 10, 400, 20, 
-		m_parent->getHWND(),
-		nullptr, nullptr, nullptr);
-}
+//void LineEdit::createWidget()
+//{
+//	wchar_t CLASS_NAME[] = L"EDIT";
+//
+//	m_hwnd = CreateWindow(CLASS_NAME, L"", WS_BORDER | WS_CHILD | WS_VISIBLE, 
+//		10, 10, 400, 20, 
+//		m_parent->getHWND(),
+//		nullptr, nullptr, nullptr);
+//}

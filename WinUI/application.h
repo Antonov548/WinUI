@@ -9,9 +9,10 @@ public:
 	~Application();
 
 	int exec();
+	static HINSTANCE getInstance();
 
 private:
-	HINSTANCE m_instance;
+	static HINSTANCE m_instance;
 	MSG m_msg;
 	HACCEL m_haccel;
 };

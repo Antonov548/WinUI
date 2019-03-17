@@ -18,5 +18,6 @@ public:
 	bool isEmpty();
 
 private:
+	//map for all widgets
 	std::map<HWND, Widget*> m_widget_map;
 };

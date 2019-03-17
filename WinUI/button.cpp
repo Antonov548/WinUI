@@ -1,31 +1,30 @@
 #include "button.h"
 
-Button::Button(Window * parent,const char * text) : Widget(parent), m_text(text)
+Button::Button(Window * parent,const char * text) : Widget("Button", parent), m_text(text)
 {
-	createWidget();
 }
 
 Button::~Button()
 {
 }
 
-void Button::createWidget()
-{
-	wchar_t CLASS_NAME[] = L"Button";
-
-	m_hwnd = CreateWindow(
-		CLASS_NAME,
-		str_to_wstr(m_text).c_str(),
-		WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON ,
-		0,
-		0,
-		80,
-		30,
-		m_parent->getHWND(),
-		NULL,
-		(HINSTANCE)GetModuleHandle(NULL),
-		NULL);
-}
+//void Button::createWidget()
+//{
+//	wchar_t CLASS_NAME[] = L"Button";
+//
+//	m_hwnd = CreateWindow(
+//		CLASS_NAME,
+//		str_to_wstr(m_text).c_str(),
+//		WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON ,
+//		0,
+//		0,
+//		80,
+//		30,
+//		m_parent->getHWND(),
+//		NULL,
+//		(HINSTANCE)GetModuleHandle(NULL),
+//		NULL);
+//}
 
 LRESULT Button::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
