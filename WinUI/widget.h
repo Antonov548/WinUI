@@ -25,10 +25,15 @@ public:
 
 protected:
 	HWND m_hwnd; 
+	WNDCLASSEX wndclass;
 	Widget* m_parent;
 
+	virtual void createWidget(const char* class_name);
+	virtual void registerClass(const char* class_name);
+
 private:
-	void createWidget(const char* class_name);
-	void registerClass();
+	void create();
+
+	std::string m_class_name;
 };
 

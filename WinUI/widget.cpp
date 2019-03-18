@@ -2,10 +2,9 @@
 
 WidgetMap Widget::widget_map;
 
-Widget::Widget(const char* class_name, Widget * parent) : m_parent(parent), m_hwnd(nullptr)
+Widget::Widget(const char* class_name, Widget * parent) : m_parent(parent), m_hwnd(nullptr), m_class_name(class_name)
 {
-	registerClass();
-	createWidget(class_name);
+	create();
 	Widget::widget_map.addWidget(m_hwnd, this);
 }
 
@@ -60,15 +59,34 @@ LRESULT CALLBACK Widget::GlobalWndProc(HWND hwnd, UINT message, WPARAM wParam, L
 	}
 }
 
-void Widget::registerClass()
+void Widget::registerClass(const char* class_name)
 {
+	//implement in child widget if need regiter class
+}
+
+void Widget::create()
+{
+	if (!GetClassInfoEx(Application::getInstance(), str_to_wstr(m_class_name).c_str(), &wndclass))
+	{
+		registerClass(m_class_name.c_str());
+	}
+	createWidget(m_class_name.c_str());
 }
 
 void Widget::createWidget(const char* class_name)
 {
+	//implement in child widget
+
+	/*LPCWSTR w_class_name = str_to_wstr(class_name).c_str();
+
+	if (!GetClassInfo(Application::getInstance(), w_class_name, &wndclass))
+	{
+		registerClass(class_name);
+	}
+
 	m_hwnd = CreateWindowEx(
 		WS_OVERLAPPEDWINDOW,
-		str_to_wstr(class_name).c_str(),
+		w_class_name,
 		L"",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
@@ -79,5 +97,5 @@ void Widget::createWidget(const char* class_name)
 		nullptr,
 		Application::getInstance(),
 		nullptr
-	);
+	);*/
 }

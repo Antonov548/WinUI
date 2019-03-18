@@ -158,7 +158,6 @@
     <ClCompile Include="button.cpp" />
     <ClCompile Include="lineedit.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="registeredwidget.cpp" />
     <ClCompile Include="string.cpp" />
     <ClCompile Include="widget.cpp" />
     <ClCompile Include="widgetmap.cpp" />
@@ -168,7 +167,6 @@
     <ClInclude Include="application.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="lineedit.h" />
-    <ClInclude Include="registeredwidget.h" />
     <ClInclude Include="string.h" />
     <ClInclude Include="widget.h" />
     <ClInclude Include="widgetmap.h" />

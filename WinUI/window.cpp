@@ -2,7 +2,7 @@
 
 int Window::window_count = 0;
 
-Window::Window(Window* parent) : Widget(parent)
+Window::Window(Window* parent) : Widget("WinUI.Window", parent)
 {
 	Window::window_count++;
 }
@@ -49,28 +49,38 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-//void Window::createWidget()
-//{
-//	wchar_t CLASS_NAME[] = L"Window";
-//
-//	WNDCLASSEX windowClass;
-//	windowClass.cbSize = sizeof(WNDCLASSEX);
-//	windowClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-//	windowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-//	windowClass.hInstance = (HINSTANCE)GetModuleHandle(NULL);
-//	windowClass.lpfnWndProc = GlobalWndProc;
-//	windowClass.lpszClassName = CLASS_NAME;
-//	windowClass.style = CS_HREDRAW | CS_VREDRAW;
-//	windowClass.hIcon = NULL;
-//	windowClass.hIconSm = NULL;
-//	windowClass.lpszMenuName = NULL;
-//	windowClass.cbClsExtra = 0;
-//	windowClass.cbWndExtra = 0;
-//
-//	RegisterClassEx(&windowClass);
-//
-//	m_hwnd = CreateWindow(CLASS_NAME, L"", WS_OVERLAPPEDWINDOW,
-//		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, m_parent ? m_parent->getHWND() : nullptr, nullptr, Application::getInstance(), nullptr);
-//
-//	UnregisterClass(CLASS_NAME, (HINSTANCE)GetModuleHandle(NULL));
-//}
+void Window::registerClass(const char * class_name)
+{
+		wndclass.cbSize = sizeof(WNDCLASSEX);
+		wndclass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+		wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
+		wndclass.hInstance = (HINSTANCE)GetModuleHandle(NULL);
+		wndclass.lpfnWndProc = GlobalWndProc;
+		wndclass.lpszClassName = str_to_wstr(class_name).c_str();
+		wndclass.style = CS_HREDRAW | CS_VREDRAW;
+		wndclass.hIcon = NULL;
+		wndclass.hIconSm = NULL;
+		wndclass.lpszMenuName = NULL;
+		wndclass.cbClsExtra = 0;
+		wndclass.cbWndExtra = 0;
+	
+		RegisterClassEx(&wndclass);
+}
+
+void Window::createWidget(const char* class_name)
+{
+	m_hwnd = CreateWindowEx(
+		WS_OVERLAPPEDWINDOW,
+		str_to_wstr(class_name).c_str(),
+		L"",
+		WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT,
+		CW_USEDEFAULT,
+		CW_USEDEFAULT,
+		CW_USEDEFAULT,
+		m_parent ? m_parent->getHWND() : nullptr,
+		nullptr,
+		Application::getInstance(),
+		nullptr
+	); 
+}

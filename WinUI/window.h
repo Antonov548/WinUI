@@ -2,9 +2,8 @@
 
 #include "application.h"
 #include "widget.h"
-#include "registeredwidget.h"
 
-class Window : public RegisteredWidget, public Widget
+class Window : public Widget
 {
 public:
 	Window(Window* parent = nullptr);
@@ -16,5 +15,9 @@ public:
 
 private:
 	static int window_count;
+
+protected:
+	virtual void createWidget(const char* class_name) override;
+	virtual void registerClass(const char* class_name) override;
 };
 

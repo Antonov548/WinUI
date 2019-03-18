@@ -39,9 +39,6 @@
     <ClCompile Include="lineedit.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="registeredwidget.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h">
@@ -63,9 +60,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="lineedit.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="registeredwidget.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
