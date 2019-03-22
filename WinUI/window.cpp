@@ -11,7 +11,8 @@ WidgetStyle Window::window_style = {
 int Window::window_count = 0;
 
 Window::Window(Window* parent) : Widget(window_style, parent), 
-								 m_minimumSize({0, 0, int(GetSystemMetrics(SM_CXMINTRACK)), int(GetSystemMetrics(SM_CYMINTRACK))})
+								 m_minimumSize({0, 0, int(GetSystemMetrics(SM_CXMINTRACK)), int(GetSystemMetrics(SM_CYMINTRACK))}),
+								 m_maximumSize({0, 0, int(GetSystemMetrics(SM_CXMAXTRACK)), int(GetSystemMetrics(SM_CYMAXTRACK))})
 {
 	Window::window_count++;
 }
@@ -30,10 +31,17 @@ void Window::show()
 	ShowWindow(m_hwnd, SW_RESTORE);
 }
 
+// must check current size of widegt and notify about resize
 void Window::setMinimumSize(int width, int height)
 {
 	m_minimumSize.width = width;
 	m_minimumSize.height = height;
+}
+
+void Window::setMaximumSize(int width, int height)
+{
+	m_maximumSize.width = width;
+	m_maximumSize.height = height;
 }
 
 LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -52,7 +60,8 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		LPMINMAXINFO min_max_info = (LPMINMAXINFO)lParam;
 		min_max_info->ptMinTrackSize.x = m_minimumSize.width;
 		min_max_info->ptMinTrackSize.y = m_minimumSize.height;
-		//MessageBox(NULL, str_to_wstr(std::to_string(min_max_info->ptMaxPosition.x)).c_str() , L"EXAMPLES", MB_YESNO | MB_OKCANCEL | MB_ICONERROR);
+		min_max_info->ptMaxTrackSize.x = m_maximumSize.width;
+		min_max_info->ptMaxTrackSize.y = m_maximumSize.height;
 
 		break;
 	}
