@@ -7,6 +7,20 @@
 
 class WidgetMap;
 
+struct Rect
+{
+	int x;
+	int y;
+	int width;
+	int height;
+};
+
+struct WidgetStyle
+{
+	std::string class_name;
+	Rect widget_size;
+};
+
 class Widget
 {
 public:
