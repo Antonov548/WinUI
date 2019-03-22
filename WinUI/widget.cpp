@@ -2,7 +2,7 @@
 
 WidgetMap Widget::widget_map;
 
-Widget::Widget(const char* class_name, Widget * parent) : m_parent(parent), m_hwnd(nullptr), m_class_name(class_name)
+Widget::Widget(WidgetStyle style, Widget * parent) : m_style(style), m_parent(parent), m_hwnd(nullptr)
 {
 	create();
 	Widget::widget_map.addWidget(m_hwnd, this);
@@ -59,43 +59,47 @@ LRESULT CALLBACK Widget::GlobalWndProc(HWND hwnd, UINT message, WPARAM wParam, L
 	}
 }
 
-void Widget::registerClass(const char* class_name)
-{
-	//implement in child widget if need regiter class
-}
-
 void Widget::create()
 {
-	if (!GetClassInfoEx(Application::getInstance(), str_to_wstr(m_class_name).c_str(), &wndclass))
+	if (!GetClassInfoEx(Application::getInstance(), str_to_wstr(m_style.class_name).c_str(), &m_wndclass))
 	{
-		registerClass(m_class_name.c_str());
+		registerClass();
 	}
-	createWidget(m_class_name.c_str());
+	createWidget();
 }
 
-void Widget::createWidget(const char* class_name)
+void Widget::registerClass()
 {
-	//implement in child widget
+	m_wndclass.cbSize = sizeof(WNDCLASSEX);
+	m_wndclass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	m_wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	m_wndclass.hInstance = (HINSTANCE)GetModuleHandle(NULL);
+	m_wndclass.lpfnWndProc = GlobalWndProc;
+	m_wndclass.lpszClassName = str_to_wstr(m_style.class_name).c_str();
+	m_wndclass.style = m_style.class_style;
+	m_wndclass.hIcon = NULL;
+	m_wndclass.hIconSm = NULL;
+	m_wndclass.lpszMenuName = NULL;
+	m_wndclass.cbClsExtra = 0;
+	m_wndclass.cbWndExtra = 0;
 
-	/*LPCWSTR w_class_name = str_to_wstr(class_name).c_str();
+	RegisterClassEx(&m_wndclass);
+}
 
-	if (!GetClassInfo(Application::getInstance(), w_class_name, &wndclass))
-	{
-		registerClass(class_name);
-	}
-
+void Widget::createWidget()
+{
 	m_hwnd = CreateWindowEx(
-		WS_OVERLAPPEDWINDOW,
-		w_class_name,
+		m_style.widget_ex_style,
+		str_to_wstr(m_style.class_name).c_str(),
 		L"",
-		WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT,
-		CW_USEDEFAULT,
-		CW_USEDEFAULT,
-		CW_USEDEFAULT,
+		m_style.widget_style,
+		m_style.widget_size.x,
+		m_style.widget_size.y,
+		m_style.widget_size.width,
+		m_style.widget_size.height,
 		m_parent ? m_parent->getHWND() : nullptr,
 		nullptr,
 		Application::getInstance(),
 		nullptr
-	);*/
+	);
 }

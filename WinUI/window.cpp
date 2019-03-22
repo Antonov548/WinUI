@@ -1,8 +1,16 @@
 #include "window.h"
 
+WidgetStyle Window::window_style = {
+	"Window",
+	{CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT},
+	WS_OVERLAPPEDWINDOW,
+	WS_EX_OVERLAPPEDWINDOW,
+	CS_HREDRAW | CS_VREDRAW
+};
+
 int Window::window_count = 0;
 
-Window::Window(Window* parent) : Widget("WinUI.Window", parent)
+Window::Window(Window* parent) : Widget(window_style, parent)
 {
 	Window::window_count++;
 }
@@ -47,40 +55,4 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	default:
 		return DefWindowProc(hwnd, message, wParam, lParam);
 	}
-}
-
-void Window::registerClass(const char * class_name)
-{
-		wndclass.cbSize = sizeof(WNDCLASSEX);
-		wndclass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-		wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
-		wndclass.hInstance = (HINSTANCE)GetModuleHandle(NULL);
-		wndclass.lpfnWndProc = GlobalWndProc;
-		wndclass.lpszClassName = str_to_wstr(class_name).c_str();
-		wndclass.style = CS_HREDRAW | CS_VREDRAW;
-		wndclass.hIcon = NULL;
-		wndclass.hIconSm = NULL;
-		wndclass.lpszMenuName = NULL;
-		wndclass.cbClsExtra = 0;
-		wndclass.cbWndExtra = 0;
-	
-		RegisterClassEx(&wndclass);
-}
-
-void Window::createWidget(const char* class_name)
-{
-	m_hwnd = CreateWindowEx(
-		WS_OVERLAPPEDWINDOW,
-		str_to_wstr(class_name).c_str(),
-		L"",
-		WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT,
-		CW_USEDEFAULT,
-		CW_USEDEFAULT,
-		CW_USEDEFAULT,
-		m_parent ? m_parent->getHWND() : nullptr,
-		nullptr,
-		Application::getInstance(),
-		nullptr
-	); 
 }

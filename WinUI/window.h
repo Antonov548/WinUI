@@ -15,9 +15,6 @@ public:
 
 private:
 	static int window_count;
-
-protected:
-	virtual void createWidget(const char* class_name) override;
-	virtual void registerClass(const char* class_name) override;
+	static WidgetStyle window_style;
 };
 

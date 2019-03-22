@@ -12,7 +12,7 @@ public:
 	static HINSTANCE getInstance();
 
 private:
-	static HINSTANCE m_instance;
+	static HINSTANCE instance;
 	MSG m_msg;
 	HACCEL m_haccel;
 };

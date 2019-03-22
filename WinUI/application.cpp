@@ -1,8 +1,8 @@
 #include "Application.h"
 
-HINSTANCE Application::m_instance = (HINSTANCE)GetModuleHandle(NULL);
+HINSTANCE Application::instance = (HINSTANCE)GetModuleHandle(NULL);
 
-Application::Application() : m_haccel(LoadAccelerators(m_instance, L"WINAPPLICATION"))
+Application::Application() : m_haccel(LoadAccelerators(instance, L"WINAPPLICATION"))
 {
 }
 
@@ -25,5 +25,5 @@ int Application::exec()
 
 HINSTANCE Application::getInstance()
 {
-	return m_instance;
+	return instance;
 }
