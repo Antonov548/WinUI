@@ -31,17 +31,31 @@ void Window::show()
 	ShowWindow(m_hwnd, SW_RESTORE);
 }
 
-// must check current size of widegt and notify about resize
-void Window::setMinimumSize(int width, int height)
+// must check current size of widegt and resize
+void Window::setMinimumSize(int min_width, int min_height)
 {
-	m_minimumSize.width = width;
-	m_minimumSize.height = height;
+	if (min_width > m_maximumSize.width || min_height > m_maximumSize.height)
+		return;
+
+	if (width() < min_width)
+		setWidth(min_width);
+	if (height() < min_height)
+		setHeight(min_height);
+	m_minimumSize.width = min_width;
+	m_minimumSize.height = min_height;
 }
 
-void Window::setMaximumSize(int width, int height)
+void Window::setMaximumSize(int max_width, int max_height)
 {
-	m_maximumSize.width = width;
-	m_maximumSize.height = height;
+	if (max_width < m_minimumSize.width || max_height < m_minimumSize.height)
+		return;
+
+	if (width() > max_width)
+		setWidth(max_width);
+	if (height() > max_height)
+		setHeight(max_height);
+	m_maximumSize.width = max_width;
+	m_maximumSize.height = max_height;
 }
 
 LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)

@@ -1,6 +1,7 @@
 ﻿#include "application.h"
 #include "window.h"
 #include "button.h"
+#include "lineedit.h"
 
 int main()
 {
@@ -12,7 +13,10 @@ int main()
 	wnd.setMaximumSize(500, 200);
 
 	Button btn(&wnd, "Hello");
-	btn.setGeometry(200, 200, btn.width(), btn.height());
+	btn.setGeometry(0, 0, btn.width(), btn.height());
+
+	LineEdit edit(&wnd);
+	edit.setGeometry(20, 20, edit.width(), edit.height());
 
 	wnd.show();
 

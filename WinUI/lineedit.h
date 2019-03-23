@@ -1,7 +1,6 @@
 #pragma once
 
 #include <windows.h>
-#include <string.h>
 #include "string.h"
 #include "widget.h"
 #include "window.h"
@@ -17,6 +16,7 @@ public:
 	void setFont(const char* font_family, int font_size);
 
 private:
+	static WidgetStyle line_edit_style;
 	std::string m_text;
 };
 

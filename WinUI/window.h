@@ -11,8 +11,8 @@ public:
 
 	void setWindowTitle(const char* title);
 	void show();
-	void setMinimumSize(int width, int height);
-	void setMaximumSize(int width, int height);
+	void setMinimumSize(int min_width, int min_height);
+	void setMaximumSize(int wax_width, int max_height);
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 
 private:

@@ -13,6 +13,16 @@ void Widget::setGeometry(int x, int y, int width, int height)
 	SetWindowPos(m_hwnd, NULL, x, y, width, height, NULL);
 }
 
+void Widget::setWidth(int width)
+{
+	SetWindowPos(m_hwnd, NULL, x(), y(), width, height(), NULL);
+}
+
+void Widget::setHeight(int height)
+{
+	SetWindowPos(m_hwnd, NULL, x(), y(), width(), height, NULL);
+}
+
 int Widget::x()
 {
 	RECT rect;
