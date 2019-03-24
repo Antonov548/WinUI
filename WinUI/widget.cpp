@@ -2,7 +2,8 @@
 
 WidgetMap Widget::widget_map;
 
-Widget::Widget(WidgetStyle style, Widget * parent) : m_style(style), m_parent(parent), m_hwnd(nullptr)
+Widget::Widget(WidgetStyle style, Widget * parent) : m_style(style), m_parent(parent), m_hwnd(nullptr),
+													 m_isMaxInstalled(false), m_isMinInstalled(false)
 {
 	create();
 	Widget::widget_map.addWidget(m_hwnd, this);
@@ -112,4 +113,34 @@ void Widget::createWidget()
 		Application::getInstance(),
 		nullptr
 	);
+}
+
+void Widget::setMinimumSize(int min_width, int min_height)
+{
+	if (min_width > m_maximumSize.width || min_height > m_maximumSize.height)
+		return;
+
+	m_isMinInstalled = true;
+	m_minimumSize.width = min_width;
+	m_minimumSize.height = min_height;
+
+	if (width() < min_width)
+		setWidth(min_width);
+	if (height() < min_height)
+		setHeight(min_height);
+}
+
+void Widget::setMaximumSize(int max_width, int max_height)
+{
+	if (max_width < m_minimumSize.width || max_height < m_minimumSize.height)
+		return;
+
+	m_isMaxInstalled = true;
+	m_maximumSize.width = max_width;
+	m_maximumSize.height = max_height;
+
+	if (width() > max_width)
+		setWidth(max_width);
+	if (height() > max_height)
+		setHeight(max_height);
 }

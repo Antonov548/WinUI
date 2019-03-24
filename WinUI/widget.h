@@ -42,10 +42,18 @@ public:
 	// static wndproc wich call procedure for each widget
 	static LRESULT CALLBACK GlobalWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) = 0;
+	void setMinimumSize(int min_width, int min_height);
+	void setMaximumSize(int wax_width, int max_height);
 
 protected:
 	HWND m_hwnd; 
 	Widget* m_parent;
+
+	bool m_isMaxInstalled;
+	bool m_isMinInstalled;
+
+	Rect m_minimumSize;
+	Rect m_maximumSize;
 
 private:
 	WidgetStyle m_style;

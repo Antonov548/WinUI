@@ -10,9 +10,7 @@ WidgetStyle Window::window_style = {
 
 int Window::window_count = 0;
 
-Window::Window(Window* parent) : Widget(window_style, parent), 
-								 m_minimumSize({0, 0, int(GetSystemMetrics(SM_CXMINTRACK)), int(GetSystemMetrics(SM_CYMINTRACK))}),
-								 m_maximumSize({0, 0, int(GetSystemMetrics(SM_CXMAXTRACK)), int(GetSystemMetrics(SM_CYMAXTRACK))})
+Window::Window(Window* parent) : Widget(window_style, parent)
 {
 	Window::window_count++;
 }
@@ -31,33 +29,6 @@ void Window::show()
 	ShowWindow(m_hwnd, SW_RESTORE);
 }
 
-// must check current size of widegt and resize
-void Window::setMinimumSize(int min_width, int min_height)
-{
-	if (min_width > m_maximumSize.width || min_height > m_maximumSize.height)
-		return;
-
-	if (width() < min_width)
-		setWidth(min_width);
-	if (height() < min_height)
-		setHeight(min_height);
-	m_minimumSize.width = min_width;
-	m_minimumSize.height = min_height;
-}
-
-void Window::setMaximumSize(int max_width, int max_height)
-{
-	if (max_width < m_minimumSize.width || max_height < m_minimumSize.height)
-		return;
-
-	if (width() > max_width)
-		setWidth(max_width);
-	if (height() > max_height)
-		setHeight(max_height);
-	m_maximumSize.width = max_width;
-	m_maximumSize.height = max_height;
-}
-
 LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
@@ -69,14 +40,34 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		EndPaint(hwnd, &ps);
 		break;
 	}
+	/*case WM_SYSCOMMAND:
+	{
+		switch (wParam)
+		{
+		case SC_MAXIMIZE:
+		{
+			if(m_is_max_installed)
+			break;
+		}
+		default:
+			return DefWindowProc(hwnd, message, wParam, lParam);
+			break;
+		}
+		break;
+	}*/
 	case WM_GETMINMAXINFO:
 	{
 		LPMINMAXINFO min_max_info = (LPMINMAXINFO)lParam;
-		min_max_info->ptMinTrackSize.x = m_minimumSize.width;
-		min_max_info->ptMinTrackSize.y = m_minimumSize.height;
-		min_max_info->ptMaxTrackSize.x = m_maximumSize.width;
-		min_max_info->ptMaxTrackSize.y = m_maximumSize.height;
-
+		if (m_isMaxInstalled)
+		{
+			min_max_info->ptMaxTrackSize.x = m_maximumSize.width;
+			min_max_info->ptMaxTrackSize.y = m_maximumSize.height;
+		}
+		if (m_isMinInstalled)
+		{
+			min_max_info->ptMinTrackSize.x = m_minimumSize.width;
+			min_max_info->ptMinTrackSize.y = m_minimumSize.height;
+		}
 		break;
 	}
 	case WM_DESTROY:
