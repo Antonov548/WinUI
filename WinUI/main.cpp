@@ -10,7 +10,7 @@ int main()
 	Window wnd;
 	wnd.setWindowTitle("Work");
 	//wnd.setMinimumSize(800, 800);
-	wnd.setMaximumSize(500, 200);
+	//wnd.setMaximumSize(500, 200);
 
 	Button btn(&wnd, "Hello");
 	btn.setGeometry(0, 0, btn.width(), btn.height());
