@@ -13,6 +13,7 @@ public:
 
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 	void setText(const char* text);
+	void setFont(const char* font_family, int font_size);
 
 private:
 	static WidgetStyle button_style;

@@ -38,8 +38,8 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hwnd, &ps);
 		EndPaint(hwnd, &ps);
-		break;
 	}
+	break;
 	/*case WM_SYSCOMMAND:
 	{
 		switch (wParam)
@@ -60,7 +60,7 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		LPMINMAXINFO min_max_info = (LPMINMAXINFO)lParam;
 		if (m_isMaxInstalled)
 		{
-			if((GetWindowLongPtr(m_hwnd, GWL_STYLE) & WS_MAXIMIZEBOX))
+			if ((GetWindowLongPtr(m_hwnd, GWL_STYLE) & WS_MAXIMIZEBOX))
 				SetWindowLongPtr(m_hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW&~WS_MAXIMIZEBOX);
 			min_max_info->ptMaxTrackSize.x = m_maximumSize.width;
 			min_max_info->ptMaxTrackSize.y = m_maximumSize.height;
@@ -70,8 +70,8 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			min_max_info->ptMinTrackSize.x = m_minimumSize.width;
 			min_max_info->ptMinTrackSize.y = m_minimumSize.height;
 		}
-		break;
 	}
+	break;
 	case WM_DESTROY:
 	{
 		Widget::widget_map.removeWidget(hwnd);
@@ -84,8 +84,8 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			DestroyWindow(hwnd);
 		}
-		break;
 	}
+	break;
 	default:
 		return DefWindowProc(hwnd, message, wParam, lParam);
 	}

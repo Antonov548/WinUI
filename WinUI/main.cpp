@@ -13,10 +13,13 @@ int main()
 	//wnd.setMaximumSize(500, 200);
 
 	Button btn(&wnd, "Hello");
+	btn.setFont("Arial", 13);
 	btn.setGeometry(0, 0, btn.width(), btn.height());
 
 	LineEdit edit(&wnd);
-	edit.setGeometry(20, 20, edit.width(), edit.height());
+	edit.setGeometry(20, 100, edit.width(), edit.height());
+	edit.setText("Введите текст");
+	edit.setFont("Arial", 13);
 
 	wnd.show();
 

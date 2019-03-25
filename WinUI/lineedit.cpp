@@ -3,13 +3,14 @@
 WidgetStyle LineEdit::line_edit_style = {
 	"Edit",
 	{0, 0, 400, 20},
-	WS_BORDER | WS_CHILD | WS_VISIBLE,
+	WS_CHILD | WS_VISIBLE | ES_LEFT | ES_AUTOHSCROLL,
 	NULL,
 	NULL
 };
 
 LineEdit::LineEdit(Window* parent) : Widget(line_edit_style, parent)
 {
+	ShowScrollBar(m_hwnd, SB_BOTH, FALSE);
 }
 
 LineEdit::~LineEdit()
@@ -28,9 +29,11 @@ LRESULT LineEdit::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 	case WM_DESTROY:
+	{
 		Widget::widget_map.removeWidget(hwnd);
 		DestroyWindow(hwnd);
-		break;
+	}
+	break;
 	default:
 		return DefWindowProc(hwnd, message, wParam, lParam);
 	}
@@ -51,11 +54,9 @@ void LineEdit::setFont(const char* font_family, int font_size)
 
 	LOGFONT logFont = { 0 };
 	logFont.lfHeight = -MulDiv(nFontSize, GetDeviceCaps(hdc, LOGPIXELSY), 72);
-	logFont.lfWeight = FW_EXTRABOLD;
+	logFont.lfWeight = FW_NORMAL;
 
 	HFONT s_hFont = CreateFontIndirect(&logFont);
-
 	ReleaseDC(m_hwnd, hdc);
-
 	SendMessage(m_hwnd, WM_SETFONT, (WPARAM)s_hFont, TRUE);
 }
