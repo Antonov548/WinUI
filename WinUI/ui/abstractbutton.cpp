@@ -2,10 +2,6 @@
 
 AbstractButton::AbstractButton(WidgetStyle style, Widget* parent) : Widget(style, parent)
 {
-	if (parent)
-	{
-		parent->addChild(m_hwnd, this);
-	}
 }
 
 AbstractButton::~AbstractButton()

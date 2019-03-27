@@ -26,6 +26,7 @@ class Widget
 {
 public:
 	Widget(WidgetStyle style, Widget* parent);
+	virtual ~Widget();
 
 	void setGeometry(int x, int y, int width, int height);
 	void setWidth(int width);
@@ -47,6 +48,7 @@ protected:
 	HWND m_hwnd; 
 	Widget* m_parent;
 	//map for child widgets of window
+	std::map<HWND, Widget*> m_child_widgets;
 
 	bool m_isMaxInstalled;
 	bool m_isMinInstalled;
@@ -57,12 +59,10 @@ protected:
 	static Widget* getWidgetPtr(HWND hwnd);
 	static void addWidget(HWND hwnd, Widget* widget);
 	static void removeWidget(HWND hwnd);
-	static bool isEmpty();
 
 private:
 	WidgetStyle m_style;
 	WNDCLASSEX m_wndclass;
-	std::map<HWND, Widget*> m_child_widgets;
 	static std::map<HWND, Widget*> widget_map;
 
 	void create();

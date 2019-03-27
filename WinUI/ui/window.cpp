@@ -12,7 +12,6 @@ int Window::window_count = 0;
 
 Window::Window(Window* parent) : Widget(window_style, parent)
 {
-	Window::window_count++;
 }
 
 Window::~Window()
@@ -26,6 +25,7 @@ void Window::setWindowTitle(const char * title)
 
 void Window::show()
 {
+	Window::window_count++;
 	ShowWindow(m_hwnd, SW_RESTORE);
 }
 
@@ -82,9 +82,8 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 	}
 	break;
-	case WM_DESTROY:
+	case WM_CLOSE:
 	{
-		removeWidget(hwnd);
 		Window::window_count--;
 		if (Window::window_count == 0)
 		{
@@ -92,7 +91,11 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		else
 		{
-			DestroyWindow(hwnd);
+			ShowWindow(hwnd, SW_HIDE);
+			for (auto& child : m_child_widgets)
+			{
+				PostMessage(child.first, WM_CLOSE, NULL, NULL);
+			}
 		}
 	}
 	break;

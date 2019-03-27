@@ -1,13 +1,23 @@
 #include "widget.h"
 
+std::map<HWND, Widget*> Widget::widget_map;
+
 Widget::Widget(WidgetStyle style, Widget * parent) : m_style(style), m_parent(parent), m_hwnd(nullptr),
 m_isMaxInstalled(false), m_isMinInstalled(false)
 {
 	create();
 	addWidget(m_hwnd, this);
+	if (m_parent)
+	{
+		m_parent->addChild(m_hwnd, this);
+	}
 }
 
-std::map<HWND, Widget*> Widget::widget_map;
+Widget::~Widget()
+{
+	removeWidget(m_hwnd);
+	DestroyWindow(m_hwnd);
+}
 
 void Widget::setGeometry(int x, int y, int width, int height)
 {
@@ -28,8 +38,10 @@ void Widget::setParent(Widget * parent)
 {
 	if (parent)
 	{
-		SetParent(getHWND(), parent->getHWND());
-		parent->addChild(getHWND(), this);
+		MessageBox(NULL, L"Event", L"Work", MB_OK);
+		SetParent(m_hwnd, parent->getHWND());
+		parent->addChild(m_hwnd, this);
+		UpdateWindow(parent->getHWND());
 	}
 }
 
@@ -173,11 +185,6 @@ void Widget::addWidget(HWND hwnd, Widget * widget)
 void Widget::removeWidget(HWND hwnd)
 {
 	Widget::widget_map.erase(hwnd);
-}
-
-bool Widget::isEmpty()
-{
-	return int(Widget::widget_map.size()) == 0;
 }
 
 Widget* Widget::getWidgetPtr(HWND hwnd)
