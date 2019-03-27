@@ -23,6 +23,11 @@ int Application::exec()
 	return (int)m_msg.wParam;
 }
 
+void Application::quit()
+{
+	PostQuitMessage(0);
+}
+
 HINSTANCE Application::getInstance()
 {
 	return instance;

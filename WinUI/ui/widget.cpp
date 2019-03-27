@@ -38,7 +38,6 @@ void Widget::setParent(Widget * parent)
 {
 	if (parent)
 	{
-		MessageBox(NULL, L"Event", L"Work", MB_OK);
 		SetParent(m_hwnd, parent->getHWND());
 		parent->addChild(m_hwnd, this);
 		UpdateWindow(parent->getHWND());

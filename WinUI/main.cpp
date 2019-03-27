@@ -5,7 +5,7 @@ class ButtonHandler : public Handler
 {
 public:
 	virtual void handleEvent() override {
-		_wnd->show();
+		Application::quit();
 	}
 
 	Window* _wnd;

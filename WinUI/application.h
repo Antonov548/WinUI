@@ -9,6 +9,7 @@ public:
 	~Application();
 
 	int exec();
+	static void quit();
 	static HINSTANCE getInstance();
 
 private:
