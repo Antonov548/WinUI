@@ -2,6 +2,8 @@
 
 WidgetMap Widget::widget_map;
 
+int Widget::widget_id = 0;
+
 Widget::Widget(WidgetStyle style, Widget * parent) : m_style(style), m_parent(parent), m_hwnd(nullptr),
 													 m_isMaxInstalled(false), m_isMinInstalled(false)
 {
@@ -76,6 +78,10 @@ void Widget::create()
 	{
 		registerClass();
 	}
+	else
+	{
+		Widget::widget_id++;
+	}
 	createWidget();
 }
 
@@ -109,7 +115,7 @@ void Widget::createWidget()
 		m_style.widget_size.width,
 		m_style.widget_size.height,
 		m_parent ? m_parent->getHWND() : nullptr,
-		nullptr,
+		HMENU(widget_id),
 		Application::getInstance(),
 		nullptr
 	);

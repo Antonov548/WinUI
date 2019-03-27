@@ -155,22 +155,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
-    <ClCompile Include="button.cpp" />
-    <ClCompile Include="lineedit.cpp" />
+    <ClCompile Include="handler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="string.cpp" />
-    <ClCompile Include="widget.cpp" />
-    <ClCompile Include="widgetmap.cpp" />
-    <ClCompile Include="window.cpp" />
+    <ClCompile Include="ui\abstractbutton.cpp" />
+    <ClCompile Include="ui\button.cpp" />
+    <ClCompile Include="ui\lineedit.cpp" />
+    <ClCompile Include="ui\widget.cpp" />
+    <ClCompile Include="ui\widgetmap.cpp" />
+    <ClCompile Include="ui\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
-    <ClInclude Include="button.h" />
-    <ClInclude Include="lineedit.h" />
+    <ClInclude Include="abstractbutton.h" />
+    <ClInclude Include="handler.h" />
     <ClInclude Include="string.h" />
-    <ClInclude Include="widget.h" />
-    <ClInclude Include="widgetmap.h" />
-    <ClInclude Include="window.h" />
+    <ClInclude Include="ui\abstractbutton.h" />
+    <ClInclude Include="ui\button.h" />
+    <ClInclude Include="ui\lineedit.h" />
+    <ClInclude Include="ui\widget.h" />
+    <ClInclude Include="ui\widgetmap.h" />
+    <ClInclude Include="ui\window.h" />
+    <ClInclude Include="winui.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

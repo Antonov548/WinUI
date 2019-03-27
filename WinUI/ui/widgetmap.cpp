@@ -4,7 +4,6 @@ WidgetMap::WidgetMap()
 {
 }
 
-
 WidgetMap::~WidgetMap()
 {
 }

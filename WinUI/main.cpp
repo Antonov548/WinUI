@@ -1,7 +1,12 @@
-﻿#include "application.h"
-#include "window.h"
-#include "button.h"
-#include "lineedit.h"
+﻿#include "winui.h"
+
+
+class ButtonHandler : public Handler
+{
+	virtual void handleEvent() override {
+		MessageBox(NULL, L"Work", L"Work", MB_OK);
+	}
+};
 
 int main()
 {
@@ -15,6 +20,9 @@ int main()
 	Button btn(&wnd, "Hello");
 	btn.setFont("Arial", 13);
 	btn.setGeometry(0, 0, btn.width(), btn.height());
+
+	ButtonHandler btn_handler;
+	btn.setClickHandler(&btn_handler);
 
 	LineEdit edit(&wnd);
 	edit.setGeometry(20, 100, edit.width(), edit.height());

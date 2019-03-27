@@ -29,6 +29,14 @@ void Window::show()
 	ShowWindow(m_hwnd, SW_RESTORE);
 }
 
+void Window::addChild(Widget * widget)
+{
+	if (widget)
+	{
+		m_child_widgets.insert(std::make_pair(Widget::widget_id, widget));
+	}
+}
+
 LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
@@ -69,6 +77,16 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			min_max_info->ptMinTrackSize.x = m_minimumSize.width;
 			min_max_info->ptMinTrackSize.y = m_minimumSize.height;
+		}
+	}
+	break;
+	case WM_COMMAND:
+	{
+		auto child = m_child_widgets.find(int(wParam));
+
+		if (child != m_child_widgets.end())
+		{
+			child->second->WndProc(hwnd, message, wParam, lParam);
 		}
 	}
 	break;

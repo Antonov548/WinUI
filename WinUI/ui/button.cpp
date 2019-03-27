@@ -8,33 +8,13 @@ WidgetStyle Button::button_style = {
 	NULL
 };
 
-Button::Button(Window * parent, const char * text) : Widget(button_style, parent), m_text(text)
+Button::Button(Window * parent, const char * text) : AbstractButton(button_style, parent)
 {
 	setText(text);
 }
 
 Button::~Button()
 {
-}
-
-LRESULT Button::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-	case WM_PAINT:
-	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hwnd, &ps);
-		EndPaint(hwnd, &ps);
-	}
-	break;
-	case WM_DESTROY:
-		Widget::widget_map.removeWidget(hwnd);
-		DestroyWindow(hwnd);
-		break;
-	default:
-		return DefWindowProc(hwnd, message, wParam, lParam);
-	}
 }
 
 void Button::setText(const char * text)

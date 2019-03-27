@@ -2,8 +2,8 @@
 
 #include <windows.h>
 #include "widgetmap.h"
-#include "application.h"
-#include "string.h"
+#include "../application.h"
+#include "../string.h"
 
 class WidgetMap;
 
@@ -30,6 +30,7 @@ public:
 	Widget(WidgetStyle style, Widget* parent = nullptr);
 
 	static WidgetMap widget_map;
+	static int widget_id;
 
 	void setGeometry(int x, int y, int width, int height);
 	void setWidth(int width);
