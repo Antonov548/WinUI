@@ -1,15 +1,13 @@
 #include "widget.h"
 
-WidgetMap Widget::widget_map;
-
-int Widget::widget_id = 0;
-
 Widget::Widget(WidgetStyle style, Widget * parent) : m_style(style), m_parent(parent), m_hwnd(nullptr),
-													 m_isMaxInstalled(false), m_isMinInstalled(false)
+m_isMaxInstalled(false), m_isMinInstalled(false)
 {
 	create();
-	Widget::widget_map.addWidget(m_hwnd, this);
+	addWidget(m_hwnd, this);
 }
+
+std::map<HWND, Widget*> Widget::widget_map;
 
 void Widget::setGeometry(int x, int y, int width, int height)
 {
@@ -24,6 +22,23 @@ void Widget::setWidth(int width)
 void Widget::setHeight(int height)
 {
 	SetWindowPos(m_hwnd, NULL, x(), y(), width(), height, NULL);
+}
+
+void Widget::setParent(Widget * parent)
+{
+	if (parent)
+	{
+		SetParent(getHWND(), parent->getHWND());
+		parent->addChild(getHWND(), this);
+	}
+}
+
+void Widget::addChild(HWND hwnd, Widget * widget)
+{
+	if (hwnd)
+	{
+		m_child_widgets.insert(std::make_pair(hwnd, widget));
+	}
 }
 
 int Widget::x()
@@ -61,7 +76,7 @@ HWND Widget::getHWND()
 
 LRESULT CALLBACK Widget::GlobalWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	Widget* widget = Widget::widget_map.getWidgetPtr(hwnd);
+	auto widget = getWidgetPtr(hwnd);
 	if (widget)
 	{
 		return widget->WndProc(hwnd, message, wParam, lParam);
@@ -77,10 +92,6 @@ void Widget::create()
 	if (!GetClassInfoEx(Application::getInstance(), str_to_wstr(m_style.class_name).c_str(), &m_wndclass))
 	{
 		registerClass();
-	}
-	else
-	{
-		Widget::widget_id++;
 	}
 	createWidget();
 }
@@ -115,7 +126,7 @@ void Widget::createWidget()
 		m_style.widget_size.width,
 		m_style.widget_size.height,
 		m_parent ? m_parent->getHWND() : nullptr,
-		HMENU(widget_id),
+		nullptr,
 		Application::getInstance(),
 		nullptr
 	);
@@ -123,7 +134,7 @@ void Widget::createWidget()
 
 void Widget::setMinimumSize(int min_width, int min_height)
 {
-	if (min_width > m_maximumSize.width || min_height > m_maximumSize.height)
+	if (m_isMaxInstalled && (min_width > m_maximumSize.width || min_height > m_maximumSize.height))
 		return;
 
 	m_isMinInstalled = true;
@@ -138,7 +149,7 @@ void Widget::setMinimumSize(int min_width, int min_height)
 
 void Widget::setMaximumSize(int max_width, int max_height)
 {
-	if (max_width < m_minimumSize.width || max_height < m_minimumSize.height)
+	if (m_isMinInstalled && (max_width < m_minimumSize.width || max_height < m_minimumSize.height))
 		return;
 
 	m_isMaxInstalled = true;
@@ -149,4 +160,28 @@ void Widget::setMaximumSize(int max_width, int max_height)
 		setWidth(max_width);
 	if (height() > max_height)
 		setHeight(max_height);
+}
+
+void Widget::addWidget(HWND hwnd, Widget * widget)
+{
+	if (hwnd)
+	{
+		Widget::widget_map.insert(std::make_pair(hwnd, widget));
+	}
+}
+
+void Widget::removeWidget(HWND hwnd)
+{
+	Widget::widget_map.erase(hwnd);
+}
+
+bool Widget::isEmpty()
+{
+	return int(Widget::widget_map.size()) == 0;
+}
+
+Widget* Widget::getWidgetPtr(HWND hwnd)
+{
+	auto wgt = Widget::widget_map.find(hwnd);
+	return wgt != Widget::widget_map.end() ? wgt->second : nullptr;
 }

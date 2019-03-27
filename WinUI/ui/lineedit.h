@@ -8,7 +8,7 @@
 class LineEdit : public Widget
 {
 public:
-	LineEdit(Window* parent);
+	LineEdit(Widget* parent = nullptr);
 	~LineEdit();
 
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;

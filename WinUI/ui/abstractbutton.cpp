@@ -1,8 +1,11 @@
 #include "abstractbutton.h"
 
-AbstractButton::AbstractButton(WidgetStyle style, Window* parent) : Widget(style, parent)
+AbstractButton::AbstractButton(WidgetStyle style, Widget* parent) : Widget(style, parent)
 {
-	parent->addChild(this);
+	if (parent)
+	{
+		parent->addChild(m_hwnd, this);
+	}
 }
 
 AbstractButton::~AbstractButton()
@@ -16,11 +19,21 @@ void AbstractButton::setClickHandler(Handler * event)
 
 void AbstractButton::click()
 {
-	m_clickHandler->handleEvent();
+	if (m_clickHandler) 
+	{
+		m_clickHandler->handleEvent();
+	}
 }
 
 LRESULT AbstractButton::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	MessageBox(NULL, L"Work", L"Hello", MB_OK);
+	switch (HIWORD(wParam))
+	{
+	case BN_CLICKED:
+		click();
+		break;
+	default:
+		return DefWindowProc(hwnd, message, wParam, lParam);
+	}
 	return DefWindowProc(hwnd, message, wParam, lParam);
 }

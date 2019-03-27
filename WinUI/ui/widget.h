@@ -1,11 +1,9 @@
 #pragma once
 
 #include <windows.h>
-#include "widgetmap.h"
+#include <map>
 #include "../application.h"
 #include "../string.h"
-
-class WidgetMap;
 
 struct Rect
 {
@@ -27,14 +25,13 @@ struct WidgetStyle
 class Widget
 {
 public:
-	Widget(WidgetStyle style, Widget* parent = nullptr);
-
-	static WidgetMap widget_map;
-	static int widget_id;
+	Widget(WidgetStyle style, Widget* parent);
 
 	void setGeometry(int x, int y, int width, int height);
 	void setWidth(int width);
 	void setHeight(int height);
+	void setParent(Widget* parent);
+	void addChild(HWND hwnd, Widget* widget);
 	int x();
 	int y();
 	int width();
@@ -49,6 +46,7 @@ public:
 protected:
 	HWND m_hwnd; 
 	Widget* m_parent;
+	//map for child widgets of window
 
 	bool m_isMaxInstalled;
 	bool m_isMinInstalled;
@@ -56,9 +54,16 @@ protected:
 	Rect m_minimumSize;
 	Rect m_maximumSize;
 
+	static Widget* getWidgetPtr(HWND hwnd);
+	static void addWidget(HWND hwnd, Widget* widget);
+	static void removeWidget(HWND hwnd);
+	static bool isEmpty();
+
 private:
 	WidgetStyle m_style;
 	WNDCLASSEX m_wndclass;
+	std::map<HWND, Widget*> m_child_widgets;
+	static std::map<HWND, Widget*> widget_map;
 
 	void create();
 	void createWidget();

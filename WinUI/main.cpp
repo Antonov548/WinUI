@@ -4,8 +4,22 @@
 class ButtonHandler : public Handler
 {
 	virtual void handleEvent() override {
-		MessageBox(NULL, L"Work", L"Work", MB_OK);
+		MessageBox(NULL, L"Event", L"Work", MB_OK);
 	}
+};
+
+class MainWindow : public Window
+{
+public:
+	MainWindow() {
+
+	}
+
+private:
+	Window wnd_dialog;
+	Button btn;
+	LineEdit edit_title;
+	ButtonHandler hdl_dialog;
 };
 
 int main()
@@ -14,10 +28,9 @@ int main()
 
 	Window wnd;
 	wnd.setWindowTitle("Work");
-	//wnd.setMinimumSize(800, 800);
-	//wnd.setMaximumSize(500, 200);
+	wnd.setMinimumSize(800, 800);
 
-	Button btn(&wnd, "Hello");
+	Button btn("Hello", &wnd);
 	btn.setFont("Arial", 13);
 	btn.setGeometry(0, 0, btn.width(), btn.height());
 

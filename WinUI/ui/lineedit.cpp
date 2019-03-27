@@ -8,7 +8,7 @@ WidgetStyle LineEdit::line_edit_style = {
 	NULL
 };
 
-LineEdit::LineEdit(Window* parent) : Widget(line_edit_style, parent)
+LineEdit::LineEdit(Widget* parent) : Widget(line_edit_style, parent)
 {
 	ShowScrollBar(m_hwnd, SB_BOTH, FALSE);
 }
@@ -30,7 +30,7 @@ LRESULT LineEdit::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_DESTROY:
 	{
-		Widget::widget_map.removeWidget(hwnd);
+		removeWidget(hwnd);
 		DestroyWindow(hwnd);
 	}
 	break;

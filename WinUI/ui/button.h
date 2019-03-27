@@ -7,7 +7,8 @@
 class Button : public AbstractButton
 {
 public:
-	Button(Window* parent, const char* text);
+	Button(const char* text, Widget* parent = nullptr);
+	Button(Window* parent = nullptr);
 	~Button();
 
 	void setText(const char* text);

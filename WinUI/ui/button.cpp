@@ -8,9 +8,14 @@ WidgetStyle Button::button_style = {
 	NULL
 };
 
-Button::Button(Window * parent, const char * text) : AbstractButton(button_style, parent)
+Button::Button(const char* text, Widget* parent) : AbstractButton(button_style, parent)
 {
 	setText(text);
+}
+
+Button::Button(Window* parent) : AbstractButton(button_style, parent)
+{
+	setText("");
 }
 
 Button::~Button()

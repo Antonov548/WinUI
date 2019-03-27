@@ -29,14 +29,6 @@ void Window::show()
 	ShowWindow(m_hwnd, SW_RESTORE);
 }
 
-void Window::addChild(Widget * widget)
-{
-	if (widget)
-	{
-		m_child_widgets.insert(std::make_pair(Widget::widget_id, widget));
-	}
-}
-
 LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
@@ -82,17 +74,17 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_COMMAND:
 	{
-		auto child = m_child_widgets.find(int(wParam));
+		auto child = getWidgetPtr(HWND(lParam));
 
-		if (child != m_child_widgets.end())
+		if (child)
 		{
-			child->second->WndProc(hwnd, message, wParam, lParam);
+			child->WndProc(hwnd, message, wParam, lParam);
 		}
 	}
 	break;
 	case WM_DESTROY:
 	{
-		Widget::widget_map.removeWidget(hwnd);
+		removeWidget(hwnd);
 		Window::window_count--;
 		if (Window::window_count == 0)
 		{

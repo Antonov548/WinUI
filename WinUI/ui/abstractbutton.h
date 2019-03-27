@@ -8,7 +8,7 @@
 class AbstractButton : public Widget
 {
 public:
-	AbstractButton(WidgetStyle style, Window* parent);
+	AbstractButton(WidgetStyle style, Widget* parent);
 	~AbstractButton();
 	void setClickHandler(Handler* event);
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;

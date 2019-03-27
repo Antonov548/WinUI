@@ -162,19 +162,16 @@
     <ClCompile Include="ui\button.cpp" />
     <ClCompile Include="ui\lineedit.cpp" />
     <ClCompile Include="ui\widget.cpp" />
-    <ClCompile Include="ui\widgetmap.cpp" />
     <ClCompile Include="ui\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
-    <ClInclude Include="abstractbutton.h" />
     <ClInclude Include="handler.h" />
     <ClInclude Include="string.h" />
     <ClInclude Include="ui\abstractbutton.h" />
     <ClInclude Include="ui\button.h" />
     <ClInclude Include="ui\lineedit.h" />
     <ClInclude Include="ui\widget.h" />
-    <ClInclude Include="ui\widgetmap.h" />
     <ClInclude Include="ui\window.h" />
     <ClInclude Include="winui.h" />
   </ItemGroup>

@@ -39,9 +39,6 @@
     <ClCompile Include="ui\widget.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ui\widgetmap.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="ui\window.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -59,9 +56,6 @@
     <ClInclude Include="handler.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="abstractbutton.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="ui\abstractbutton.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -72,9 +66,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="ui\widget.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ui\widgetmap.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="ui\window.h">
