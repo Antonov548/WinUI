@@ -31,5 +31,4 @@ LRESULT AbstractButton::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
 	default:
 		return DefWindowProc(hwnd, message, wParam, lParam);
 	}
-	return DefWindowProc(hwnd, message, wParam, lParam);
 }
