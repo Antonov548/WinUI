@@ -11,7 +11,7 @@ public:
 
 	void setWindowTitle(string title);
 	void show();
-	void close();
+	void hide();
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 
 private:

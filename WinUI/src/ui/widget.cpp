@@ -200,6 +200,11 @@ void Widget::removeWidget(HWND hwnd)
 	Widget::widget_map.erase(hwnd);
 }
 
+string Widget::getClassName() const
+{
+	return m_style.class_name;
+}
+
 Widget* Widget::getWidgetPtr(HWND hwnd)
 {
 	auto wgt = Widget::widget_map.find(hwnd);

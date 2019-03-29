@@ -29,7 +29,7 @@ void Window::show()
 	ShowWindow(m_hwnd, SW_RESTORE);
 }
 
-void Window::close()
+void Window::hide()
 {
 	Window::window_count--;
 	ShowWindow(m_hwnd, SW_HIDE);
@@ -100,7 +100,8 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			ShowWindow(hwnd, SW_HIDE);
 			for (auto& child : m_child_widgets)
 			{
-				PostMessage(child.first, WM_CLOSE, NULL, NULL);
+				if(child.second->getClassName() == Window::window_style.class_name)
+					PostMessage(child.first, WM_CLOSE, NULL, NULL);
 			}
 		}
 	}

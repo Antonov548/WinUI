@@ -41,6 +41,7 @@ public:
 	HWND getHWND() const;
 	// static wndproc wich call procedure for each widget
 	static LRESULT CALLBACK GlobalWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+	string getClassName() const;
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) = 0;
 	void setMinimumSize(int min_width, int min_height);
 	void setMaximumSize(int wax_width, int max_height);
