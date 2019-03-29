@@ -31,6 +31,7 @@ public:
 	void setGeometry(int x, int y, int width, int height);
 	void setWidth(int width);
 	void setHeight(int height);
+	void setFixedSize(int width, int height);
 	void setParent(Widget* parent);
 	void addChild(HWND hwnd, Widget* widget);
 	int x();

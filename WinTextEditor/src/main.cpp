@@ -1,6 +1,6 @@
-#include "winui.h"
+#include <WinUI>
 
-class ButtonHandler : public Handler
+class ButtonHandlerMainWindow : public Handler
 {
 public:
 	virtual void handleEvent() override {
@@ -10,22 +10,51 @@ public:
 	Window* _wnd;
 };
 
+class ButtonHandlerDialogWindow : public Handler
+{
+public:
+	virtual void handleEvent() override {
+		_wnd->setWindowTitle(_title.c_str());
+		_dialog->close();
+	}
+
+	std::string _title;
+	Window* _dialog;
+	Window* _wnd;
+};
+
+class DialogWindow : public Window
+{
+public:
+	DialogWindow(Widget* parent = nullptr) : Window(parent), btn(this) {
+		btn.setText("Сохранить");
+		hdl_dialog._wnd = (Window*)(parent);
+		hdl_dialog._dialog = this;
+		hdl_dialog._title = "new text";
+		btn.setClickHandler(&hdl_dialog);
+	}
+
+private:
+	Button btn;
+	LineEdit edit_title;
+	ButtonHandlerDialogWindow hdl_dialog;
+};
+
 class MainWindow : public Window
 {
 public:
 	MainWindow() : Window(), btn(this), wnd_dialog(this) {
 		btn.setGeometry(20, 20, btn.width(), btn.height());
 		btn.setText("Открыть");
-		wnd_dialog.setMaximumSize(300, 200);
+		wnd_dialog.setFixedSize(300, 200);
 		hdl_dialog._wnd = &wnd_dialog;
 		btn.setClickHandler(&hdl_dialog);
 	}
 
 private:
-	Window wnd_dialog;
+	DialogWindow wnd_dialog;
 	Button btn;
-	LineEdit edit_title;
-	ButtonHandler hdl_dialog;
+	ButtonHandlerMainWindow hdl_dialog;
 };
 
 int main()

@@ -30,6 +30,7 @@
     <ClCompile Include="src\ui\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\WinUI" />
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\handler.h" />
     <ClInclude Include="src\winstring.h" />
@@ -39,7 +40,7 @@
     <ClInclude Include="src\ui\widget.h" />
     <ClInclude Include="src\ui\widgetmap.h" />
     <ClInclude Include="src\ui\window.h" />
-    <ClInclude Include="src\winui.h" />
+    <ClInclude Include="include\winui.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

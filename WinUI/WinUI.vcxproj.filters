@@ -12,7 +12,6 @@
     <ClCompile Include="src\winstring.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\winui.h" />
     <ClInclude Include="src\ui\abstractbutton.h" />
     <ClInclude Include="src\ui\button.h" />
     <ClInclude Include="src\ui\lineedit.h" />
@@ -22,5 +21,7 @@
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\handler.h" />
     <ClInclude Include="src\winstring.h" />
+    <ClInclude Include="include\winui.h" />
+    <ClInclude Include="include\WinUI" />
   </ItemGroup>
 </Project>

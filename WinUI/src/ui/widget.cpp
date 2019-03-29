@@ -34,6 +34,20 @@ void Widget::setHeight(int height)
 	SetWindowPos(m_hwnd, NULL, x(), y(), width(), height, NULL);
 }
 
+void Widget::setFixedSize(int width, int height)
+{
+	m_isMaxInstalled = true;
+	m_isMinInstalled = true;
+
+	m_minimumSize.width = width;
+	m_minimumSize.height = height;
+	m_maximumSize.width = width;
+	m_maximumSize.height = height;
+
+	setWidth(width);
+	setHeight(height);
+}
+
 void Widget::setParent(Widget * parent)
 {
 	if (parent)

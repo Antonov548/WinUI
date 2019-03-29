@@ -10,7 +10,7 @@ WidgetStyle Window::window_style = {
 
 int Window::window_count = 0;
 
-Window::Window(Window* parent) : Widget(window_style, parent)
+Window::Window(Widget* parent) : Widget(window_style, parent)
 {
 }
 
@@ -23,10 +23,21 @@ void Window::setWindowTitle(const char * title)
 	SetWindowTextA(m_hwnd, title);
 }
 
+void Window::setWindowTitle(std::string title)
+{
+	SetWindowTextA(m_hwnd, title.c_str());
+}
+
 void Window::show()
 {
 	Window::window_count++;
 	ShowWindow(m_hwnd, SW_RESTORE);
+}
+
+void Window::close()
+{
+	Window::window_count--;
+	ShowWindow(m_hwnd, SW_HIDE);
 }
 
 LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
