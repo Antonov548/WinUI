@@ -1,4 +1,4 @@
-#include "string.h"
+#include "winstring.h"
 
 std::wstring str_to_wstr(const std::string& str, UINT code_page) {
 	if (!str.empty()) {

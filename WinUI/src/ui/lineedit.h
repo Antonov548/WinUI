@@ -1,7 +1,6 @@
 #pragma once
 
 #include <windows.h>
-#include "../string.h"
 #include "widget.h"
 #include "window.h"
 

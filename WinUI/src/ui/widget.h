@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <map>
 #include "../application.h"
-#include "../string.h"
+#include "../winstring.h"
 
 struct Rect
 {

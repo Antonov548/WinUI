@@ -1,5 +1,4 @@
-п»ї#include "winui.h"
-
+#include "winui.h"
 
 class ButtonHandler : public Handler
 {
@@ -16,7 +15,7 @@ class MainWindow : public Window
 public:
 	MainWindow() : Window(), btn(this), wnd_dialog(this) {
 		btn.setGeometry(20, 20, btn.width(), btn.height());
-		btn.setText("РћС‚РєСЂС‹С‚СЊ");
+		btn.setText("Открыть");
 		wnd_dialog.setMaximumSize(300, 200);
 		hdl_dialog._wnd = &wnd_dialog;
 		btn.setClickHandler(&hdl_dialog);
@@ -46,7 +45,7 @@ int main()
 
 	LineEdit edit(&wnd);
 	edit.setGeometry(20, 100, edit.width(), edit.height());
-	edit.setText("Р’РІРµРґРёС‚Рµ С‚РµРєСЃС‚");
+	edit.setText("Введите текст");
 	edit.setFont("Arial", 13);*/
 
 	wnd.show();
