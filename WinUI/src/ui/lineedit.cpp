@@ -39,13 +39,20 @@ LRESULT LineEdit::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-void LineEdit::setText(const char * text)
+void LineEdit::setText(string text)
 {
 	m_text = text;
 	SetWindowTextA(m_hwnd, m_text.c_str());
 }
 
-void LineEdit::setFont(const char* font_family, int font_size)
+std::string LineEdit::text() const
+{
+	wchar_t text[1024];
+	GetWindowText(m_hwnd, text, 1024);
+	return wstr_to_str(text).c_str();
+}
+
+void LineEdit::setFont(string font_family, int font_size)
 {
 	const TCHAR* fontName = str_to_wstr(font_family).c_str();
 	const long nFontSize = font_size;

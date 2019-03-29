@@ -11,8 +11,9 @@ public:
 	~LineEdit();
 
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
-	void setText(const char* text);
-	void setFont(const char* font_family, int font_size);
+	void setText(string text);
+	string text() const;
+	void setFont(string font_family, int font_size);
 
 private:
 	static WidgetStyle line_edit_style;

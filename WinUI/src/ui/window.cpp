@@ -18,11 +18,6 @@ Window::~Window()
 {
 }
 
-void Window::setWindowTitle(const char * title)
-{
-	SetWindowTextA(m_hwnd, title);
-}
-
 void Window::setWindowTitle(std::string title)
 {
 	SetWindowTextA(m_hwnd, title.c_str());

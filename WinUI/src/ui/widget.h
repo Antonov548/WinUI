@@ -15,7 +15,7 @@ struct Rect
 
 struct WidgetStyle
 {
-	std::string class_name;
+	string class_name;
 	Rect widget_size;
 	DWORD widget_style;
 	DWORD widget_ex_style;

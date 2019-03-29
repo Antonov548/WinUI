@@ -14,23 +14,25 @@ class ButtonHandlerDialogWindow : public Handler
 {
 public:
 	virtual void handleEvent() override {
-		_wnd->setWindowTitle(_title.c_str());
-		_dialog->close();
+		_wnd->setWindowTitle(_edit->text());
+		//_dialog->close();
 	}
 
-	std::string _title;
+	LineEdit* _edit;
 	Window* _dialog;
 	Window* _wnd;
 };
-
+ 
 class DialogWindow : public Window
 {
 public:
-	DialogWindow(Widget* parent = nullptr) : Window(parent), btn(this) {
+	DialogWindow(Widget* parent = nullptr) : Window(parent), btn(this), edit_title(this) {
 		btn.setText("Сохранить");
+		edit_title.setGeometry(0, 40, edit_title.width(), edit_title.height());
+		edit_title.setText("Введите текст");
 		hdl_dialog._wnd = (Window*)(parent);
 		hdl_dialog._dialog = this;
-		hdl_dialog._title = "new text";
+		hdl_dialog._edit = &edit_title;
 		btn.setClickHandler(&hdl_dialog);
 	}
 

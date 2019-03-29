@@ -1,6 +1,6 @@
 #include "winstring.h"
 
-std::wstring str_to_wstr(const std::string& str, UINT code_page) {
+wstring str_to_wstr(const string& str, UINT code_page) {
 	if (!str.empty()) {
 		int length = MultiByteToWideChar(code_page, 0, str.c_str(), -1, nullptr, 0);
 		if (length > 0) {
@@ -10,10 +10,10 @@ std::wstring str_to_wstr(const std::string& str, UINT code_page) {
 		}
 	}
 
-	return std::wstring();
+	return wstring();
 }
 
-std::string wstr_to_str(const std::wstring& str, UINT code_page) {
+string wstr_to_str(const wstring& str, UINT code_page) {
 	if (!str.empty()) {
 		int length = WideCharToMultiByte(code_page, 0, str.c_str(), -1, nullptr, 0,
 			nullptr, nullptr);
@@ -25,5 +25,5 @@ std::string wstr_to_str(const std::wstring& str, UINT code_page) {
 		}
 	}
 
-	return std::string();
+	return string();
 }
