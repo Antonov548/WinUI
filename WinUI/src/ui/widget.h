@@ -34,11 +34,11 @@ public:
 	void setFixedSize(int width, int height);
 	void setParent(Widget* parent);
 	void addChild(HWND hwnd, Widget* widget);
-	int x();
-	int y();
-	int width();
-	int height();
-	HWND getHWND();
+	int x() const;
+	int y() const;
+	int width() const;
+	int height() const;
+	HWND getHWND() const;
 	// static wndproc wich call procedure for each widget
 	static LRESULT CALLBACK GlobalWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) = 0;

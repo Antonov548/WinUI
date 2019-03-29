@@ -66,35 +66,35 @@ void Widget::addChild(HWND hwnd, Widget * widget)
 	}
 }
 
-int Widget::x()
+int Widget::x() const
 {
 	RECT rect;
 	GetWindowRect(m_hwnd, &rect);
 	return int(rect.left);
 }
 
-int Widget::y()
+int Widget::y() const
 {
 	RECT rect;
 	GetWindowRect(m_hwnd, &rect);
 	return int(rect.top);
 }
 
-int Widget::width()
+int Widget::width() const
 {
 	RECT rect;
 	GetWindowRect(m_hwnd, &rect);
 	return int(rect.right - rect.left);
 }
 
-int Widget::height()
+int Widget::height() const
 {
 	RECT rect;
 	GetWindowRect(m_hwnd, &rect);
 	return int(rect.bottom - rect.top);
 }
 
-HWND Widget::getHWND()
+HWND Widget::getHWND() const
 {
 	return m_hwnd;
 }

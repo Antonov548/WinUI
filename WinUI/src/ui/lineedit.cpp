@@ -49,7 +49,7 @@ std::string LineEdit::text() const
 {
 	wchar_t text[1024];
 	GetWindowText(m_hwnd, text, 1024);
-	return wstr_to_str(text).c_str();
+	return wstr_to_str(text);
 }
 
 void LineEdit::setFont(string font_family, int font_size)

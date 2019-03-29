@@ -18,9 +18,9 @@ Window::~Window()
 {
 }
 
-void Window::setWindowTitle(std::string title)
+void Window::setWindowTitle(string title)
 {
-	SetWindowTextA(m_hwnd, title.c_str());
+	SetWindowTextA(m_hwnd, to_str_code(title, CP_ACP).c_str());
 }
 
 void Window::show()
