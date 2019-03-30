@@ -3,7 +3,7 @@
 std::map<HWND, Widget*> Widget::widget_map;
 
 Widget::Widget(WidgetStyle style, Widget * parent) : m_style(style), m_parent(parent), m_hwnd(nullptr),
-m_isMaxInstalled(false), m_isMinInstalled(false)
+m_isMaxInstalled(false), m_isMinInstalled(false), m_size(style.widget_size)
 {
 	create();
 	addWidget(m_hwnd, this);
@@ -21,16 +21,22 @@ Widget::~Widget()
 
 void Widget::setGeometry(int x, int y, int width, int height)
 {
+	m_size.x = x;
+	m_size.y = y;
+	m_size.width = width;
+	m_size.height = height;
 	SetWindowPos(m_hwnd, NULL, x, y, width, height, NULL);
 }
 
 void Widget::setWidth(int width)
 {
+	m_size.width = width;
 	SetWindowPos(m_hwnd, NULL, x(), y(), width, height(), NULL);
 }
 
 void Widget::setHeight(int height)
 {
+	m_size.height = height;
 	SetWindowPos(m_hwnd, NULL, x(), y(), width(), height, NULL);
 }
 
@@ -52,9 +58,19 @@ void Widget::setParent(Widget * parent)
 {
 	if (parent)
 	{
-		SetParent(m_hwnd, parent->getHWND());
+		DestroyWindow(m_hwnd);
+		removeWidget(m_hwnd);
+
+		m_parent = parent;
 		parent->addChild(m_hwnd, this);
-		UpdateWindow(parent->getHWND());
+
+		recreateWidget();
+		addWidget(m_hwnd, this);
+
+		for (auto& child : m_child_widgets)
+		{
+			child.second->setParent(this);
+		}
 	}
 }
 
@@ -116,12 +132,26 @@ void Widget::create()
 {
 	if (!GetClassInfoEx(Application::getInstance(), str_to_wstr(m_style.class_name).c_str(), &m_wndclass))
 	{
-		registerClass();
+		registerClass(m_style);
 	}
-	createWidget();
+	createWidget(m_style);
 }
 
-void Widget::registerClass()
+void Widget::recreateWidget()
+{
+	WidgetStyle style = {
+			m_style.class_name,
+			m_size,
+			m_style.widget_style,
+			m_style.widget_ex_style,
+			m_style.class_style
+	};
+	wchar_t text[1024];
+	GetWindowText(m_hwnd, text, 1024);
+	createWidget(m_style, wstr_to_str(text));
+}
+
+void Widget::registerClass(WidgetStyle style)
 {
 	m_wndclass.cbSize = sizeof(WNDCLASSEX);
 	m_wndclass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
@@ -139,12 +169,12 @@ void Widget::registerClass()
 	RegisterClassEx(&m_wndclass);
 }
 
-void Widget::createWidget()
+void Widget::createWidget(WidgetStyle style, string text)
 {
 	m_hwnd = CreateWindowEx(
 		m_style.widget_ex_style,
 		str_to_wstr(m_style.class_name).c_str(),
-		L"",
+		str_to_wstr(text).c_str(),
 		m_style.widget_style,
 		m_style.widget_size.x,
 		m_style.widget_size.y,

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string.h>
+#include <functional>
 #include "window.h"
 #include "widget.h"
-#include "../handler.h"
 
 class AbstractButton : public Widget
 {
@@ -12,7 +12,7 @@ public:
 	~AbstractButton();
 	void setText(string text);
 	void setFont(string font_family, int font_size);
-	void setClickHandler(Handler* event);
+	void connect(std::function<void(void)> func);
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 
 protected:
@@ -20,6 +20,6 @@ protected:
 	virtual void click();
 
 private:
-	Handler* m_clickHandler;
+	std::function<void(void)> m_clickHandler;
 };
 

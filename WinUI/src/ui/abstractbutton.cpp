@@ -8,16 +8,11 @@ AbstractButton::~AbstractButton()
 {
 }
 
-void AbstractButton::setClickHandler(Handler * event)
-{
-	m_clickHandler = event;
-}
-
 void AbstractButton::click()
 {
 	if (m_clickHandler) 
 	{
-		m_clickHandler->handleEvent();
+		m_clickHandler();
 	}
 }
 
@@ -53,4 +48,9 @@ void AbstractButton::setFont(string font_family, int font_size)
 	HFONT s_hFont = CreateFontIndirect(&logFont);
 	ReleaseDC(m_hwnd, hdc);
 	SendMessage(m_hwnd, WM_SETFONT, (WPARAM)s_hFont, TRUE);
+}
+
+void AbstractButton::connect(std::function<void(void)> func)
+{
+	m_clickHandler = func;
 }

@@ -12,8 +12,8 @@ public:
 
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 	void setText(string text);
-	string text() const;
 	void setFont(string font_family, int font_size);
+	string text() const;
 
 private:
 	static WidgetStyle line_edit_style;

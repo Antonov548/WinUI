@@ -5,10 +5,8 @@
     <ClCompile Include="src\ui\button.cpp" />
     <ClCompile Include="src\ui\lineedit.cpp" />
     <ClCompile Include="src\ui\widget.cpp" />
-    <ClCompile Include="src\ui\widgetmap.cpp" />
     <ClCompile Include="src\ui\window.cpp" />
     <ClCompile Include="src\application.cpp" />
-    <ClCompile Include="src\handler.cpp" />
     <ClCompile Include="src\winstring.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -16,10 +14,8 @@
     <ClInclude Include="src\ui\button.h" />
     <ClInclude Include="src\ui\lineedit.h" />
     <ClInclude Include="src\ui\widget.h" />
-    <ClInclude Include="src\ui\widgetmap.h" />
     <ClInclude Include="src\ui\window.h" />
     <ClInclude Include="src\application.h" />
-    <ClInclude Include="src\handler.h" />
     <ClInclude Include="src\winstring.h" />
     <ClInclude Include="include\winui.h" />
     <ClInclude Include="include\WinUI" />

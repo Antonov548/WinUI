@@ -1,45 +1,19 @@
 #include <WinUI>
 
-class ButtonHandlerMainWindow : public Handler
-{
-public:
-	virtual void handleEvent() override {
-		_wnd->show();
-	}
-
-	Window* _wnd;
-};
-
-class ButtonHandlerDialogWindow : public Handler
-{
-public:
-	virtual void handleEvent() override {
-		_wnd->setWindowTitle(_edit->text());
-		//_dialog->close();
-	}
-
-	LineEdit* _edit;
-	Window* _dialog;
-	Window* _wnd;
-};
- 
 class DialogWindow : public Window
 {
 public:
-	DialogWindow(Widget* parent = nullptr) : Window(parent), btn(this), edit_title(this) {
+	DialogWindow(Widget* parent = nullptr) : Window(parent), btn(this), edit_title(this), wnd_parent((Window*)(parent)) {
 		btn.setText("—охранить");
+		btn.connect([&]() {wnd_parent->setWindowTitle(edit_title.text()); });
 		edit_title.setGeometry(0, 40, edit_title.width(), edit_title.height());
 		edit_title.setText("¬ведите текст");
-		hdl_dialog._wnd = (Window*)(parent);
-		hdl_dialog._dialog = this;
-		hdl_dialog._edit = &edit_title;
-		btn.setClickHandler(&hdl_dialog);
 	}
 
 private:
 	Button btn;
 	LineEdit edit_title;
-	ButtonHandlerDialogWindow hdl_dialog;
+	Window* wnd_parent;
 };
 
 class MainWindow : public Window
@@ -48,15 +22,17 @@ public:
 	MainWindow() : Window(), btn(this), wnd_dialog(this) {
 		btn.setGeometry(20, 20, btn.width(), btn.height());
 		btn.setText("ќткрыть");
+		btn.connect([&]() {wnd_dialog.show(); });
 		wnd_dialog.setFixedSize(300, 200);
-		hdl_dialog._wnd = &wnd_dialog;
-		btn.setClickHandler(&hdl_dialog);
+	}
+	void openDialog()
+	{
+		wnd_dialog.show();
 	}
 
 private:
 	DialogWindow wnd_dialog;
 	Button btn;
-	ButtonHandlerMainWindow hdl_dialog;
 };
 
 int main()
@@ -66,18 +42,6 @@ int main()
 	MainWindow wnd;
 	wnd.setWindowTitle("Lab 1");
 	wnd.setMinimumSize(800, 800);
-
-	/*Button btn("Hello", &wnd);
-	btn.setFont("Arial", 13);
-	btn.setGeometry(0, 0, 100, 100);
-
-	ButtonHandler btn_handler;
-	btn.setClickHandler(&btn_handler);
-
-	LineEdit edit(&wnd);
-	edit.setGeometry(20, 100, edit.width(), edit.height());
-	edit.setText("¬ведите текст");
-	edit.setFont("Arial", 13);*/
 
 	wnd.show();
 

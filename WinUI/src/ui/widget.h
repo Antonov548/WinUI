@@ -58,6 +58,8 @@ protected:
 	Rect m_minimumSize;
 	Rect m_maximumSize;
 
+	Rect m_size;
+
 	static Widget* getWidgetPtr(HWND hwnd);
 	static void addWidget(HWND hwnd, Widget* widget);
 	static void removeWidget(HWND hwnd);
@@ -68,7 +70,8 @@ private:
 	static std::map<HWND, Widget*> widget_map;
 
 	void create();
-	void createWidget();
-	void registerClass();
+	void recreateWidget();
+	void createWidget(WidgetStyle style, string text = "");
+	void registerClass(WidgetStyle style);
 };
 
