@@ -8,7 +8,7 @@ class Button : public AbstractButton
 {
 public:
 	Button(string text, Widget* parent = nullptr);
-	Button(Window* parent = nullptr);
+	Button(Widget* parent = nullptr);
 	~Button();
 
 private:

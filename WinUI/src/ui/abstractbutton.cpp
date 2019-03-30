@@ -22,6 +22,7 @@ LRESULT AbstractButton::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
 	{
 	case BN_CLICKED:
 		click();
+		return DefWindowProc(hwnd, message, wParam, lParam);
 		break;
 	default:
 		return DefWindowProc(hwnd, message, wParam, lParam);

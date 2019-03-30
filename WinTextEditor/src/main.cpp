@@ -5,13 +5,13 @@ class DialogWindow : public Window
 public:
 	DialogWindow(Widget* parent = nullptr) : Window(parent), btn(this), edit_title(this), wnd_parent((Window*)(parent)) {
 		btn.setText("Сохранить");
-		btn.connect([&]() {wnd_parent->setWindowTitle(edit_title.text()); });
+		btn.connect([&]() {wnd_parent->setWindowTitle(std::to_string(btn.isChecked())); });
 		edit_title.setGeometry(0, 40, edit_title.width(), edit_title.height());
 		edit_title.setText("Введите текст");
 	}
 
 private:
-	Button btn;
+	CheckBox btn;
 	LineEdit edit_title;
 	Window* wnd_parent;
 };
@@ -25,6 +25,7 @@ public:
 		btn.connect([&]() {wnd_dialog.show(); });
 		wnd_dialog.setFixedSize(300, 200);
 	}
+
 	void openDialog()
 	{
 		wnd_dialog.show();

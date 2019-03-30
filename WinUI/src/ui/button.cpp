@@ -13,7 +13,7 @@ Button::Button(string text, Widget* parent) : AbstractButton(button_style, paren
 	setText(text);
 }
 
-Button::Button(Window* parent) : AbstractButton(button_style, parent)
+Button::Button(Widget* parent) : AbstractButton(button_style, parent)
 {
 	setText("");
 }

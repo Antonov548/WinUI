@@ -8,6 +8,7 @@
     <ClCompile Include="src\ui\window.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\winstring.cpp" />
+    <ClCompile Include="src\ui\checkbox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ui\abstractbutton.h" />
@@ -19,5 +20,6 @@
     <ClInclude Include="src\winstring.h" />
     <ClInclude Include="include\winui.h" />
     <ClInclude Include="include\WinUI" />
+    <ClInclude Include="src\ui\checkbox.h" />
   </ItemGroup>
 </Project>

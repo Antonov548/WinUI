@@ -17,7 +17,7 @@ public:
 
 protected:
 	std::string m_text;
-	virtual void click();
+	void click();
 
 private:
 	std::function<void(void)> m_clickHandler;
