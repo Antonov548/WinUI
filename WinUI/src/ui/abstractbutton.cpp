@@ -59,7 +59,18 @@ void AbstractButton::setFont(string font_family, int font_size)
 	SendMessage(m_hwnd, WM_SETFONT, (WPARAM)s_hFont, TRUE);
 }
 
-void AbstractButton::connect(std::function<void(void)> func)
+void AbstractButton::connect(std::function<void(void)> func, AbstractButton::ConnectType type)
 {
-	m_clickHandler = func;
+	switch (type)
+	{
+	case AbstractButton::Clicked:
+		m_clickHandler = func;
+		break;
+	case AbstractButton::DoubleClicked:
+		break;
+	case AbstractButton::Pressed:
+		break;
+	default:
+		break;
+	}
 }
