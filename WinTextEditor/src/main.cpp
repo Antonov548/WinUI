@@ -24,6 +24,8 @@ public:
 		btn.setText("Открыть");
 		btn.connect([&]() {wnd_dialog.show(); });
 		wnd_dialog.setFixedSize(300, 200);
+		Label *label = new Label("Work", this);
+		label->setGeometry(40, 40, 200, 300);
 	}
 
 	void openDialog()

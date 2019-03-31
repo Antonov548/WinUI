@@ -25,13 +25,11 @@ void Window::setWindowTitle(string title)
 
 void Window::show()
 {
-	Window::window_count++;
-	ShowWindow(m_hwnd, SW_RESTORE);
+	ShowWindow(m_hwnd, SW_SHOW);
 }
 
 void Window::hide()
 {
-	Window::window_count--;
 	ShowWindow(m_hwnd, SW_HIDE);
 }
 
@@ -81,29 +79,45 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 	{
 		auto child = getWidgetPtr(HWND(lParam));
-
 		if (child)
 		{
 			child->WndProc(hwnd, message, wParam, lParam);
 		}
 	}
 	break;
+	case WM_SHOWWINDOW:
+	{
+		if (bool(wParam))
+		{
+			Window::window_count++;
+		}
+		else
+		{
+			Window::window_count--;
+		}
+	}
+		break;
 	case WM_CLOSE:
 	{
-		Window::window_count--;
+		hide();
 		if (Window::window_count == 0)
 		{
 			PostQuitMessage(0);
 		}
 		else
 		{
-			ShowWindow(hwnd, SW_HIDE);
 			for (auto& child : m_child_widgets)
 			{
 				if(child.second->getClassName() == Window::window_style.class_name)
 					PostMessage(child.first, WM_CLOSE, NULL, NULL);
 			}
 		}
+	}
+	break;
+	case WM_DESTROY:
+	{
+		removeWidget(hwnd);
+		DestroyWindow(hwnd);
 	}
 	break;
 	default:

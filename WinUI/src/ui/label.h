@@ -1,21 +1,19 @@
 #pragma once
 
-#include <windows.h>
 #include "widget.h"
-#include "window.h"
 
-class LineEdit : public Widget
+class Label : public Widget
 {
 public:
-	LineEdit(Widget* parent = nullptr);
-	~LineEdit();
+	Label(string text, Widget* parent = nullptr);
+	Label(Widget* parent = nullptr);
+	~Label();
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 	void setText(string text);
 	void setFont(string font_family, int font_size);
-	string text() const;
 
 private:
-	static WidgetStyle line_edit_style;
-	std::string m_text;
+	static WidgetStyle label_style;
+	string m_text;
 };
 

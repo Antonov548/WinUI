@@ -8,7 +8,6 @@ class Window : public Widget
 public:
 	Window(Widget* parent = nullptr);
 	~Window();
-
 	void setWindowTitle(string title);
 	void show();
 	void hide();

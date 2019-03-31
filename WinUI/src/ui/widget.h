@@ -27,18 +27,20 @@ class Widget
 public:
 	Widget(WidgetStyle style, Widget* parent);
 	virtual ~Widget();
-
 	void setGeometry(int x, int y, int width, int height);
 	void setWidth(int width);
 	void setHeight(int height);
 	void setFixedSize(int width, int height);
 	void setParent(Widget* parent);
+	void setVisible(bool visible);
 	void addChild(HWND hwnd, Widget* widget);
 	int x() const;
 	int y() const;
 	int width() const;
 	int height() const;
+	Rect size() const;
 	HWND getHWND() const;
+	bool isVisible() const;
 	// static wndproc wich call procedure for each widget
 	static LRESULT CALLBACK GlobalWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 	string getClassName() const;
@@ -57,7 +59,6 @@ protected:
 
 	Rect m_minimumSize;
 	Rect m_maximumSize;
-
 	Rect m_size;
 
 	static Widget* getWidgetPtr(HWND hwnd);

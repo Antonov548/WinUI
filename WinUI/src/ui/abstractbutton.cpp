@@ -21,9 +21,17 @@ LRESULT AbstractButton::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
 	switch (HIWORD(wParam))
 	{
 	case BN_CLICKED:
+	{
 		click();
 		return DefWindowProc(hwnd, message, wParam, lParam);
+	}
 		break;
+	case WM_DESTROY:
+	{
+		removeWidget(hwnd);
+		DestroyWindow(hwnd);
+	}
+	break;
 	default:
 		return DefWindowProc(hwnd, message, wParam, lParam);
 	}

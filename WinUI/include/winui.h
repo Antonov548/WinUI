@@ -5,3 +5,4 @@
 #include "../src/ui/button.h"
 #include "../src/ui/checkbox.h"
 #include "../src/ui/lineedit.h"
+#include "../src/ui/label.h"

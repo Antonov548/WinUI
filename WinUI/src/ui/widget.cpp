@@ -74,6 +74,12 @@ void Widget::setParent(Widget * parent)
 	}
 }
 
+void Widget::setVisible(bool visible)
+{
+	int show_comand = visible ? SW_SHOW : SW_HIDE;
+	ShowWindow(m_hwnd, show_comand);
+}
+
 void Widget::addChild(HWND hwnd, Widget * widget)
 {
 	if (hwnd)
@@ -110,9 +116,19 @@ int Widget::height() const
 	return int(rect.bottom - rect.top);
 }
 
+Rect Widget::size() const
+{
+	return m_size;
+}
+
 HWND Widget::getHWND() const
 {
 	return m_hwnd;
+}
+
+bool Widget::isVisible() const
+{
+	return bool(IsWindowVisible(m_hwnd));
 }
 
 LRESULT CALLBACK Widget::GlobalWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
