@@ -64,7 +64,10 @@ void AbstractButton::connect(std::function<void(void)> func, AbstractButton::Con
 	switch (type)
 	{
 	case AbstractButton::Clicked:
-		m_clickHandler = func;
+		if (!bool(m_clickHandler))
+		{
+			m_clickHandler = func;
+		}
 		break;
 	case AbstractButton::DoubleClicked:
 		break;
