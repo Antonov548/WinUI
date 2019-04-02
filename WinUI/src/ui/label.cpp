@@ -3,8 +3,7 @@
 WidgetStyle Label::label_style = {
 	"Static",
 	{0, 0, 80, 30},
-	WS_CHILD | WS_VISIBLE | SS_LEFT,
-	NULL,
+	Style(WS_CHILD | WS_VISIBLE | SS_LEFT, NULL),
 	NULL
 };
 
@@ -64,4 +63,34 @@ void Label::setFont(string font_family, int font_size)
 	HFONT s_hFont = CreateFontIndirect(&logFont);
 	ReleaseDC(m_hwnd, hdc);
 	SendMessage(m_hwnd, WM_SETFONT, (WPARAM)s_hFont, TRUE);
+}
+
+void Label::setAlignment(WinUI::Alignment align)
+{
+	
+	switch (align)
+	{
+	case WinUI::AlignmentTop:
+	{
+
+	}
+	break;
+	case WinUI::AlignmentRight:
+	{
+		
+	}
+	break;
+	case WinUI::AlignmentBottom:
+	{
+
+	}
+	break;
+	case WinUI::AlignmentLeft:
+	{
+
+	}
+	break;
+	default:
+	break;
+	}
 }

@@ -3,8 +3,7 @@
 WidgetStyle Button::button_style = {
 	"Button",
 	{0, 0, 80, 30},
-	WS_TABSTOP | WS_VISIBLE | WS_CHILD,
-	NULL,
+	Style(WS_TABSTOP | WS_VISIBLE | WS_CHILD, NULL),
 	NULL
 };
 

@@ -159,7 +159,6 @@ void Widget::recreateWidget()
 			m_style.class_name,
 			m_size,
 			m_style.widget_style,
-			m_style.widget_ex_style,
 			m_style.class_style
 	};
 	wchar_t text[1024];
@@ -188,10 +187,10 @@ void Widget::registerClass(WidgetStyle style)
 void Widget::createWidget(WidgetStyle style, string text)
 {
 	m_hwnd = CreateWindowEx(
-		m_style.widget_ex_style,
+		m_style.widget_style.extended,
 		str_to_wstr(m_style.class_name).c_str(),
 		str_to_wstr(text).c_str(),
-		m_style.widget_style,
+		m_style.widget_style.regular,
 		m_style.widget_size.x,
 		m_style.widget_size.y,
 		m_style.widget_size.width,
@@ -233,6 +232,16 @@ void Widget::setMaximumSize(int max_width, int max_height)
 		setHeight(max_height);
 }
 
+Style Widget::getStyle() const
+{
+	return m_style.widget_style;
+}
+
+bool Widget::hasStyle(Style style) const
+{
+	return (getStyle() & style) == style;
+}
+
 void Widget::addWidget(HWND hwnd, Widget * widget)
 {
 	if (hwnd)
@@ -244,6 +253,22 @@ void Widget::addWidget(HWND hwnd, Widget * widget)
 void Widget::removeWidget(HWND hwnd)
 {
 	Widget::widget_map.erase(hwnd);
+}
+
+void Widget::setStyle(Style style)
+{
+	SetWindowLongPtr(m_hwnd, GWL_STYLE, style.regular);
+	SetWindowLongPtr(m_hwnd, GWL_EXSTYLE, style.extended);
+}
+
+void Widget::addStyle(Style style)
+{
+	setStyle(getStyle() + style);
+}
+
+void Widget::removeStyle(Style style)
+{
+	setStyle(getStyle() - style);
 }
 
 string Widget::getClassName() const

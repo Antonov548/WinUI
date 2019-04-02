@@ -28,8 +28,10 @@
     <ClCompile Include="src\ui\lineedit.cpp" />
     <ClCompile Include="src\ui\widget.cpp" />
     <ClCompile Include="src\ui\window.cpp" />
+    <ClCompile Include="src\style.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\winuienums.h" />
     <ClInclude Include="src\ui\label.h" />
     <ClInclude Include="src\ui\checkbox.h" />
     <ClInclude Include="include\WinUI" />
@@ -41,6 +43,7 @@
     <ClInclude Include="src\ui\widget.h" />
     <ClInclude Include="src\ui\window.h" />
     <ClInclude Include="include\winui.h" />
+    <ClInclude Include="src\style.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

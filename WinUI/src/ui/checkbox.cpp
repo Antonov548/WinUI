@@ -3,8 +3,7 @@
 WidgetStyle CheckBox::check_style = {
 	"Button",
 	{0, 0, 80, 30},
-	WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX,
-	NULL,
+	Style(WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX, NULL),
 	NULL
 };
 

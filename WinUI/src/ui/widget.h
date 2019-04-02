@@ -4,6 +4,7 @@
 #include <map>
 #include "../application.h"
 #include "../winstring.h"
+#include "../style.h"
 
 struct Rect
 {
@@ -17,8 +18,7 @@ struct WidgetStyle
 {
 	string class_name;
 	Rect widget_size;
-	DWORD widget_style;
-	DWORD widget_ex_style;
+	Style widget_style;
 	UINT class_style;
 };
 
@@ -64,6 +64,12 @@ protected:
 	static Widget* getWidgetPtr(HWND hwnd);
 	static void addWidget(HWND hwnd, Widget* widget);
 	static void removeWidget(HWND hwnd);
+
+	void setStyle(Style style);
+	void addStyle(Style style);
+	void removeStyle(Style style);
+	Style getStyle() const;
+	bool hasStyle(Style style) const;
 
 private:
 	WidgetStyle m_style;

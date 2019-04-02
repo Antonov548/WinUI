@@ -24,6 +24,7 @@ public:
 		Label *label = new Label("WinUI Редактор Текста", this);
 		label->setFont("Arial", 15);
 		label->setGeometry(0, 20, 300, 30);
+		label->setAlignment(WinUI::AlignmentRight);
 
 		btn_open.setGeometry(90, 100, 120, btn_open.height());
 		btn_open.setText("Открыть файл");

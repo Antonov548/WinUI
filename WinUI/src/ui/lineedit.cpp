@@ -3,8 +3,7 @@
 WidgetStyle LineEdit::line_edit_style = {
 	"Edit",
 	{0, 0, 400, 20},
-	WS_CHILD | WS_BORDER | WS_VISIBLE | ES_LEFT | ES_AUTOHSCROLL,
-	NULL,
+	Style(WS_CHILD | WS_BORDER | WS_VISIBLE | ES_LEFT | ES_AUTOHSCROLL, NULL),
 	NULL
 };
 
