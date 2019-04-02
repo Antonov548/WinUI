@@ -1,58 +1,87 @@
 #include <WinUI>
+#include <vector>
 
-class DialogWindow : public Window
+class EditWindow : public Window
 {
 public:
-	DialogWindow(Widget* parent = nullptr) : Window(parent), btn(this), edit_title(this), wnd_parent((Window*)(parent)) {
-		btn.setText("Сохранить");
-		btn.connect([&]() {wnd_parent->setWindowTitle(std::to_string(btn.isChecked())); }, Button::Clicked);
-		edit_title.setGeometry(0, 40, edit_title.width(), edit_title.height());
-		edit_title.setText("Введите текст");
+	EditWindow(Widget* parent = nullptr) : Window(parent), line_edit(this), btn_save(this) {
+		line_edit.setGeometry(0, 0, 280, line_edit.height());
+		
+		btn_save.setText("Сохранить");
+		btn_save.setGeometry(90, 40, 120, btn_save.height());
 	}
 
-private:
-	CheckBox btn;
-	LineEdit edit_title;
-	Window* wnd_parent;
+	void openWindow(bool isEdit, string text)
+	{
+		line_edit.setReadOnly(!isEdit);
+		line_edit.setText(text);
+		show();
+	}
+	LineEdit line_edit;
+	Button btn_save;
+};
+
+class Note : public Button
+{
+public:
+	Note(Widget* parent = nullptr) : Button(parent) {
+		window.setFixedSize(300, 150);
+		connect([&]() {window.openWindow(is_edit, window_text); }, Button::Clicked);
+		window.btn_save.connect([&]() { window_text = window.line_edit.text(); window.hide(); }, Button::Clicked);
+	}
+
+	bool is_edit;
+	string window_text;
+	EditWindow window;
 };
 
 class MainWindow : public Window
 {
 public:
-	MainWindow() : Window(), btn_open(this), btn_new(this), wnd_dialog(this) {
+	MainWindow() : Window(), btn_add(this), line_edit(this), check(this) {
 
-		Label *label = new Label("WinUI Редактор Текста", this);
-		label->setFont("Arial", 15);
-		label->setGeometry(0, 20, 300, 30);
-		label->setAlignment(WinUI::AlignmentRight);
+		Label *label = new Label("Список записей", this);
+		label->setFont("Arial", 13);
+		label->setGeometry(0, 20, 300, 20);
+		label->setAlignment(WinUI::AlignmentCenter);
 
-		btn_open.setGeometry(90, 100, 120, btn_open.height());
-		btn_open.setText("Открыть файл");
-		btn_open.connect([&]() {wnd_dialog.show(); }, Button::Clicked);
+		line_edit.setGeometry(0, 50, 280, line_edit.height());
+		line_edit.setText("Ввод...");
 
-		btn_new.setGeometry(90, 150, 120, btn_open.height());
-		btn_new.setText("Новый файл");
-		btn_new.connect([&]() {wnd_dialog.show(); }, Button::Clicked);
+		check.setGeometry(90, 80, 120, btn_add.height());
+		check.setText("Изменять");
+
+		btn_add.setGeometry(80, 120, 140, btn_add.height());
+		btn_add.setText("Добавить запись");
+		btn_add.connect([&]() { add(); }, Button::Clicked);
 	}
 
-	void openDialog()
+	void add()
 	{
-		wnd_dialog.show();
+		Note *new_note = new Note(this);
+		new_note->setGeometry(90, 180 + (list.size() * 40), 120, new_note->height());
+		new_note->setText("Запись №" + std::to_string(list.size()+1));
+		new_note->is_edit = check.isChecked();
+		new_note->window_text = line_edit.text();
+		list.push_back(new_note);
 	}
 
 private:
-	DialogWindow wnd_dialog;
-	Button btn_open;
-	Button  btn_new;
+	LineEdit line_edit;
+	Button btn_add;
+	CheckBox check;
+	std::vector<Note*> list;
 };
+
 
 int main()
 {
 	Application app;
 
 	MainWindow wnd;
-	wnd.setWindowTitle("Редактор текста");
-	wnd.setFixedSize(300, 400);
+	wnd.setWindowTitle("Редактор списка записей");
+	wnd.setWidth(300);
+	//wnd.setFixedSize(300, 400);
 
 	wnd.show();
 

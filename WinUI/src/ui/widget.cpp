@@ -237,11 +237,6 @@ Style Widget::getStyle() const
 	return m_style.widget_style;
 }
 
-bool Widget::hasStyle(Style style) const
-{
-	return (getStyle() & style) == style;
-}
-
 void Widget::addWidget(HWND hwnd, Widget * widget)
 {
 	if (hwnd)
@@ -259,6 +254,7 @@ void Widget::setStyle(Style style)
 {
 	SetWindowLongPtr(m_hwnd, GWL_STYLE, style.regular);
 	SetWindowLongPtr(m_hwnd, GWL_EXSTYLE, style.extended);
+	m_style.widget_style = style;
 }
 
 void Widget::addStyle(Style style)
@@ -269,6 +265,11 @@ void Widget::addStyle(Style style)
 void Widget::removeStyle(Style style)
 {
 	setStyle(getStyle() - style);
+}
+
+bool Widget::hasStyle(Style style)
+{
+	return m_style.widget_style.hasStyle(style);
 }
 
 string Widget::getClassName() const

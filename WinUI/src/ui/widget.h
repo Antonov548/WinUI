@@ -68,8 +68,8 @@ protected:
 	void setStyle(Style style);
 	void addStyle(Style style);
 	void removeStyle(Style style);
+	bool hasStyle(Style style);
 	Style getStyle() const;
-	bool hasStyle(Style style) const;
 
 private:
 	WidgetStyle m_style;

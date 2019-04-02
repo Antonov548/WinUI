@@ -63,8 +63,10 @@ LRESULT Window::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		LPMINMAXINFO min_max_info = (LPMINMAXINFO)lParam;
 		if (m_isMaxInstalled)
 		{
-			if ((GetWindowLongPtr(m_hwnd, GWL_STYLE) & WS_MAXIMIZEBOX))
-				SetWindowLongPtr(m_hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW&~WS_MAXIMIZEBOX);
+			if (hasStyle(Style(WS_MAXIMIZEBOX, NULL)))
+			{
+				removeStyle(Style(WS_MAXIMIZEBOX, NULL));
+			}
 			min_max_info->ptMaxTrackSize.x = m_maximumSize.width;
 			min_max_info->ptMaxTrackSize.y = m_maximumSize.height;
 		}

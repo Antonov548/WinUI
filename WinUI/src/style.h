@@ -13,6 +13,8 @@ struct Style
 	Style operator+(const Style& style) const;
 	Style operator-(const Style& style) const;
 	Style operator&(const Style& style) const;
+
+	bool hasStyle(const Style& style) const;
 	
 	bool operator==(const Style& style) const;
 	bool operator!=(const Style& style) const;

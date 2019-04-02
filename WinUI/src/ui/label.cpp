@@ -67,30 +67,15 @@ void Label::setFont(string font_family, int font_size)
 
 void Label::setAlignment(WinUI::Alignment align)
 {
-	
+	DWORD style;
 	switch (align)
 	{
-	case WinUI::AlignmentTop:
-	{
-
-	}
-	break;
-	case WinUI::AlignmentRight:
-	{
-		
-	}
-	break;
-	case WinUI::AlignmentBottom:
-	{
-
-	}
-	break;
-	case WinUI::AlignmentLeft:
-	{
-
-	}
-	break;
+	case WinUI::AlignmentRight: style = SS_RIGHT; break;
+	case WinUI::AlignmentLeft: style = SS_LEFT; break;
+	case WinUI::AlignmentCenter: style = SS_CENTER; break;
 	default:
-	break;
+	return;
 	}
+	removeStyle(Style(SS_LEFT | SS_RIGHT | SS_CENTER, NULL));
+	addStyle(Style(style, NULL));
 }

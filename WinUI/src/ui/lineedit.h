@@ -12,6 +12,7 @@ public:
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 	void setText(string text);
 	void setFont(string font_family, int font_size);
+	void setReadOnly(bool readonly);
 	string text() const;
 
 private:
