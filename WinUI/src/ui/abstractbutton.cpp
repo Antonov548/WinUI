@@ -8,21 +8,16 @@ AbstractButton::~AbstractButton()
 {
 }
 
-void AbstractButton::click()
-{
-	if (m_clickHandler) 
-	{
-		m_clickHandler();
-	}
-}
-
 LRESULT AbstractButton::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (HIWORD(wParam))
 	{
 	case BN_CLICKED:
 	{
-		click();
+		if (m_clickHandler)
+		{
+			m_clickHandler();
+		}
 		return DefWindowProc(hwnd, message, wParam, lParam);
 	}
 		break;

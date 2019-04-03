@@ -23,7 +23,6 @@ public:
 
 protected:
 	std::string m_text;
-	void click();
 
 private:
 	std::function<void(void)> m_clickHandler;
