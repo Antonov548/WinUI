@@ -14,7 +14,7 @@ LRESULT AbstractButton::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
 	{
 	case BN_CLICKED:
 	{
-		if (m_clickHandler)
+		if (bool(m_clickHandler))
 		{
 			m_clickHandler();
 		}
