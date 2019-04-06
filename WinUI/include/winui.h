@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../src/application.h"
+#include "../src/thread.h"
 #include "../src/winuienums.h"
 
 #include "../src/ui/window.h"

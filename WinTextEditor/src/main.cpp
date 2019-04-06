@@ -26,8 +26,8 @@ class Note : public Button
 public:
 	Note(Widget* parent = nullptr) : Button(parent) {
 		window.setFixedSize(300, 150);
-		connect([&]() {window.openWindow(is_edit, window_text); }, Button::Clicked);
-		window.btn_save.connect([&]() { window_text = window.line_edit.text(); window.hide(); }, Button::Clicked);
+		connect([&]() {window.openWindow(is_edit, window_text); });
+		window.btn_save.connect([&]() { window_text = window.line_edit.text(); window.hide(); });
 	}
 
 	bool is_edit;
@@ -53,7 +53,7 @@ public:
 
 		btn_add.setGeometry(80, 120, 140, btn_add.height());
 		btn_add.setText("Добавить запись");
-		btn_add.connect([&]() { add(); }, Button::Clicked);
+		btn_add.connect([&]() { add(); });
 	}
 
 	void add()

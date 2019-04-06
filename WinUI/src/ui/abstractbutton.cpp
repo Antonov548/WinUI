@@ -18,9 +18,14 @@ LRESULT AbstractButton::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
 		{
 			m_clickHandler();
 		}
-		return DefWindowProc(hwnd, message, wParam, lParam);
 	}
-		break;
+	break;
+	default:
+		return DefWindowProc(hwnd, message, wParam, lParam);	
+	}
+
+	switch (message)
+	{
 	case WM_DESTROY:
 	{
 		removeWidget(hwnd);
@@ -54,21 +59,7 @@ void AbstractButton::setFont(string font_family, int font_size)
 	SendMessage(m_hwnd, WM_SETFONT, (WPARAM)s_hFont, TRUE);
 }
 
-void AbstractButton::connect(std::function<void(void)> func, AbstractButton::ConnectType type)
+void AbstractButton::connect(std::function<void(void)> func)
 {
-	switch (type)
-	{
-	case AbstractButton::Clicked:
-		if (!bool(m_clickHandler))
-		{
-			m_clickHandler = func;
-		}
-		break;
-	case AbstractButton::DoubleClicked:
-		break;
-	case AbstractButton::Pressed:
-		break;
-	default:
-		break;
-	}
+	m_clickHandler = func;
 }

@@ -11,6 +11,7 @@
     <ClCompile Include="src\ui\checkbox.cpp" />
     <ClCompile Include="src\ui\label.cpp" />
     <ClCompile Include="src\style.cpp" />
+    <ClCompile Include="src\thread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ui\abstractbutton.h" />
@@ -26,5 +27,6 @@
     <ClInclude Include="src\ui\label.h" />
     <ClInclude Include="src\winuienums.h" />
     <ClInclude Include="src\style.h" />
+    <ClInclude Include="src\thread.h" />
   </ItemGroup>
 </Project>

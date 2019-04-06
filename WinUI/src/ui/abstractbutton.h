@@ -8,17 +8,11 @@
 class AbstractButton : public Widget
 {
 public:
-	enum ConnectType {
-		Clicked,
-		DoubleClicked,
-		Pressed
-	};
-
 	AbstractButton(WidgetStyle style, Widget* parent);
 	~AbstractButton();
 	void setText(string text);
 	void setFont(string font_family, int font_size);
-	void connect(std::function<void(void)> func, AbstractButton::ConnectType type);
+	void connect(std::function<void(void)> func);
 	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 
 protected:
