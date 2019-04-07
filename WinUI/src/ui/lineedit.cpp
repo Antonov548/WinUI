@@ -40,8 +40,8 @@ LRESULT LineEdit::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void LineEdit::setText(string text)
 {
-	m_text = text;
-	SetWindowTextA(m_hwnd, m_text.c_str());
+	string new_text = text;
+	SetWindowTextA(m_hwnd, new_text.c_str());
 }
 
 std::string LineEdit::text() const
@@ -70,4 +70,9 @@ void LineEdit::setFont(string font_family, int font_size)
 void LineEdit::setReadOnly(bool readonly)
 {
 	SendMessage(m_hwnd, EM_SETREADONLY, readonly, NULL);
+}
+
+void LineEdit::clear()
+{
+	setText("");
 }

@@ -13,10 +13,10 @@ public:
 	void setText(string text);
 	void setFont(string font_family, int font_size);
 	void setReadOnly(bool readonly);
+	void clear();
 	string text() const;
 
 private:
 	static WidgetStyle line_edit_style;
-	std::string m_text;
 };
 

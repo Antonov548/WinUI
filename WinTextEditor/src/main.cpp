@@ -63,6 +63,7 @@ public:
 		new_note->setText("Запись №" + std::to_string(list.size()+1));
 		new_note->is_edit = check.isChecked();
 		new_note->window_text = line_edit.text();
+		line_edit.clear();
 		list.push_back(new_note);
 	}
 
