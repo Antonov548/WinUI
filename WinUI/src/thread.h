@@ -1,6 +1,9 @@
 #pragma once
 
 #include <windows.h>
+#include <map>
+#include <string>
+#include "winstring.h"
 
 class Thread
 {
@@ -16,10 +19,12 @@ public:
 	virtual void run() = 0;
 	void setPriority(Thread::Priority priority);
 	void start();
+	HANDLE getHandle() const;
 
 private:
 	HANDLE m_threadHandle;
+	int m_threadId;
 
-	DWORD WINAPI threadFunction(LPVOID lpParam);
+	static DWORD WINAPI threadFunction(LPVOID lpParam);
+	void addThread(int id, Thread* thread);
 };
-

@@ -1,6 +1,19 @@
 #include <WinUI>
 #include <vector>
 
+class MyThread : public Thread
+{
+public:
+	virtual void run()
+	{
+		MessageBox(NULL, "thread", "same", MB_OK);
+		while (true)
+		{
+
+		}
+	}
+};
+
 class EditWindow : public Window
 {
 public:
@@ -59,7 +72,7 @@ public:
 	void add()
 	{
 		Note *new_note = new Note(this);
-		new_note->setGeometry(90, 180 + (list.size() * 40), 120, new_note->height());
+		new_note->setGeometry(90, 180 + (int(list.size()) * 40), 120, new_note->height());
 		new_note->setText("Запись №" + std::to_string(list.size()+1));
 		new_note->is_edit = check.isChecked();
 		new_note->window_text = line_edit.text();
@@ -79,12 +92,17 @@ int main()
 {
 	Application app;
 
-	MainWindow wnd;
-	wnd.setWindowTitle("Редактор списка записей");
-	wnd.setWidth(300);
-	//wnd.setFixedSize(300, 400);
+	//MainWindow wnd;
+	//wnd.setWindowTitle("Редактор списка записей");
+	//wnd.setWidth(300);
+	////wnd.setFixedSize(300, 400);
 
-	wnd.show();
+	//wnd.show();
+
+	MyThread thread;
+	thread.start();
+
+	MessageBox(NULL, "OUT THREAD", "same", MB_OK);
 
 	app.exec();
 }
