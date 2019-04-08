@@ -3,8 +3,8 @@
 Thread::Thread()
 {
 	DWORD id;
-	m_threadHandle = CreateThread(NULL, NULL, Thread::threadFunction, this, CREATE_SUSPENDED, &id);
-	m_threadId = int(id);
+	m_handle = CreateThread(NULL, NULL, Thread::threadFunction, this, NULL, &id);
+	m_id = int(id);
 }
 
 Thread::~Thread()
@@ -17,13 +17,24 @@ void Thread::setPriority(Thread::Priority priority)
 
 void Thread::start()
 {
-	ResumeThread(m_threadHandle);
-	WaitForSingleObject(m_threadHandle, INFINITY);
+	ResumeThread(m_handle);
+}
+
+void Thread::wait(const int milliseconds)
+{
+	if (milliseconds == -1)
+	{
+		WaitForSingleObject(m_handle, INFINITE);
+	}
+	else
+	{
+		WaitForSingleObject(m_handle, milliseconds);
+	}
 }
 
 HANDLE Thread::getHandle() const
 {
-	return m_threadHandle;
+	return m_handle;
 }
 
 DWORD __stdcall Thread::threadFunction(LPVOID lpParam)

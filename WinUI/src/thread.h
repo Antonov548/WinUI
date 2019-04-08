@@ -19,12 +19,12 @@ public:
 	virtual void run() = 0;
 	void setPriority(Thread::Priority priority);
 	void start();
+	void wait(int milliseconds = -1);
 	HANDLE getHandle() const;
 
 private:
-	HANDLE m_threadHandle;
-	int m_threadId;
+	HANDLE m_handle;
+	int m_id;
 
 	static DWORD WINAPI threadFunction(LPVOID lpParam);
-	void addThread(int id, Thread* thread);
 };

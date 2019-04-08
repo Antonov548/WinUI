@@ -6,10 +6,9 @@ class MyThread : public Thread
 public:
 	virtual void run()
 	{
-		MessageBox(NULL, "thread", "same", MB_OK);
 		while (true)
 		{
-
+			MessageBox(NULL, "thread", "same", MB_OK);
 		}
 	}
 };
@@ -101,6 +100,7 @@ int main()
 
 	MyThread thread;
 	thread.start();
+	thread.wait();
 
 	MessageBox(NULL, "OUT THREAD", "same", MB_OK);
 
