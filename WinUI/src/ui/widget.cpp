@@ -1,5 +1,7 @@
 #include "widget.h"
 
+using namespace WinUI;
+
 std::map<HWND, Widget*> Widget::widget_map;
 
 Widget::Widget(WidgetStyle style, Widget * parent) : m_style(style), m_parent(parent), m_hwnd(nullptr),

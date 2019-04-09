@@ -1,5 +1,7 @@
 #include "label.h"
 
+using namespace WinUI;
+
 WidgetStyle Label::label_style = {
 	"Static",
 	{0, 0, 80, 30},

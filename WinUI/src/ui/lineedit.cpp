@@ -1,5 +1,7 @@
 #include "lineedit.h"
 
+using namespace WinUI;
+
 WidgetStyle LineEdit::line_edit_style = {
 	"Edit",
 	{0, 0, 400, 20},

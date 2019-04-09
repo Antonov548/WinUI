@@ -1,5 +1,7 @@
 #include "checkbox.h"
 
+using namespace WinUI;
+
 WidgetStyle CheckBox::check_style = {
 	"Button",
 	{0, 0, 80, 30},

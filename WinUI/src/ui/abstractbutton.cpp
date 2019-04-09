@@ -1,5 +1,7 @@
 #include "abstractbutton.h"
 
+using namespace WinUI;
+
 AbstractButton::AbstractButton(WidgetStyle style, Widget* parent) : Widget(style, parent)
 {
 }

@@ -1,5 +1,7 @@
 #include "window.h"
 
+using namespace WinUI;
+
 WidgetStyle Window::window_style = {
 	"Window",
 	{CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT},

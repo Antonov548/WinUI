@@ -1,5 +1,7 @@
 #include "button.h"
 
+using namespace WinUI;
+
 WidgetStyle Button::button_style = {
 	"Button",
 	{0, 0, 80, 30},

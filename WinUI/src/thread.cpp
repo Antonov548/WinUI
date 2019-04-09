@@ -1,5 +1,7 @@
 #include "thread.h"
 
+using namespace WinUI;
+
 CurrentThread Thread::currend_thread;
 
 Thread::Thread()
@@ -59,14 +61,3 @@ int CurrentThread::getId()
 {
 	return int(GetCurrentThreadId());
 }
-
-//void Thread::addThread(int id, Thread * thread)
-//{
-//	Thread::thread_map.insert(std::make_pair(id, thread));
-//}
-//
-//Thread* Thread::getThreadPtrById(int id)
-//{
-//	auto thread = Thread::thread_map.find(id);
-//	return thread != Thread::thread_map.end() ? thread->second : nullptr;
-//}

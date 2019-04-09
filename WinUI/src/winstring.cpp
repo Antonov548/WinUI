@@ -1,6 +1,8 @@
 #include "winstring.h"
 
-wstring str_to_wstr(const string& str, UINT code_page) {
+using namespace WinUI;
+
+wstring WinUI::str_to_wstr(const string& str, UINT code_page) {
 	if (!str.empty()) {
 		int length = MultiByteToWideChar(code_page, 0, str.c_str(), -1, nullptr, 0);
 		if (length > 0) {
@@ -13,7 +15,7 @@ wstring str_to_wstr(const string& str, UINT code_page) {
 	return wstring();
 }
 
-string wstr_to_str(const wstring& str, UINT code_page) {
+string WinUI::wstr_to_str(const wstring& str, UINT code_page) {
 	if (!str.empty()) {
 		int length = WideCharToMultiByte(code_page, 0, str.c_str(), -1, nullptr, 0,
 			nullptr, nullptr);
@@ -28,7 +30,7 @@ string wstr_to_str(const wstring& str, UINT code_page) {
 	return string();
 }
 
-string to_str_code(const string & str, UINT code_page)
+string WinUI::to_str_code(const string & str, UINT code_page)
 {
 	if (!str.empty()) {
 		wstring w_str = str_to_wstr(str);

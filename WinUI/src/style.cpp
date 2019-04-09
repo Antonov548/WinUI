@@ -1,5 +1,7 @@
 #include "style.h"
 
+using namespace WinUI;
+
 Style::Style(DWORD style, DWORD ex_style)
 	: regular(style), extended(ex_style)
 {
