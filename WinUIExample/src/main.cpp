@@ -7,8 +7,8 @@ class EditWindow : public Window
 public:
 	EditWindow(Widget* parent = nullptr) : Window(parent), line_edit(this), btn_save(this) {
 		line_edit.setGeometry(0, 0, 280, line_edit.height());
-		
-		btn_save.setText("Сохранить");
+
+		btn_save.setText("Save");
 		btn_save.setGeometry(90, 40, 120, btn_save.height());
 	}
 
@@ -66,19 +66,19 @@ class MainWindow : public Window
 public:
 	MainWindow() : Window(), btn_add(this), line_edit(this), check(this) {
 
-		Label *label = new Label("Список записей", this);
+		Label *label = new Label("Edit text", this);
 		label->setFont("Arial", 13);
 		label->setGeometry(0, 20, 300, 20);
 		label->setAlignment(WinUI::AlignmentCenter);
 
 		line_edit.setGeometry(0, 50, 280, line_edit.height());
-		line_edit.setText("Ввод...");
+		line_edit.setText("Text...");
 
 		check.setGeometry(90, 80, 120, btn_add.height());
-		check.setText("Изменять");
+		check.setText("Change");
 
 		btn_add.setGeometry(80, 120, 140, btn_add.height());
-		btn_add.setText("Добавить запись");
+		btn_add.setText("add");
 		btn_add.connect([&]() { thread.start(); thread.wait(); setWindowTitle(std::to_string(thread.count)); /*add();*/ });
 	}
 
@@ -86,7 +86,7 @@ public:
 	{
 		Note *new_note = new Note(this);
 		new_note->setGeometry(90, 180 + (int(list.size()) * 40), 120, new_note->height());
-		new_note->setText("Запись №" + std::to_string(list.size()+1));
+		new_note->setText("Note" + std::to_string(list.size() + 1));
 		new_note->is_edit = check.isChecked();
 		new_note->window_text = line_edit.text();
 		line_edit.clear();
@@ -111,7 +111,7 @@ int main()
 	Application app;
 
 	MainWindow wnd;
-	wnd.setWindowTitle("Редактор списка записей");
+	wnd.setWindowTitle("Work");
 	wnd.setWidth(300);
 	//wnd.setFixedSize(300, 400);
 
