@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\filesystem.cpp" />
     <ClCompile Include="src\ui\label.cpp" />
     <ClCompile Include="src\ui\checkbox.cpp" />
     <ClCompile Include="src\application.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="src\thread.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\filesystem.h" />
     <ClInclude Include="src\winuienums.h" />
     <ClInclude Include="src\ui\label.h" />
     <ClInclude Include="src\ui\checkbox.h" />

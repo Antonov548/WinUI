@@ -15,6 +15,10 @@ Window::Window(Widget* parent) : Widget(window_style, parent)
 
 Window::~Window()
 {
+	if (isVisible())
+	{
+		Window::window_count--;
+	}
 }
 
 void Window::setWindowTitle(string title)

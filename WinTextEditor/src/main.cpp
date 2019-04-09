@@ -1,17 +1,6 @@
 #include <WinUI>
 #include <vector>
-
-class MyThread : public Thread
-{
-public:
-	virtual void run()
-	{
-		while (true)
-		{
-			MessageBox(NULL, "thread", "same", MB_OK);
-		}
-	}
-};
+#include <string>
 
 class EditWindow : public Window
 {
@@ -47,6 +36,31 @@ public:
 	EditWindow window;
 };
 
+class MyThread : public Thread
+{
+public:
+	MyThread()
+	{
+
+	}
+	virtual void run()
+	{
+		int x = 0;
+		while (true)
+		{
+			Thread::currend_thread.sleep(1000);
+			MessageBox(NULL, std::to_string(GetCurrentThreadId()).c_str(), "same", MB_OK);
+			if (x == 5)
+			{
+				count = 10;
+				return;
+			}
+			x++;
+		}
+	}
+	int count;
+};
+
 class MainWindow : public Window
 {
 public:
@@ -65,7 +79,7 @@ public:
 
 		btn_add.setGeometry(80, 120, 140, btn_add.height());
 		btn_add.setText("Добавить запись");
-		btn_add.connect([&]() { add(); });
+		btn_add.connect([&]() { thread.start(); thread.wait(); setWindowTitle(std::to_string(thread.count)); /*add();*/ });
 	}
 
 	void add()
@@ -79,30 +93,35 @@ public:
 		list.push_back(new_note);
 	}
 
+	void setTextLine(std::string text)
+	{
+		line_edit.setText(text);
+	}
+
 private:
 	LineEdit line_edit;
 	Button btn_add;
 	CheckBox check;
 	std::vector<Note*> list;
+	MyThread thread;
 };
-
 
 int main()
 {
 	Application app;
 
-	//MainWindow wnd;
-	//wnd.setWindowTitle("Редактор списка записей");
-	//wnd.setWidth(300);
-	////wnd.setFixedSize(300, 400);
+	MainWindow wnd;
+	wnd.setWindowTitle("Редактор списка записей");
+	wnd.setWidth(300);
+	//wnd.setFixedSize(300, 400);
 
-	//wnd.show();
-
-	MyThread thread;
+	/*MyThread thread;
 	thread.start();
-	thread.wait();
+	thread.wait();*/
 
-	MessageBox(NULL, "OUT THREAD", "same", MB_OK);
+	wnd.show();
+
+	MessageBox(NULL, std::to_string(GetCurrentThreadId()).c_str(), "same", MB_OK);
 
 	app.exec();
 }

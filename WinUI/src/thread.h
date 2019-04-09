@@ -5,6 +5,12 @@
 #include <string>
 #include "winstring.h"
 
+struct CurrentThread
+{
+	void sleep(int msecs);
+	int getId();
+};
+
 class Thread
 {
 public:
@@ -16,11 +22,13 @@ public:
 
 	};
 
+	static CurrentThread currend_thread;
+
 	virtual void run() = 0;
 	void setPriority(Thread::Priority priority);
 	void start();
-	void wait(int milliseconds = -1);
-	HANDLE getHandle() const;
+	void wait();
+	int getId() const;
 
 private:
 	HANDLE m_handle;
