@@ -9,6 +9,8 @@ namespace WinUI
 	{
 	public:
 		FileSystem(string path, string filter);
+		FileSystem(FileSystem&) = delete;
+		FileSystem& operator = (FileSystem&) = delete;
 		~FileSystem();
 
 		bool findNext();

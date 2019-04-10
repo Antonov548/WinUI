@@ -21,8 +21,24 @@ bool FileSystem::findNext()
 	}
 	else
 	{
-		return bool(FindNextFile(m_handle, &m_data));
+		bool isFound = FindNextFile(m_handle, &m_data);
+		return isFound;
 	}
+}
+
+bool FileSystem::isFile() const
+{
+	return m_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? false : true;
+}
+
+bool FileSystem::isDirectory() const
+{
+	return m_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? true : false;
+}
+
+string FileSystem::getFullName()
+{
+	return m_path + getName();
 }
 
 string FileSystem::getName()
