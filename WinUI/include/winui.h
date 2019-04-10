@@ -3,6 +3,7 @@
 #include "../src/application.h"
 #include "../src/thread.h"
 #include "../src/winuienums.h"
+#include "../src/filesystem.h"
 
 #include "../src/ui/window.h"
 #include "../src/ui/button.h"

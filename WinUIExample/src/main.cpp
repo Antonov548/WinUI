@@ -1,39 +1,26 @@
 #include <WinUI>
 #include <vector>
 #include <string>
+#include <vector>
 
-class EditWindow : public Window
+class WindowFind : public Window
 {
 public:
-	EditWindow(Widget* parent = nullptr) : Window(parent), line_edit(this), btn_save(this) {
+	WindowFind(Widget* parent = nullptr) : Window(parent), line_edit(this), btn_stop(this) {
+		setGeometry(x(), y(), 300, 200);
+
 		line_edit.setGeometry(0, 0, 280, line_edit.height());
+		line_edit.setReadOnly(true);
 
-		btn_save.setText("Save");
-		btn_save.setGeometry(90, 40, 120, btn_save.height());
-	}
-
-	void openWindow(bool isEdit, string text)
-	{
-		line_edit.setReadOnly(!isEdit);
-		line_edit.setText(text);
-		show();
+		btn_stop.setText("Stop");
+		btn_stop.setGeometry(90, 40, 120, btn_stop.height());
 	}
 	LineEdit line_edit;
-	Button btn_save;
-};
-
-class Note : public Button
-{
-public:
-	Note(Widget* parent = nullptr) : Button(parent) {
-		window.setFixedSize(300, 150);
-		connect([&]() {window.openWindow(is_edit, window_text); });
-		window.btn_save.connect([&]() { window_text = window.line_edit.text(); window.hide(); });
+	Button btn_stop;
+	void setFoundText(string text)
+	{
+		line_edit.setText(text);
 	}
-
-	bool is_edit;
-	string window_text;
-	EditWindow window;
 };
 
 class MyThread : public Thread
@@ -45,65 +32,66 @@ public:
 	}
 	virtual void run()
 	{
-		int x = 0;
-		while (true)
+
+		FileSystem system(path, "*");
+		if (files.size() != 0)
 		{
-			Thread::currend_thread.sleep(1000);
-			MessageBox(NULL, std::to_string(GetCurrentThreadId()).c_str(), "same", MB_OK);
-			if (x == 5)
-			{
-				count = 10;
-				return;
-			}
-			x++;
+			files.clear();
+		}
+		while (system.findNext())
+		{
+			files.push_back(system.getName());
 		}
 	}
 	int count;
+	string path;
+	std::vector<string> files;
 };
 
 class MainWindow : public Window
 {
 public:
-	MainWindow() : Window(), btn_add(this), line_edit(this), check(this) {
+	MainWindow() : Window(), btn_find(this), line_edit(this) {
 
-		Label *label = new Label("Edit text", this);
+		Label *label = new Label("Find File", this);
 		label->setFont("Arial", 13);
 		label->setGeometry(0, 20, 300, 20);
 		label->setAlignment(WinUI::AlignmentCenter);
 
 		line_edit.setGeometry(0, 50, 280, line_edit.height());
-		line_edit.setText("Text...");
+		line_edit.setText("Path...");
 
-		check.setGeometry(90, 80, 120, btn_add.height());
-		check.setText("Change");
-
-		btn_add.setGeometry(80, 120, 140, btn_add.height());
-		btn_add.setText("add");
-		btn_add.connect([&]() { thread.start(); thread.wait(); setWindowTitle(std::to_string(thread.count)); /*add();*/ });
-	}
-
-	void add()
-	{
-		Note *new_note = new Note(this);
-		new_note->setGeometry(90, 180 + (int(list.size()) * 40), 120, new_note->height());
-		new_note->setText("Note" + std::to_string(list.size() + 1));
-		new_note->is_edit = check.isChecked();
-		new_note->window_text = line_edit.text();
-		line_edit.clear();
-		list.push_back(new_note);
-	}
-
-	void setTextLine(std::string text)
-	{
-		line_edit.setText(text);
+		btn_find.setGeometry(80, 120, 140, btn_find.height());
+		btn_find.setText("Find");
+		btn_find.connect([&]() { MyThread* thread = new MyThread; thread->path = line_edit.text(); thread->start(); thread->wait(); showFiles(thread->files); delete thread; });
 	}
 
 private:
 	LineEdit line_edit;
-	Button btn_add;
-	CheckBox check;
-	std::vector<Note*> list;
-	MyThread thread;
+	Button btn_find;
+	std::vector<Label*> vector_files;
+
+	void showFiles(std::vector<string> files)
+	{
+		if (vector_files.size() != 0)
+		{
+			for (auto val : vector_files)
+			{
+				delete val;
+				vector_files.clear();
+			}
+		}
+
+		int count = 0;
+		for (auto& val : files)
+		{
+			Label *file = new Label(this);
+			file->setGeometry(90, 180 + (count * 40), 120, file->height());
+			file->setText(val);
+			vector_files.push_back(file);
+			count++;
+		}
+	}
 };
 
 int main()
@@ -111,17 +99,10 @@ int main()
 	Application app;
 
 	MainWindow wnd;
-	wnd.setWindowTitle("Work");
+	wnd.setWindowTitle("Find file");
 	wnd.setWidth(300);
-	//wnd.setFixedSize(300, 400);
-
-	/*MyThread thread;
-	thread.start();
-	thread.wait();*/
 
 	wnd.show();
-
-	MessageBox(NULL, std::to_string(GetCurrentThreadId()).c_str(), "same", MB_OK);
 
 	app.exec();
 }
