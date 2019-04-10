@@ -1,7 +1,6 @@
 #include <WinUI>
 #include <vector>
 #include <string>
-#include <vector>
 
 class WindowFind : public Window
 {
@@ -37,6 +36,15 @@ public:
 		if (files.size() != 0)
 		{
 			files.clear();
+		}
+		if (!system.findNext())
+		{
+			MessageBox(NULL, "File/Folder not found", "ERROR", MB_OK);
+			return;
+		}
+		else
+		{
+			files.push_back(system.getName());
 		}
 		while (system.findNext())
 		{

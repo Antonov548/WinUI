@@ -17,7 +17,12 @@ bool FileSystem::findNext()
 	if (!m_handle)
 	{
 		m_handle = FindFirstFile(str_to_wstr(m_path + m_filter).c_str(), &m_data);
-		return m_handle ?  true : false;
+		if (int(m_handle) == -1)
+		{
+			m_handle = NULL;
+			return false;
+		}
+		return true;
 	}
 	else
 	{
