@@ -8,12 +8,6 @@
 namespace WinUI
 {
 
-	struct CurrentThread
-	{
-		void sleep(int msecs);
-		int getId();
-	};
-
 	class Thread
 	{
 	public:
@@ -23,6 +17,12 @@ namespace WinUI
 		enum Priority
 		{
 
+		};
+
+		struct CurrentThread
+		{
+			void sleep(int msecs);
+			int getId();
 		};
 
 		static CurrentThread currend_thread;
