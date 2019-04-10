@@ -2,7 +2,7 @@
 
 using namespace WinUI;
 
-CurrentThread Thread::currend_thread;
+Thread::CurrentThread Thread::currend_thread;
 
 Thread::Thread()
 {
@@ -52,12 +52,12 @@ DWORD __stdcall Thread::threadFunction(LPVOID lpParam)
 	return -1;
 }
 
-void CurrentThread::sleep(int msecs)
+void Thread::CurrentThread::sleep(int msecs)
 {
 	Sleep(msecs);
 }
 
-int CurrentThread::getId()
+int Thread::CurrentThread::getId()
 {
 	return int(GetCurrentThreadId());
 }
