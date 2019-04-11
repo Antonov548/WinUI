@@ -26,9 +26,9 @@
     <ClInclude Include="include\WinUI" />
     <ClInclude Include="src\ui\checkbox.h" />
     <ClInclude Include="src\ui\label.h" />
-    <ClInclude Include="src\winuienums.h" />
     <ClInclude Include="src\style.h" />
     <ClInclude Include="src\thread.h" />
     <ClInclude Include="src\filesystem.h" />
+    <ClInclude Include="src\winuinamespace.h" />
   </ItemGroup>
 </Project>
