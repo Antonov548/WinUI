@@ -4,11 +4,12 @@
 #include <map>
 #include <string>
 #include "winstring.h"
+#include "winuidll.h"
 
 namespace WinUI
 {
 
-	class Thread
+	class WINUI_DLL Thread
 	{
 	public:
 		Thread();

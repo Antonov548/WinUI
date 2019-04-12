@@ -6,7 +6,7 @@
 namespace WinUI
 {
 
-	class Window : public Widget
+	class WINUI_DLL Window : public Widget
 	{
 	public:
 		Window(Widget* parent = nullptr);

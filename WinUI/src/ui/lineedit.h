@@ -7,7 +7,7 @@
 namespace WinUI
 {
 
-	class LineEdit : public Widget
+	class WINUI_DLL LineEdit : public Widget
 	{
 	public:
 		LineEdit(Widget* parent = nullptr);

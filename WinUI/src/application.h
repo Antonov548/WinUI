@@ -1,11 +1,12 @@
 #pragma once
 
 #include <windows.h>
+#include "winuidll.h"
 
 namespace WinUI
 {
 
-	class Application
+	class WINUI_DLL Application
 	{
 	public:
 		Application();

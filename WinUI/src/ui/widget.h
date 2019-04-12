@@ -5,11 +5,12 @@
 #include "../application.h"
 #include "../winstring.h"
 #include "../style.h"
+#include "../winuidll.h"
 
 namespace WinUI
 {
 
-	struct Rect
+	struct WINUI_DLL Rect
 	{
 		int x;
 		int y;
@@ -25,7 +26,7 @@ namespace WinUI
 		UINT class_style;
 	};
 
-	class Widget
+	class WINUI_DLL Widget
 	{
 	public:
 		Widget(WidgetStyle style, Widget* parent);

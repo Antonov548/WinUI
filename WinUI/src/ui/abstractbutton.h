@@ -8,7 +8,7 @@
 namespace WinUI
 {
 
-	class AbstractButton : public Widget
+	class WINUI_DLL AbstractButton : public Widget
 	{
 	public:
 		AbstractButton(WidgetStyle style, Widget* parent);

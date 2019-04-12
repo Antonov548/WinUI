@@ -5,7 +5,7 @@
 namespace WinUI
 {
 
-	class CheckBox : public AbstractButton
+	class WINUI_DLL CheckBox : public AbstractButton
 	{
 	public:
 		CheckBox(Widget* parent = nullptr);

@@ -7,7 +7,7 @@
 namespace WinUI
 {
 
-	class Button : public AbstractButton
+	class WINUI_DLL Button : public AbstractButton
 	{
 	public:
 		Button(string text, Widget* parent = nullptr);

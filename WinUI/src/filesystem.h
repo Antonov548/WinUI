@@ -5,7 +5,7 @@
 namespace WinUI
 {
 
-	class FileSystem
+	class WINUI_DLL FileSystem
 	{
 	public:
 		FileSystem(string path, string filter);
