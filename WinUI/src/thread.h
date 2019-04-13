@@ -17,7 +17,13 @@ namespace WinUI
 
 		enum Priority
 		{
-
+			Idle,
+			Lowest,
+			Low,
+			Normal,
+			High,
+			Highest,
+			TimeCritical
 		};
 
 		struct CurrentThread

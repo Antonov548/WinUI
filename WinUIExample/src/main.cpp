@@ -31,8 +31,16 @@ public:
 	}
 	virtual void run()
 	{
+		if (filter.length() == 0)
+		{
+			filter = "*";
+		}
+		else
+		{
+			filter = "*" + filter;
+		}
 
-		FileSystem system(path, "*");
+		FileSystem system(path, filter);
 		if (files.size() != 0)
 		{
 			files.clear();
@@ -53,29 +61,34 @@ public:
 	}
 	int count;
 	string path;
+	string filter;
 	std::vector<string> files;
 };
 
 class MainWindow : public Window
 {
 public:
-	MainWindow() : Window(), btn_find(this), line_edit(this) {
+	MainWindow() : Window(), btn_find(this), line_edit(this), line_edit_filter(this){
 
 		Label *label = new Label("Find File", this);
 		label->setFont("Arial", 13);
-		label->setGeometry(0, 20, 300, 20);
+		label->setGeometry(0, 0, 300, 20);
 		label->setAlignment(WinUI::AlignmentCenter);
 
-		line_edit.setGeometry(0, 50, 280, line_edit.height());
+		line_edit.setGeometry(0, 30, 280, line_edit.height());
 		line_edit.setText("Path...");
 
-		btn_find.setGeometry(80, 120, 140, btn_find.height());
+		line_edit_filter.setGeometry(0, 60, 280, line_edit.height());
+		line_edit_filter.setText("Type of file...");
+
+		btn_find.setGeometry(80, 100, 140, btn_find.height());
 		btn_find.setText("Find");
-		btn_find.connect([&]() { MyThread* thread = new MyThread; thread->path = line_edit.text(); thread->start(); thread->wait(); showFiles(thread->files); delete thread; });
+		btn_find.connect([&]() { MyThread* thread = new MyThread; thread->path = line_edit.text(); thread->filter = line_edit_filter.text();  thread->start(); thread->wait(); showFiles(thread->files); delete thread; });
 	}
 
 private:
 	LineEdit line_edit;
+	LineEdit line_edit_filter;
 	Button btn_find;
 	std::vector<Label*> vector_files;
 

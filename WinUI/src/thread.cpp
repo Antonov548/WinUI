@@ -22,6 +22,21 @@ Thread::~Thread()
 
 void Thread::setPriority(Thread::Priority priority)
 {
+	if (!m_handle)
+		return;
+
+	int new_priority;
+	switch (priority) {
+	case Thread::Priority::Idle: new_priority = THREAD_PRIORITY_IDLE; break;
+	case Thread::Priority::Lowest: new_priority = THREAD_PRIORITY_LOWEST; break;
+	case Thread::Priority::Low: new_priority = THREAD_PRIORITY_BELOW_NORMAL; break;
+	case Thread::Priority::Normal: new_priority = THREAD_PRIORITY_NORMAL; break;
+	case Thread::Priority::High: new_priority = THREAD_PRIORITY_ABOVE_NORMAL; break;
+	case Thread::Priority::Highest: new_priority = THREAD_PRIORITY_HIGHEST; break;
+	case Thread::Priority::TimeCritical: new_priority = THREAD_PRIORITY_TIME_CRITICAL; break;
+	}
+
+	SetThreadPriority(m_handle, new_priority);
 }
 
 void Thread::start()
