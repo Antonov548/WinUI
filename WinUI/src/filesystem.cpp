@@ -13,7 +13,10 @@ FileSystem::FileSystem(string path, string patern, Filter filter) : m_path(path)
 	}
 	else
 	{
-
+		if (!checkFilter())
+		{
+			m_isFindError = !next();
+		}
 	}
 }
 
@@ -31,6 +34,7 @@ bool FileSystem::next()
 		{
 			if (!findNext())
 			{
+				m_isFindError = true;
 				return false;
 			}
 		} while (!checkFilter());
@@ -83,22 +87,26 @@ bool FileSystem::checkFilter()
 		return true;
 	}
 
+	if (m_filter.flags & Filter::NotDotAndDotDot)
+	{
+		string name = getName();
+		if (name == "." || name == "..")
+		{
+			return false;
+		}
+	}
+
 	if (m_filter.flags & Filter::Dirs)
 	{
-		if (isDirectory())
+		if (isDirectory() && getName()[0] != '.')
+		{
 			return true;
+		}
 	}
 
 	if (m_filter.flags & Filter::Files)
 	{
-		if (isFile())
-			return true;
-	}
-
-	if (m_filter.flags & Filter::NotDotAndDotDot)
-	{
-		string name = getName();
-		if (name != "." && name != "..")
+		if (isFile() && getName()[0] != '.')
 		{
 			return true;
 		}
@@ -107,7 +115,7 @@ bool FileSystem::checkFilter()
 	if (m_filter.flags & Filter::Hidden)
 	{
 		string name = getName();
-		if (name[0] == '.')
+		if (name[0] == '.' && (name != "." && name != ".."))
 		{
 			return true;
 		}

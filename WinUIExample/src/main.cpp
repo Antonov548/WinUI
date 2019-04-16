@@ -20,7 +20,7 @@ public:
 			filter = "*" + filter;
 		}
 
-		FileSystem system(path, filter, FileSystem::Filter::NoFilters);
+		FileSystem system(path, "", FileSystem::Filter::Hidden | FileSystem::Filter::Files);
 		if (files.size() != 0)
 		{
 			files.clear();
