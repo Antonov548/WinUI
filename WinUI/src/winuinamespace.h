@@ -2,10 +2,10 @@
 
 namespace WinUI
 {
-	enum Alignment
+	enum class Alignment
 	{
-		AlignmentRight,
-		AlignmentLeft,
-		AlignmentCenter
+		Right,
+		Left,
+		Center
 	};
 }

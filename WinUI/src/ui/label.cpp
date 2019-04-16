@@ -67,14 +67,14 @@ void Label::setFont(string font_family, int font_size)
 	SendMessage(m_hwnd, WM_SETFONT, (WPARAM)s_hFont, TRUE);
 }
 
-void Label::setAlignment(WinUI::Alignment align)
+void Label::setAlignment(Alignment align)
 {
 	DWORD style;
 	switch (align)
 	{
-	case WinUI::AlignmentRight: style = SS_RIGHT; break;
-	case WinUI::AlignmentLeft: style = SS_LEFT; break;
-	case WinUI::AlignmentCenter: style = SS_CENTER; break;
+	case Alignment::Right: style = SS_RIGHT; break;
+	case Alignment::Left: style = SS_LEFT; break;
+	case Alignment::Center: style = SS_CENTER; break;
 	default:
 	return;
 	}

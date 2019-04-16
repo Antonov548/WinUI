@@ -15,7 +15,7 @@ namespace WinUI
 		virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 		void setText(string text);
 		void setFont(string font_family, int font_size);
-		void setAlignment(WinUI::Alignment align);
+		void setAlignment(Alignment align);
 
 	private:
 		static WidgetStyle label_style;

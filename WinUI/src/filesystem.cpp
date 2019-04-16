@@ -2,8 +2,19 @@
 
 using namespace WinUI;
 
-FileSystem::FileSystem(string path, string filter) : m_path(path), m_filter(filter), m_handle(NULL)
+FileSystem::FileSystem(string path, string patern, Filter filter) : m_path(path), m_filter(filter), m_handle(NULL)
 {
+	m_handle = FindFirstFile(str_to_wstr(m_path + patern).c_str(), &m_data);
+	m_isFindError = false;
+	if (int(m_handle) == -1)
+	{
+		m_handle = NULL;
+		m_isFindError = true;
+	}
+	else
+	{
+
+	}
 }
 
 FileSystem::~FileSystem()
@@ -12,23 +23,33 @@ FileSystem::~FileSystem()
 		FindClose(m_handle);
 }
 
-bool FileSystem::findNext()
+bool FileSystem::next()
 {
-	if (!m_handle)
+	if (!m_isFindError)
 	{
-		m_handle = FindFirstFile(str_to_wstr(m_path + m_filter).c_str(), &m_data);
-		if (int(m_handle) == -1)
+		do
 		{
-			m_handle = NULL;
-			return false;
-		}
+			if (!findNext())
+			{
+				return false;
+			}
+		} while (!checkFilter());
 		return true;
 	}
-	else
-	{
-		bool isFound = FindNextFile(m_handle, &m_data);
-		return isFound;
-	}
+	return false;
+}
+
+bool FileSystem::findNext()
+{
+	bool isFound = false;
+	if (m_handle)
+		isFound = FindNextFile(m_handle, &m_data);
+	return isFound;
+}
+
+bool FileSystem::isWrongPath() const
+{
+	return m_isFindError;
 }
 
 bool FileSystem::isFile() const
@@ -53,4 +74,49 @@ string FileSystem::getName()
 		return wstr_to_str(m_data.cFileName);
 	}
 	return "";
+}
+
+bool FileSystem::checkFilter()
+{
+	if (m_filter.flags & Filter::NoFilters)
+	{
+		return true;
+	}
+
+	if (m_filter.flags & Filter::Dirs)
+	{
+		if (isDirectory())
+			return true;
+	}
+
+	if (m_filter.flags & Filter::Files)
+	{
+		if (isFile())
+			return true;
+	}
+
+	if (m_filter.flags & Filter::NotDotAndDotDot)
+	{
+		string name = getName();
+		if (name != "." && name != "..")
+		{
+			return true;
+		}
+	}
+
+	if (m_filter.flags & Filter::Hidden)
+	{
+		string name = getName();
+		if (name[0] == '.')
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+FileSystem::Filter::Filter(int filters)
+{
+	flags = filters;
 }

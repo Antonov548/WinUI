@@ -1,26 +1,6 @@
-#include <WinUI.>
+#include <WinUI>
 #include <vector>
 #include <string>
-
-class WindowFind : public Window
-{
-public:
-	WindowFind(Widget* parent = nullptr) : Window(parent), line_edit(this), btn_stop(this) {
-		setGeometry(x(), y(), 300, 200);
-
-		line_edit.setGeometry(0, 0, 280, line_edit.height());
-		line_edit.setReadOnly(true);
-
-		btn_stop.setText("Stop");
-		btn_stop.setGeometry(90, 40, 120, btn_stop.height());
-	}
-	LineEdit line_edit;
-	Button btn_stop;
-	void setFoundText(string text)
-	{
-		line_edit.setText(text);
-	}
-};
 
 class MyThread : public Thread
 {
@@ -40,12 +20,12 @@ public:
 			filter = "*" + filter;
 		}
 
-		FileSystem system(path, filter);
+		FileSystem system(path, filter, FileSystem::Filter::NoFilters);
 		if (files.size() != 0)
 		{
 			files.clear();
 		}
-		if (!system.findNext())
+		if (system.isWrongPath())
 		{
 			MessageBox(NULL, "File/Folder not found", "ERROR", MB_OK);
 			return;
@@ -54,7 +34,7 @@ public:
 		{
 			files.push_back(system.getName());
 		}
-		while (system.findNext())
+		while (system.next())
 		{
 			files.push_back(system.getName());
 		}
@@ -73,17 +53,17 @@ public:
 		Label *label = new Label("Find File", this);
 		label->setFont("Arial", 13);
 		label->setGeometry(0, 0, 300, 20);
-		label->setAlignment(WinUI::AlignmentCenter);
+		label->setAlignment(Alignment::Center);
 
 		line_edit.setGeometry(0, 30, 280, line_edit.height());
-		line_edit.setText("Path...");
+		line_edit.setText("");
 
 		line_edit_filter.setGeometry(0, 60, 280, line_edit.height());
-		line_edit_filter.setText("Type of file...");
+		line_edit_filter.setText("");
 
 		btn_find.setGeometry(80, 100, 140, btn_find.height());
 		btn_find.setText("Find");
-		btn_find.connect([&]() { MyThread* thread = new MyThread; thread->path = line_edit.text(); thread->filter = line_edit_filter.text();  thread->start(); thread->wait(); showFiles(thread->files); delete thread; });
+		btn_find.connect([&]() { MyThread thread; thread.path = line_edit.text(); thread.filter = line_edit_filter.text();  thread.start(); thread.wait(); showFiles(thread.files);});
 	}
 
 private:
