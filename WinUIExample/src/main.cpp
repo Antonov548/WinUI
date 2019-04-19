@@ -58,8 +58,9 @@ public:
 		line_edit.setGeometry(0, 30, 280, line_edit.height());
 		line_edit.setText("");
 
-		line_edit_filter.setGeometry(0, 60, 280, line_edit.height());
+		line_edit_filter.setGeometry(0, 60, 280, line_edit_filter.height());
 		line_edit_filter.setText("");
+		//line_edit_filter.setReadOnly(true);
 
 		btn_find.setGeometry(80, 100, 140, btn_find.height());
 		btn_find.setText("Find");

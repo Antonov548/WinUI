@@ -77,7 +77,7 @@ string FileSystem::getName()
 	{
 		return wstr_to_str(m_data.cFileName);
 	}
-	return "";
+	return string();
 }
 
 bool FileSystem::checkFilter()

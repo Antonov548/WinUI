@@ -5,15 +5,15 @@
 namespace WinUI
 {
 
-	class WINUI_DLL LineEdit : public TextEdit
+	class WINUI_DLL TextArea : public TextEdit
 	{
 	public:
-		LineEdit(Widget* parent = nullptr);
-		~LineEdit();
+		TextArea(Widget* parent = nullptr);
+		~TextArea();
 		virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 
 	private:
-		static WidgetStyle line_edit_style;
+		static WidgetStyle text_area_style;
 	};
 
 }

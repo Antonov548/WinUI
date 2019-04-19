@@ -31,6 +31,8 @@
     <ClCompile Include="src\ui\window.cpp" />
     <ClCompile Include="src\style.cpp" />
     <ClCompile Include="src\thread.cpp" />
+    <ClCompile Include="src\ui\textarea.cpp" />
+    <ClCompile Include="src\ui\textedit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\filesystem.h" />
@@ -49,6 +51,8 @@
     <ClInclude Include="include\winui.h" />
     <ClInclude Include="src\style.h" />
     <ClInclude Include="src\thread.h" />
+    <ClInclude Include="src\ui\textarea.h" />
+    <ClInclude Include="src\ui\textedit.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

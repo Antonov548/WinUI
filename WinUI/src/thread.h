@@ -11,6 +11,13 @@ namespace WinUI
 
 	class WINUI_DLL Thread
 	{
+
+		struct WINUI_DLL CurrentThread
+		{
+			void sleep(int msecs);
+			int getId();
+		};
+
 	public:
 		Thread();
 		~Thread();
@@ -24,12 +31,6 @@ namespace WinUI
 			High,
 			Highest,
 			TimeCritical
-		};
-
-		struct CurrentThread
-		{
-			void sleep(int msecs);
-			int getId();
 		};
 
 		static CurrentThread currend_thread;

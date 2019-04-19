@@ -13,6 +13,8 @@
     <ClCompile Include="src\style.cpp" />
     <ClCompile Include="src\thread.cpp" />
     <ClCompile Include="src\filesystem.cpp" />
+    <ClCompile Include="src\ui\textarea.cpp" />
+    <ClCompile Include="src\ui\textedit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ui\abstractbutton.h" />
@@ -31,5 +33,7 @@
     <ClInclude Include="src\filesystem.h" />
     <ClInclude Include="src\winuinamespace.h" />
     <ClInclude Include="src\winuidll.h" />
+    <ClInclude Include="src\ui\textarea.h" />
+    <ClInclude Include="src\ui\textedit.h" />
   </ItemGroup>
 </Project>
