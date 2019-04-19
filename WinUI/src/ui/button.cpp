@@ -16,7 +16,6 @@ Button::Button(string text, Widget* parent) : AbstractButton(button_style, paren
 
 Button::Button(Widget* parent) : AbstractButton(button_style, parent)
 {
-	setText("");
 }
 
 Button::~Button()

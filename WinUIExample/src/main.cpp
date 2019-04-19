@@ -55,7 +55,7 @@ public:
 		label->setGeometry(0, 0, 300, 20);
 		label->setAlignment(Alignment::Center);
 
-		line_edit.setGeometry(0, 30, 280, line_edit.height());
+		line_edit.setGeometry(0, 30, 280, line_edit.height() + 5);
 		line_edit.setText("");
 		line_edit.setFont("Times New Roman", 13);
 
@@ -64,7 +64,7 @@ public:
 		//line_edit_filter.setReadOnly(true);
 
 		btn_find.setGeometry(80, 100, 140, btn_find.height());
-		btn_find.setText("Find");
+		//btn_find.setText("Find");
 		btn_find.connect([&]() { MyThread thread; thread.path = line_edit.text(); thread.filter = line_edit_filter.text();  thread.start(); thread.wait(); showFiles(thread.files);});
 	}
 

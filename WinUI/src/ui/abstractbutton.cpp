@@ -41,8 +41,7 @@ LRESULT AbstractButton::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
 
 void AbstractButton::setText(string text)
 {
-	m_text = text;
-	SetWindowTextA(m_hwnd, m_text.c_str());
+	SetWindowTextA(m_hwnd, text.c_str());
 }
 
 void AbstractButton::setFont(string font_family, int font_size)

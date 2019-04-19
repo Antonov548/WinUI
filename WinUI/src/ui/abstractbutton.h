@@ -18,9 +18,6 @@ namespace WinUI
 		void connect(std::function<void(void)> func);
 		virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 
-	protected:
-		std::string m_text;
-
 	private:
 		std::function<void(void)> m_clickHandler;
 	};

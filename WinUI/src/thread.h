@@ -2,9 +2,8 @@
 
 #include <windows.h>
 #include <map>
-#include <string>
 #include "winstring.h"
-#include "winuidll.h"
+#include "winuinamespace.h"
 
 namespace WinUI
 {
@@ -22,21 +21,10 @@ namespace WinUI
 		Thread();
 		~Thread();
 
-		enum Priority
-		{
-			Idle,
-			Lowest,
-			Low,
-			Normal,
-			High,
-			Highest,
-			TimeCritical
-		};
-
 		static CurrentThread currend_thread;
 
 		virtual void run() = 0;
-		void setPriority(Thread::Priority priority);
+		void setPriority(ThreadPriority priority);
 		void start();
 		void wait();
 		int getId() const;

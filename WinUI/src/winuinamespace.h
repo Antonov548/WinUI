@@ -9,6 +9,17 @@ namespace WinUI
 		Center
 	};
 
+	enum class ThreadPriority
+	{
+		Idle,
+		Lowest,
+		Low,
+		Normal,
+		High,
+		Highest,
+		TimeCritical
+	};
+
 	struct EnumFlags
 	{
 		int flags;
