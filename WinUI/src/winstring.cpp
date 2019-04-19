@@ -44,3 +44,9 @@ string WinUI::to_str_code(const string & str, UINT code_page)
 
 	return string();
 }
+
+void WinUI::copy_wstr(const wstring & str, wchar_t * wcopy, int size)
+{
+	std::wcsncpy(wcopy, str.c_str(), size);
+	wcopy[size - 1] = L'\0';
+}

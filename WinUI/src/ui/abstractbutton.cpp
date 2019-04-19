@@ -47,14 +47,14 @@ void AbstractButton::setText(string text)
 
 void AbstractButton::setFont(string font_family, int font_size)
 {
-	const TCHAR* fontName = str_to_wstr(font_family).c_str();
 	const long nFontSize = font_size;
-
 	HDC hdc = GetDC(m_hwnd);
 
 	LOGFONT logFont = { 0 };
 	logFont.lfHeight = -MulDiv(nFontSize, GetDeviceCaps(hdc, LOGPIXELSY), 72);
 	logFont.lfWeight = FW_NORMAL;
+
+	copy_wstr(str_to_wstr(font_family), logFont.lfFaceName, LF_FACESIZE);
 
 	HFONT s_hFont = CreateFontIndirect(&logFont);
 	ReleaseDC(m_hwnd, hdc);

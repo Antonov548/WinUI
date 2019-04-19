@@ -1,6 +1,7 @@
 #pragma once
 
 #include "winstring.h"
+#include "winuinamespace.h"
 
 namespace WinUI
 {
@@ -8,23 +9,7 @@ namespace WinUI
 	class WINUI_DLL FileSystem
 	{
 	public:
-		struct WINUI_DLL Filter
-		{
-			enum
-			{
-				Dirs = 0x01,
-				Files = 0x02,
-				NotDotAndDotDot = 0x04,
-				Hidden = 0x08,
-				NoFilters = 0x10
-			};
-
-			Filter(int filters);
-
-			int flags;
-		};
-
-		FileSystem(string path, string patern, Filter filter = Filter::NoFilters);
+		FileSystem(string path, string patern, FileSystemFilter filter = FileSystemFilter::NoFilters);
 		~FileSystem();
 
 		bool next();
@@ -37,7 +22,7 @@ namespace WinUI
 	private:
 		bool m_isFindError;
 		string m_path;
-		Filter m_filter;
+		FileSystemFilter m_filter;
 		HANDLE m_handle;
 		WIN32_FIND_DATA m_data;
 

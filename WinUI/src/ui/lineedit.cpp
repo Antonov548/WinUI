@@ -9,7 +9,7 @@ WidgetStyle LineEdit::line_edit_style = {
 	NULL
 };
 
-LineEdit::LineEdit(Widget* parent) : TextEdit(line_edit_style, parent)
+LineEdit::LineEdit(Widget* parent) : TextControl(line_edit_style, parent)
 {
 	ShowScrollBar(m_hwnd, SB_BOTH, FALSE);
 }

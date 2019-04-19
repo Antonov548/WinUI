@@ -2,7 +2,7 @@
 
 using namespace WinUI;
 
-FileSystem::FileSystem(string path, string patern, Filter filter) : m_path(path), m_filter(filter), m_handle(NULL)
+FileSystem::FileSystem(string path, string patern, FileSystemFilter filter) : m_path(path), m_filter(filter), m_handle(NULL)
 {
 	m_handle = FindFirstFile(str_to_wstr(m_path + patern).c_str(), &m_data);
 	m_isFindError = false;
@@ -82,12 +82,12 @@ string FileSystem::getName()
 
 bool FileSystem::checkFilter()
 {
-	if (m_filter.flags & Filter::NoFilters)
+	if (m_filter.flags & FileSystemFilter::NoFilters)
 	{
 		return true;
 	}
 
-	if (m_filter.flags & Filter::NotDotAndDotDot)
+	if (m_filter.flags & FileSystemFilter::NotDotAndDotDot)
 	{
 		string name = getName();
 		if (name == "." || name == "..")
@@ -96,7 +96,7 @@ bool FileSystem::checkFilter()
 		}
 	}
 
-	if (m_filter.flags & Filter::Dirs)
+	if (m_filter.flags & FileSystemFilter::Dirs)
 	{
 		if (isDirectory() && getName()[0] != '.')
 		{
@@ -104,7 +104,7 @@ bool FileSystem::checkFilter()
 		}
 	}
 
-	if (m_filter.flags & Filter::Files)
+	if (m_filter.flags & FileSystemFilter::Files)
 	{
 		if (isFile() && getName()[0] != '.')
 		{
@@ -112,7 +112,7 @@ bool FileSystem::checkFilter()
 		}
 	}
 
-	if (m_filter.flags & Filter::Hidden)
+	if (m_filter.flags & FileSystemFilter::Hidden)
 	{
 		string name = getName();
 		if (name[0] == '.' && (name != "." && name != ".."))
@@ -122,9 +122,4 @@ bool FileSystem::checkFilter()
 	}
 
 	return false;
-}
-
-FileSystem::Filter::Filter(int filters)
-{
-	flags = filters;
 }

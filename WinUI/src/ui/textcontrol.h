@@ -5,11 +5,11 @@
 namespace WinUI
 {
 
-	class WINUI_DLL TextEdit : public Widget
+	class WINUI_DLL TextControl : public Widget
 	{
 	public:
-		TextEdit(WidgetStyle style, Widget* parent);
-		~TextEdit();
+		TextControl(WidgetStyle style, Widget* parent);
+		~TextControl();
 
 		void setText(string text);
 		void setFont(string font_family, int font_size);

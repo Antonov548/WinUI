@@ -1,11 +1,11 @@
 #pragma once
 
-#include "textedit.h"
+#include "textcontrol.h"
 
 namespace WinUI
 {
 
-	class WINUI_DLL TextArea : public TextEdit
+	class WINUI_DLL TextArea : public TextControl
 	{
 	public:
 		TextArea(Widget* parent = nullptr);

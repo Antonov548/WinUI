@@ -20,7 +20,7 @@ public:
 			filter = "*" + filter;
 		}
 
-		FileSystem system(path, "", FileSystem::Filter::Hidden | FileSystem::Filter::Files);
+		FileSystem system(path, "", FileSystemFilter::Hidden | FileSystemFilter::Files);
 		if (files.size() != 0)
 		{
 			files.clear();
@@ -51,12 +51,13 @@ public:
 	MainWindow() : Window(), btn_find(this), line_edit(this), line_edit_filter(this){
 
 		Label *label = new Label("Find File", this);
-		label->setFont("Arial", 13);
+		label->setFont("Times New Roman", 13);
 		label->setGeometry(0, 0, 300, 20);
 		label->setAlignment(Alignment::Center);
 
 		line_edit.setGeometry(0, 30, 280, line_edit.height());
 		line_edit.setText("");
+		line_edit.setFont("Times New Roman", 13);
 
 		line_edit_filter.setGeometry(0, 60, 280, line_edit_filter.height());
 		line_edit_filter.setText("");
