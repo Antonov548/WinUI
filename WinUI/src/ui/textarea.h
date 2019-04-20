@@ -5,7 +5,7 @@
 namespace WinUI
 {
 
-	class WINUI_DLL TextArea : public TextControl
+	class WINUI_DLL TextArea : public Widget, public TextControl
 	{
 	public:
 		TextArea(Widget* parent = nullptr);

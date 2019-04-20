@@ -5,10 +5,10 @@
 namespace WinUI
 {
 
-	class WINUI_DLL TextControl : public Widget
+	class WINUI_DLL TextControl
 	{
 	public:
-		TextControl(WidgetStyle style, Widget* parent);
+		TextControl(HWND hwnd);
 		~TextControl();
 
 		void setText(string text);
@@ -16,6 +16,9 @@ namespace WinUI
 		string text() const;
 		void setReadOnly(bool readonly);
 		void clear();
+
+	private:
+		HWND m_container;
 	};
 
 }

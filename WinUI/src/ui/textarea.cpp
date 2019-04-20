@@ -9,7 +9,7 @@ WidgetStyle TextArea::text_area_style = {
 	NULL
 };
 
-TextArea::TextArea(Widget* parent) : TextControl(text_area_style, parent)
+TextArea::TextArea(Widget* parent) : Widget(text_area_style, parent), TextControl(m_hwnd)
 {
 }
 
