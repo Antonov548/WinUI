@@ -9,32 +9,11 @@ WidgetStyle LineEdit::line_edit_style = {
 	NULL
 };
 
-LineEdit::LineEdit(Widget* parent) : Widget(line_edit_style, parent), TextControl(m_hwnd)
+LineEdit::LineEdit(Widget* parent) : TextControl(line_edit_style, parent)
 {
+	ShowScrollBar(m_hwnd, SB_BOTH, FALSE);
 }
 
 LineEdit::~LineEdit()
 {
-}
-
-LRESULT LineEdit::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-	case WM_PAINT:
-	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hwnd, &ps);
-		EndPaint(hwnd, &ps);
-	}
-	break;
-	case WM_DESTROY:
-	{
-		removeWidget(hwnd);
-		DestroyWindow(hwnd);
-	}
-	break;
-	default:
-		return DefWindowProc(hwnd, message, wParam, lParam);
-	}
 }
