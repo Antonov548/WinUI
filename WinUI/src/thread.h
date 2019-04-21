@@ -24,9 +24,10 @@ namespace WinUI
 
 		static CurrentThread currend_thread;
 
-		virtual void run() = 0;
+		virtual void run();
 		void setPriority(ThreadPriority priority);
 		void start();
+		void exit(int exitcode = 0);
 		void wait();
 		int getId() const;
 		void setThreadFunction(std::function<void(void)> func);
@@ -37,6 +38,7 @@ namespace WinUI
 		std::function<void(void)> m_threadFunc;
 
 		static DWORD WINAPI threadFunction(LPVOID lpParam);
+		void clearThread();
 	};
 
 }

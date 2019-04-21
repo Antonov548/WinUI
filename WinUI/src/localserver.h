@@ -6,7 +6,7 @@
 namespace WinUI
 {
 
-	class LocalServer
+	class WINUI_DLL LocalServer
 	{
 	public:
 		LocalServer();
@@ -16,20 +16,7 @@ namespace WinUI
 		void close();
 
 	private:
-
-		class LocalServerThread : public Thread
-		{
-			friend class LocalServer;
-		public:
-			LocalServerThread(LocalServer* server);
-			~LocalServerThread();
-
-			virtual void run();
-		private:
-			LocalServer* m_server;
-		};
-
-		LocalServerThread m_serverThread;
+		Thread m_serverThread;
 		HANDLE m_pipe;
 		string m_name;
 		bool m_isServerRun;

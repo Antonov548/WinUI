@@ -107,5 +107,8 @@ int main()
 
 	wnd.show();
 
+	LocalServer server;
+	server.listen("test");
+
 	app.exec();
 }

@@ -13,11 +13,12 @@ Thread::Thread()
 
 Thread::~Thread()
 {
-	if (m_handle != NULL)
-	{
-		CloseHandle(m_handle);
-		m_handle = NULL;
-	}
+	clearThread();
+}
+
+void Thread::run()
+{
+	m_threadFunc();
 }
 
 void Thread::setPriority(ThreadPriority priority)
@@ -44,6 +45,12 @@ void Thread::start()
 	ResumeThread(m_handle);
 }
 
+void Thread::exit(int exitcode)
+{
+	TerminateThread(m_handle, exitcode);
+	clearThread();
+}
+
 void Thread::wait()
 {
 	WaitForSingleObject(m_handle, INFINITE);
@@ -56,7 +63,7 @@ int Thread::getId() const
 	return m_id;
 }
 
-void WinUI::Thread::setThreadFunction(std::function<void(void)> func)
+void Thread::setThreadFunction(std::function<void(void)> func)
 {
 	m_threadFunc = func;
 }
@@ -66,17 +73,19 @@ DWORD __stdcall Thread::threadFunction(LPVOID lpParam)
 	auto thread = (Thread*)(lpParam);
 	if (thread)
 	{
-		if (bool(thread->m_threadFunc))
-		{
-			thread->m_threadFunc();
-		}
-		else
-		{
-			thread->run();
-		}
+		thread->run();
 		return 0;
 	}
 	return -1;
+}
+
+void Thread::clearThread()
+{
+	if (!m_handle)
+	{
+		CloseHandle(m_handle);
+		m_handle = NULL;
+	}
 }
 
 void Thread::CurrentThread::sleep(int msecs)
