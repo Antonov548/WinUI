@@ -15,6 +15,7 @@
     <ClCompile Include="src\filesystem.cpp" />
     <ClCompile Include="src\ui\textarea.cpp" />
     <ClCompile Include="src\ui\textcontrol.cpp" />
+    <ClCompile Include="src\localserver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ui\abstractbutton.h" />
@@ -35,5 +36,6 @@
     <ClInclude Include="src\winuidll.h" />
     <ClInclude Include="src\ui\textcontrol.h" />
     <ClInclude Include="src\ui\textarea.h" />
+    <ClInclude Include="src\localserver.h" />
   </ItemGroup>
 </Project>

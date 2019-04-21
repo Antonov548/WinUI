@@ -4,6 +4,7 @@
 #include "../src/thread.h"
 #include "../src/winuinamespace.h"
 #include "../src/filesystem.h"
+#include "../src/localserver.h"
 
 #include "../src/ui/window.h"
 #include "../src/ui/button.h"

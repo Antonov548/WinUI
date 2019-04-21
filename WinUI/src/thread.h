@@ -2,6 +2,7 @@
 
 #include <windows.h>
 #include <map>
+#include <functional>
 #include "winstring.h"
 #include "winuinamespace.h"
 
@@ -28,10 +29,12 @@ namespace WinUI
 		void start();
 		void wait();
 		int getId() const;
+		void setThreadFunction(std::function<void(void)> func);
 
 	private:
 		HANDLE m_handle;
 		int m_id;
+		std::function<void(void)> m_threadFunc;
 
 		static DWORD WINAPI threadFunction(LPVOID lpParam);
 	};

@@ -56,12 +56,24 @@ int Thread::getId() const
 	return m_id;
 }
 
+void WinUI::Thread::setThreadFunction(std::function<void(void)> func)
+{
+	m_threadFunc = func;
+}
+
 DWORD __stdcall Thread::threadFunction(LPVOID lpParam)
 {
 	auto thread = (Thread*)(lpParam);
 	if (thread)
 	{
-		thread->run();
+		if (bool(thread->m_threadFunc))
+		{
+			thread->m_threadFunc();
+		}
+		else
+		{
+			thread->run();
+		}
 		return 0;
 	}
 	return -1;
