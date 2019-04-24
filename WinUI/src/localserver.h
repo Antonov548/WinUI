@@ -14,9 +14,15 @@ namespace WinUI
 		~LocalServer();
 
 		bool listen(const string name);
+		bool isRun() const;
 		void close();
 
 	private:
+		enum
+		{
+			BufferSize = 512
+		};
+
 		class LocalServerThread : public Thread
 		{
 			friend class LocalServer;

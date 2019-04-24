@@ -64,7 +64,7 @@ public:
 		//line_edit_filter.setReadOnly(true);
 
 		btn_find.setGeometry(80, 100, 140, btn_find.height());
-		//btn_find.setText("Find");
+		btn_find.setText("Find");
 		btn_find.connect([&]() { MyThread thread; thread.path = line_edit.text(); thread.filter = line_edit_filter.text();  thread.start(); thread.wait(); showFiles(thread.files); });
 	}
 
