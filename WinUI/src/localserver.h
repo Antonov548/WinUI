@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <map>
 #include "winstring.h"
 #include "thread.h"
 
@@ -41,8 +42,7 @@ namespace WinUI
 		HANDLE m_pipe;
 		string m_name;
 		bool m_isServerRun;
-		std::vector<Thread*> m_clientThreads;
-		std::vector<HANDLE> m_pipeHandles;
+		std::map<HANDLE, Thread*> m_clients;
 
 		bool createPipe();
 	};

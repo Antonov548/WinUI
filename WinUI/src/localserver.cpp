@@ -42,6 +42,7 @@ void LocalServer::LocalServerThread::run()
 			//thread function for handle client messages
 			thread->setThreadFunction([this]() {
 				HANDLE pipe = m_server->m_pipe;
+				int index = m_server->m_clients.size() - 1;
 				
 				HANDLE heap = GetProcessHeap();
 				wchar_t* client_message = (wchar_t*)HeapAlloc(heap, 0, LocalServer::BufferSize * sizeof(wchar_t));
@@ -65,8 +66,9 @@ void LocalServer::LocalServerThread::run()
 					}
 				}
 			});
-			m_server->m_clientThreads.push_back(thread);
-			m_server->m_clientThreads[m_server->m_clientThreads.size()-1]->run();
+
+			m_server->m_clients[m_server->m_pipe] = thread;
+			thread->start();
 
 			if (!m_server->createPipe())
 			{
@@ -79,7 +81,7 @@ void LocalServer::LocalServerThread::run()
 
 bool LocalServer::listen(const string name)
 {
-	if (m_pipeHandles.size() == 0)
+	if (m_clients.size() == 0)
 	{
 		m_name = name;
 
@@ -100,18 +102,12 @@ void LocalServer::close()
 {
 	m_isServerRun = false;
 
-	for (auto thread : m_clientThreads)
+	for (auto& client : m_clients)
 	{
-		delete thread;
+		CloseHandle(client.first);
+		delete client.second;
 	}
-	m_clientThreads.clear();
-
-	for (auto& pipe : m_pipeHandles)
-	{
-		DisconnectNamedPipe(pipe);
-		CloseHandle(pipe);
-	}
-	m_pipeHandles.clear();
+	m_clients.clear();
 }
 
 bool LocalServer::isRun() const
@@ -133,7 +129,8 @@ bool LocalServer::createPipe()
 		0,
 		NULL);
 
-	m_pipeHandles.push_back(m_pipe);
+	m_clients.insert(std::make_pair(m_pipe, nullptr));
+	//m_pipeHandles.push_back(m_pipe);
 	return (m_pipe != INVALID_HANDLE_VALUE);
 }
 
