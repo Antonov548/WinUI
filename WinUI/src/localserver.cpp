@@ -38,11 +38,11 @@ void LocalServer::LocalServerThread::run()
 		if (connected)
 		{
 			Thread* thread = new Thread;
+			MessageBox(NULL, L"Work", L"Work", MB_OK);
 
 			//thread function for handle client messages
 			thread->setThreadFunction([this]() {
 				HANDLE pipe = m_server->m_pipe;
-				int index = m_server->m_clients.size() - 1;
 				
 				HANDLE heap = GetProcessHeap();
 				wchar_t* client_message = (wchar_t*)HeapAlloc(heap, 0, LocalServer::BufferSize * sizeof(wchar_t));
@@ -56,7 +56,6 @@ void LocalServer::LocalServerThread::run()
 					
 					if (!message_read && GetLastError() == ERROR_BROKEN_PIPE)
 					{
-
 						return;
 					}
 
@@ -74,6 +73,19 @@ void LocalServer::LocalServerThread::run()
 			{
 				m_server->close();
 				return;
+			}
+		}
+
+		for (auto& client : m_server->m_clients)
+		{
+			if (client.second != nullptr)
+			{
+				if (!client.second->isRun())
+				{
+					CloseHandle(client.first);
+					delete client.second;
+					m_server->m_clients.erase(client.first);
+				}
 			}
 		}
 	};
@@ -130,7 +142,6 @@ bool LocalServer::createPipe()
 		NULL);
 
 	m_clients.insert(std::make_pair(m_pipe, nullptr));
-	//m_pipeHandles.push_back(m_pipe);
 	return (m_pipe != INVALID_HANDLE_VALUE);
 }
 

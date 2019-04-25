@@ -9,6 +9,7 @@ Thread::Thread()
 	DWORD id;
 	m_handle = CreateThread(NULL, NULL, Thread::threadFunction, LPVOID(this), CREATE_SUSPENDED, &id);
 	m_id = int(id);
+	m_isRun = false;
 }
 
 Thread::~Thread()
@@ -43,10 +44,12 @@ void Thread::setPriority(ThreadPriority priority)
 void Thread::start()
 {
 	ResumeThread(m_handle);
+	m_isRun = true;
 }
 
 void Thread::exit(int exitcode)
 {
+	m_isRun = false;
 	TerminateThread(m_handle, exitcode);
 	clearThread();
 }
@@ -63,6 +66,11 @@ int Thread::getId() const
 	return m_id;
 }
 
+bool Thread::isRun() const
+{
+	return m_isRun;
+}
+
 void Thread::setThreadFunction(std::function<void(void)> func)
 {
 	m_threadFunc = func;
@@ -74,6 +82,7 @@ DWORD __stdcall Thread::threadFunction(LPVOID lpParam)
 	if (thread)
 	{
 		thread->run();
+		thread->m_isRun = false;
 		return 0;
 	}
 	return -1;

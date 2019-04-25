@@ -30,11 +30,13 @@ namespace WinUI
 		void exit(int exitcode = 0);
 		void wait();
 		int getId() const;
+		bool isRun() const;
 		void setThreadFunction(std::function<void(void)> func);
 
 	private:
 		HANDLE m_handle;
 		int m_id;
+		bool m_isRun;
 		std::function<void(void)> m_threadFunc;
 
 		static DWORD WINAPI threadFunction(LPVOID lpParam);
