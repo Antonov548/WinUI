@@ -4,12 +4,11 @@ using namespace WinUI;
 
 Thread::CurrentThread Thread::currend_thread;
 
-Thread::Thread()
+Thread::Thread() : m_isRun(false)
 {
 	DWORD id;
 	m_handle = CreateThread(NULL, NULL, Thread::threadFunction, LPVOID(this), CREATE_SUSPENDED, &id);
 	m_id = int(id);
-	m_isRun = false;
 }
 
 Thread::~Thread()

@@ -41,7 +41,7 @@ namespace WinUI
 		LocalServerThread m_serverThread;
 		HANDLE m_pipe;
 		string m_name;
-		bool m_isServerRun;
+		bool m_isReady;
 		std::map<HANDLE, Thread*> m_clients;
 
 		bool createPipe();

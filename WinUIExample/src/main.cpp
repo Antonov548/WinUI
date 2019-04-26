@@ -108,7 +108,7 @@ int main()
 	wnd.show();
 
 	LocalServer server;
-	server.listen("test");
+	server.listen("fortune");
 
 	app.exec();
 }

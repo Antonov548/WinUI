@@ -2,7 +2,7 @@
 
 using namespace WinUI;
 
-LocalServer::LocalServer() : m_isServerRun(false)
+LocalServer::LocalServer() : m_isReady(true)
 {
 	m_serverThread.setServer(this);
 }
@@ -27,18 +27,27 @@ void LocalServer::LocalServerThread::setServer(LocalServer* server)
 
 void LocalServer::LocalServerThread::run()
 {
-	while (m_server->m_isServerRun)
+	while (true)
 	{
-		bool connected = ConnectNamedPipe(m_server->m_pipe, NULL);
-		if (!connected && GetLastError() == ERROR_PIPE_CONNECTED)
+		bool connected = false;
+		if (m_server->m_isReady)
 		{
-			connected = true;
+			if (!m_server->createPipe())
+			{
+				m_server->close();
+				return;
+			}
+
+			connected = ConnectNamedPipe(m_server->m_pipe, NULL);
+			if (!connected && GetLastError() == ERROR_PIPE_CONNECTED)
+			{
+				connected = true;
+			}
 		}
 
 		if (connected)
 		{
 			Thread* thread = new Thread;
-			MessageBox(NULL, L"Work", L"Work", MB_OK);
 
 			//thread function for handle client messages
 			thread->setThreadFunction([this]() {
@@ -49,12 +58,13 @@ void LocalServer::LocalServerThread::run()
 
 				DWORD bytes_read = 0;
 				bool message_read;
+				m_server->m_isReady = true;
 
-				while (m_server->m_isServerRun)
+				while (true)
 				{
 					message_read = ReadFile(pipe, client_message, LocalServer::BufferSize * sizeof(wchar_t), &bytes_read, NULL);
-					
-					if (!message_read && GetLastError() == ERROR_BROKEN_PIPE)
+
+					if (GetLastError() == ERROR_BROKEN_PIPE)
 					{
 						return;
 					}
@@ -66,27 +76,9 @@ void LocalServer::LocalServerThread::run()
 				}
 			});
 
+			m_server->m_isReady = false;
 			m_server->m_clients[m_server->m_pipe] = thread;
 			thread->start();
-
-			if (!m_server->createPipe())
-			{
-				m_server->close();
-				return;
-			}
-		}
-
-		for (auto& client : m_server->m_clients)
-		{
-			if (client.second != nullptr)
-			{
-				if (!client.second->isRun())
-				{
-					CloseHandle(client.first);
-					delete client.second;
-					m_server->m_clients.erase(client.first);
-				}
-			}
 		}
 	};
 }
@@ -96,15 +88,7 @@ bool LocalServer::listen(const string name)
 	if (m_clients.size() == 0)
 	{
 		m_name = name;
-
-		if (!createPipe())
-		{
-			return false;
-		}
-
-		m_isServerRun = true;
 		m_serverThread.start();
-
 		return true;
 	}
 	return false;
@@ -112,19 +96,23 @@ bool LocalServer::listen(const string name)
 
 void LocalServer::close()
 {
-	m_isServerRun = false;
+	m_serverThread.exit();
 
 	for (auto& client : m_clients)
 	{
 		CloseHandle(client.first);
-		delete client.second;
+		if (client.second != nullptr)
+		{
+			client.second->exit();
+			delete client.second;
+		}
 	}
 	m_clients.clear();
 }
 
 bool LocalServer::isRun() const
 {
-	return m_isServerRun;
+	return m_serverThread.isRun();
 }
 
 bool LocalServer::createPipe()
@@ -134,7 +122,7 @@ bool LocalServer::createPipe()
 		PIPE_ACCESS_DUPLEX,
 		PIPE_TYPE_MESSAGE |
 		PIPE_READMODE_MESSAGE |
-		PIPE_NOWAIT,
+		PIPE_WAIT,
 		PIPE_UNLIMITED_INSTANCES,
 		0,
 		0,
