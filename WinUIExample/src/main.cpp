@@ -109,6 +109,8 @@ int main()
 
 	LocalServer server;
 	server.listen("fortune");
+	//server.onNewConnection([]() {MessageBox(NULL, "New", "New", MB_OK); });
+	//server.onGetMessage([](string msg) {MessageBox(NULL, msg.c_str(), msg.c_str(), MB_OK); });
 
 	app.exec();
 }
