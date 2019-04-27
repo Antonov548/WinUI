@@ -29,6 +29,12 @@ namespace WinUI
 			LocalServer* m_server;
 		};
 
+		struct Client
+		{
+			Thread* thread;
+			char* buffer;
+		};
+
 	public:
 		LocalServer();
 		~LocalServer();

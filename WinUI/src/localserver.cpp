@@ -69,9 +69,9 @@ void LocalServer::LocalServerThread::run()
 				while (true)
 				{
 					message_read = ReadFile(pipe, client_message, LocalServer::BufferSize * sizeof(char), &bytes_read, NULL);
-
-					if (GetLastError() == ERROR_BROKEN_PIPE)
+					if (GetLastError() == ERROR_BROKEN_PIPE || !message_read)
 					{
+						MessageBox(NULL, L"Work", L"", MB_OK);
 						return;
 					}
 
@@ -107,13 +107,12 @@ void LocalServer::close()
 {
 	m_serverThread.exit();
 
-	MessageBox(NULL, std::to_wstring(m_clients.size()).c_str(), L"Work", MB_OK);
 	for (auto& client : m_clients)
 	{
+		CancelIoEx(client.first, NULL);
 		CloseHandle(client.first);
 		if (client.second != nullptr)
 		{
-			client.second->exit();
 			delete client.second;
 		}
 	}
@@ -148,8 +147,6 @@ bool LocalServer::createPipe()
 		0,
 		0,
 		NULL);
-
-	MessageBox(NULL, std::to_wstring(int(m_pipe)).c_str(), L"Work", MB_OK);
 
 	return (m_pipe != INVALID_HANDLE_VALUE);
 }
