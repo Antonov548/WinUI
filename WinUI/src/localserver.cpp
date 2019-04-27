@@ -4,6 +4,7 @@ using namespace WinUI;
 
 LocalServer::LocalServer() : m_isReady(true)
 {
+	m_heap = GetProcessHeap();
 	m_serverThread.setServer(this);
 }
 
@@ -57,9 +58,7 @@ void LocalServer::LocalServerThread::run()
 			//thread function for handle client messages
 			thread->setThreadFunction([this]() {
 				HANDLE pipe = m_server->m_pipe;
-				
-				HANDLE heap = GetProcessHeap();
-				char* client_message = (char*)HeapAlloc(heap, 0, LocalServer::BufferSize * sizeof(char));
+				ServerClient client = m_server->m_clients[pipe];
 
 				DWORD bytes_read = 0;
 				bool message_read;
@@ -68,7 +67,7 @@ void LocalServer::LocalServerThread::run()
 
 				while (true)
 				{
-					message_read = ReadFile(pipe, client_message, LocalServer::BufferSize * sizeof(char), &bytes_read, NULL);
+					message_read = ReadFile(pipe, client.message, LocalServer::BufferSize * sizeof(char), &bytes_read, NULL);
 					if (GetLastError() == ERROR_BROKEN_PIPE || !message_read)
 					{
 						MessageBox(NULL, L"Work", L"", MB_OK);
@@ -86,7 +85,9 @@ void LocalServer::LocalServerThread::run()
 			});
 
 			m_server->m_isReady = false;
-			m_server->m_clients.insert(std::make_pair(m_server->m_pipe, thread));
+
+			ServerClient client = {thread, (char*)HeapAlloc(m_server->m_heap, NULL, LocalServer::BufferSize * sizeof(char))};
+			m_server->m_clients.insert(std::make_pair(m_server->m_pipe, client));
 			thread->start();
 		}
 	};
@@ -111,9 +112,9 @@ void LocalServer::close()
 	{
 		CancelIoEx(client.first, NULL);
 		CloseHandle(client.first);
-		if (client.second != nullptr)
+		if (client.second.thread != nullptr)
 		{
-			delete client.second;
+			delete client.second.thread;
 		}
 	}
 	m_clients.clear();

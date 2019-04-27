@@ -29,10 +29,10 @@ namespace WinUI
 			LocalServer* m_server;
 		};
 
-		struct Client
+		struct ServerClient
 		{
 			Thread* thread;
-			char* buffer;
+			char* message;
 		};
 
 	public:
@@ -48,9 +48,10 @@ namespace WinUI
 	private:
 		LocalServerThread m_serverThread;
 		HANDLE m_pipe;
+		HANDLE m_heap;
 		string m_name;
 		bool m_isReady;
-		std::map<HANDLE, Thread*> m_clients;
+		std::map<HANDLE, ServerClient> m_clients;
 		std::function<void(const string)> m_msgHandler;
 		std::function<void(void)> m_connHandler;
 
