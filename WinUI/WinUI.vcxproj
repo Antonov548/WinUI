@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\localsocket.cpp" />
     <ClCompile Include="src\localserver.cpp" />
     <ClCompile Include="src\filesystem.cpp" />
     <ClCompile Include="src\ui\label.cpp" />
@@ -36,6 +37,7 @@
     <ClCompile Include="src\ui\textcontrol.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\localsocket.h" />
     <ClInclude Include="src\localserver.h" />
     <ClInclude Include="src\filesystem.h" />
     <ClInclude Include="src\ui\textarea.h" />

@@ -48,10 +48,10 @@ void LocalServer::LocalServerThread::run()
 
 		if (connected)
 		{
-			/*if (bool(m_server->m_connHandler))
+			if (bool(m_server->m_connHandler))
 			{
 				m_server->m_connHandler();
-			}*/
+			}
 
 			Thread* thread = new Thread;
 
@@ -67,10 +67,11 @@ void LocalServer::LocalServerThread::run()
 
 				while (true)
 				{
+					HeapFree(m_server->m_heap, NULL, client.message);
+					client.message = (char*)HeapAlloc(m_server->m_heap, NULL, LocalServer::BufferSize * sizeof(char));
 					message_read = ReadFile(pipe, client.message, LocalServer::BufferSize * sizeof(char), &bytes_read, NULL);
 					if (GetLastError() == ERROR_BROKEN_PIPE || !message_read)
 					{
-						MessageBox(NULL, L"Work", L"", MB_OK);
 						return;
 					}
 
@@ -78,7 +79,7 @@ void LocalServer::LocalServerThread::run()
 					{
 						if (bool(m_server->m_msgHandler))
 						{
-							//m_server->m_msgHandler(client_message);
+							m_server->m_msgHandler(client.message);
 						}
 					}
 				}
@@ -86,7 +87,7 @@ void LocalServer::LocalServerThread::run()
 
 			m_server->m_isReady = false;
 
-			ServerClient client = {thread, (char*)HeapAlloc(m_server->m_heap, NULL, LocalServer::BufferSize * sizeof(char))};
+			ServerClient client = {thread, nullptr};
 			m_server->m_clients.insert(std::make_pair(m_server->m_pipe, client));
 			thread->start();
 		}
@@ -111,6 +112,11 @@ void LocalServer::close()
 	for (auto& client : m_clients)
 	{
 		CancelIoEx(client.first, NULL);
+		FlushFileBuffers(client.first);
+		DisconnectNamedPipe(client.first);
+
+		HeapFree(m_heap, NULL, client.second.message);
+
 		CloseHandle(client.first);
 		if (client.second.thread != nullptr)
 		{
@@ -118,6 +124,18 @@ void LocalServer::close()
 		}
 	}
 	m_clients.clear();
+}
+
+void LocalServer::report(string message)
+{
+	if (isRun())
+	{
+		for (auto& client : m_clients)
+		{
+			DWORD bytes_write = 0;
+			WriteFile(client.first, message.c_str(), message.size(), &bytes_write, NULL);
+		}
+	}
 }
 
 void LocalServer::onNewConnection(std::function<void(void)> func)

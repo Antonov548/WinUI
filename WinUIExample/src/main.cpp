@@ -68,6 +68,11 @@ public:
 		btn_find.connect([&]() { MyThread thread; thread.path = line_edit.text(); thread.filter = line_edit_filter.text();  thread.start(); thread.wait(); showFiles(thread.files); });
 	}
 
+	void addMessage(const string& message)
+	{
+		line_edit.setText(line_edit.text() + " " + message);
+	}
+
 private:
 	LineEdit line_edit;
 	LineEdit line_edit_filter;
@@ -109,8 +114,8 @@ int main()
 
 	LocalServer server;
 	server.listen("fortune");
-	//server.onNewConnection([]() {MessageBox(NULL, "New", "New", MB_OK); });
-	//server.onGetMessage([](string msg) {MessageBox(NULL, msg.c_str(), msg.c_str(), MB_OK); });
+	server.onNewConnection([]() {MessageBox(NULL, "New", "New", MB_OK); });
+	server.onGetMessage([&](string msg) {wnd.addMessage(msg); });
 
 	app.exec();
 }

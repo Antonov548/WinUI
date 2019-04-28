@@ -5,6 +5,7 @@
 #include "../src/winuinamespace.h"
 #include "../src/filesystem.h"
 #include "../src/localserver.h"
+#include "../src/localsocket.h"
 
 #include "../src/ui/window.h"
 #include "../src/ui/button.h"

@@ -2,6 +2,7 @@
 
 #include <map>
 #include <functional>
+#include <strsafe.h>
 #include "winstring.h"
 #include "thread.h"
 
@@ -42,6 +43,7 @@ namespace WinUI
 		bool listen(const string name);
 		bool isRun() const;
 		void close();
+		void report(string message);
 		void onNewConnection(std::function<void(void)> func);
 		void onGetMessage(std::function<void(string)> func);
 

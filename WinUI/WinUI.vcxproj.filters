@@ -16,6 +16,7 @@
     <ClCompile Include="src\ui\textarea.cpp" />
     <ClCompile Include="src\ui\textcontrol.cpp" />
     <ClCompile Include="src\localserver.cpp" />
+    <ClCompile Include="src\localsocket.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ui\abstractbutton.h" />
@@ -37,5 +38,6 @@
     <ClInclude Include="src\ui\textcontrol.h" />
     <ClInclude Include="src\ui\textarea.h" />
     <ClInclude Include="src\localserver.h" />
+    <ClInclude Include="src\localsocket.h" />
   </ItemGroup>
 </Project>
