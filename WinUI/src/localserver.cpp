@@ -72,6 +72,10 @@ void LocalServer::LocalServerThread::run()
 					message_read = ReadFile(pipe, client.message, LocalServer::BufferSize * sizeof(char), &bytes_read, NULL);
 					if (GetLastError() == ERROR_BROKEN_PIPE || !message_read)
 					{
+						if (bool(m_server->m_discHandler))
+						{
+							m_server->m_discHandler();
+						}
 						return;
 					}
 
@@ -141,6 +145,11 @@ void LocalServer::report(string message)
 void LocalServer::onNewConnection(std::function<void(void)> func)
 {
 	m_connHandler = func;
+}
+
+void LocalServer::onDisconnect(std::function<void(void)> func)
+{
+	m_discHandler = func;
 }
 
 void LocalServer::onGetMessage(std::function<void(string)> func)

@@ -45,6 +45,7 @@ namespace WinUI
 		void close();
 		void report(string message);
 		void onNewConnection(std::function<void(void)> func);
+		void onDisconnect(std::function<void(void)> func);
 		void onGetMessage(std::function<void(string)> func);
 
 	private:
@@ -56,6 +57,7 @@ namespace WinUI
 		std::map<HANDLE, ServerClient> m_clients;
 		std::function<void(const string)> m_msgHandler;
 		std::function<void(void)> m_connHandler;
+		std::function<void(void)> m_discHandler;
 
 		bool createPipe();
 	};

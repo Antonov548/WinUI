@@ -6,11 +6,17 @@ LocalSocket::LocalSocket()
 {
 	m_heap = GetProcessHeap();
 
-	m_socketThread.setThreadFunction([this]() {});
+	m_socketThread.setThreadFunction([this]() {
+		while (true)
+		{
+
+		}
+	});
 }
 
 LocalSocket::~LocalSocket()
 {
+	m_socketThread.exit();
 }
 
 bool LocalSocket::send(string message)
@@ -21,7 +27,7 @@ bool LocalSocket::send(string message)
 		bool message_send = WriteFile(
 			m_pipe,
 			message.c_str(),
-			message.size(),
+			(message.length() + 1) * sizeof(char),
 			&bytes_write,
 			NULL);
 

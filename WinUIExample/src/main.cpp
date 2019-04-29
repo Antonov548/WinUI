@@ -115,6 +115,7 @@ int main()
 	LocalServer server;
 	server.listen("fortune");
 	server.onNewConnection([]() {MessageBox(NULL, "New", "New", MB_OK); });
+	server.onDisconnect([]() {MessageBox(NULL, "Disc", "Disc", MB_OK); });
 	server.onGetMessage([&](string msg) {wnd.addMessage(msg); });
 
 	app.exec();
