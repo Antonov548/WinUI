@@ -22,7 +22,9 @@ MainWindow::MainWindow(Widget* parent) : Window(parent), _btnConnect(this), _btn
 
 	_btnSend.setText("Текст");
 	_btnSend.setGeometry(0, 50, _btnSend.width(), _btnSend.height());
-	_btnSend.connect([this]() {_socket.send("2"); });
+	_btnSend.connect([this]() {_socket.send("0"); });
+
+	_socket.onGetReport([](string msg) {MessageBox(NULL, msg.c_str(), "", MB_OK); });
 }
 
 MainWindow::~MainWindow()

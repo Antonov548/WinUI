@@ -65,18 +65,18 @@ public:
 
 		btn_find.setGeometry(80, 100, 140, btn_find.height());
 		btn_find.setText("Find");
-		btn_find.connect([&]() { MyThread thread; thread.path = line_edit.text(); thread.filter = line_edit_filter.text();  thread.start(); thread.wait(); showFiles(thread.files); });
+		//btn_find.connect([&]() { MyThread thread; thread.path = line_edit.text(); thread.filter = line_edit_filter.text();  thread.start(); thread.wait(); showFiles(thread.files); });
 	}
 
 	void addMessage(const string& message)
 	{
 		line_edit.setText(line_edit.text() + " " + message);
 	}
+	Button btn_find;
 
 private:
 	LineEdit line_edit;
 	LineEdit line_edit_filter;
-	Button btn_find;
 	std::vector<Label*> vector_files;
 
 	void showFiles(std::vector<string> files)
@@ -115,8 +115,9 @@ int main()
 	LocalServer server;
 	server.listen("fortune");
 	server.onNewConnection([]() {MessageBox(NULL, "New", "New", MB_OK); });
-	server.onDisconnect([]() {MessageBox(NULL, "Disc", "Disc", MB_OK); });
+	server.onDisconnect([&]() {MessageBox(NULL, std::to_string(server.connectsCount()).c_str(), "Disc", MB_OK); });
 	server.onGetMessage([&](string msg) {wnd.addMessage(msg); });
+	wnd.btn_find.connect([&]() {server.report("Message From Server"); });
 
 	app.exec();
 }

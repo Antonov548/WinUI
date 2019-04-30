@@ -40,10 +40,11 @@ namespace WinUI
 		LocalServer();
 		~LocalServer();
 
+		int connectsCount() const;
 		bool listen(const string name);
 		bool isRun() const;
 		void close();
-		void report(string message);
+		bool report(string message);
 		void onNewConnection(std::function<void(void)> func);
 		void onDisconnect(std::function<void(void)> func);
 		void onGetMessage(std::function<void(string)> func);
@@ -54,6 +55,8 @@ namespace WinUI
 		HANDLE m_heap;
 		string m_name;
 		bool m_isReady;
+		bool m_isSending;
+		int m_count;
 		std::map<HANDLE, ServerClient> m_clients;
 		std::function<void(const string)> m_msgHandler;
 		std::function<void(void)> m_connHandler;

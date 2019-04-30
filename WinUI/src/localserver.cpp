@@ -2,7 +2,7 @@
 
 using namespace WinUI;
 
-LocalServer::LocalServer() : m_isReady(true)
+LocalServer::LocalServer() : m_isReady(true), m_isSending(false), m_pipe(nullptr), m_count(0)
 {
 	m_heap = GetProcessHeap();
 	m_serverThread.setServer(this);
@@ -69,14 +69,28 @@ void LocalServer::LocalServerThread::run()
 				{
 					HeapFree(m_server->m_heap, NULL, client.message);
 					client.message = (char*)HeapAlloc(m_server->m_heap, NULL, LocalServer::BufferSize * sizeof(char));
+
+					if (m_server->m_isSending)
+					{
+						continue;
+					}
 					message_read = ReadFile(pipe, client.message, LocalServer::BufferSize * sizeof(char), &bytes_read, NULL);
+				
 					if (GetLastError() == ERROR_BROKEN_PIPE || !message_read)
 					{
-						if (bool(m_server->m_discHandler))
+						if (GetLastError() == ERROR_OPERATION_ABORTED && m_server->m_isSending)
 						{
-							m_server->m_discHandler();
+							continue;
 						}
-						return;
+						else
+						{
+							m_server->m_count--;
+							if (bool(m_server->m_discHandler) && !m_server->m_isSending)
+							{
+								m_server->m_discHandler();
+							}
+							return;
+						}
 					}
 
 					if (message_read)
@@ -93,6 +107,7 @@ void LocalServer::LocalServerThread::run()
 
 			ServerClient client = {thread, nullptr};
 			m_server->m_clients.insert(std::make_pair(m_server->m_pipe, client));
+			m_server->m_count++;
 			thread->start();
 		}
 	};
@@ -112,6 +127,7 @@ bool LocalServer::listen(const string name)
 void LocalServer::close()
 {
 	m_serverThread.exit();
+	m_isSending = false;
 
 	for (auto& client : m_clients)
 	{
@@ -122,24 +138,45 @@ void LocalServer::close()
 		HeapFree(m_heap, NULL, client.second.message);
 
 		CloseHandle(client.first);
-		if (client.second.thread != nullptr)
-		{
-			delete client.second.thread;
-		}
+		delete client.second.thread;
 	}
 	m_clients.clear();
 }
 
-void LocalServer::report(string message)
+bool LocalServer::report(string message)
 {
 	if (isRun())
 	{
+		m_isSending = true;
+		int message_size = (message.length() + 1) * sizeof(char);
+
 		for (auto& client : m_clients)
 		{
+			CancelIoEx(client.first, NULL);
 			DWORD bytes_write = 0;
-			WriteFile(client.first, message.c_str(), message.size(), &bytes_write, NULL);
+			bool report_send = WriteFile(
+				client.first,
+				message.c_str(),
+				message_size,
+				&bytes_write,
+				NULL);
+
+			if (!report_send || bytes_write != message_size)
+			{
+				close();
+				return false;
+			}
+			//client.second.thread->start();
 		}
+		m_isSending = false;
+		return true;
 	}
+	return false;
+}
+
+int LocalServer::connectsCount() const
+{
+	return m_count;
 }
 
 void LocalServer::onNewConnection(std::function<void(void)> func)
@@ -159,7 +196,7 @@ void LocalServer::onGetMessage(std::function<void(string)> func)
 
 bool LocalServer::isRun() const
 {
-	return m_serverThread.isRun();
+	return m_serverThread.isRun() || m_isSending;
 }
 
 bool LocalServer::createPipe()
