@@ -166,7 +166,6 @@ bool LocalServer::report(string message)
 				close();
 				return false;
 			}
-			//client.second.thread->start();
 		}
 		m_isSending = false;
 		return true;

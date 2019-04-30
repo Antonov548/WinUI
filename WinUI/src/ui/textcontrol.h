@@ -15,6 +15,7 @@ namespace WinUI
 		void setText(string text);
 		void setFont(string font_family, int font_size);
 		string text() const;
+		bool isEmpty() const;
 		void setReadOnly(bool readonly);
 		void clear();
 	};

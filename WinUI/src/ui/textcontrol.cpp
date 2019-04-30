@@ -38,6 +38,14 @@ string TextControl::text() const
 	return to_str_code(wstr_to_str(text), CP_ACP);
 }
 
+bool TextControl::isEmpty() const
+{
+	wchar_t text[1024];
+	GetWindowText(m_hwnd, text, 1024);
+	string std_text = to_str_code(wstr_to_str(text), CP_ACP);
+	return std_text.empty();
+}
+
 void TextControl::setFont(string font_family, int font_size)
 {
 	const long nFontSize = font_size;

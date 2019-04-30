@@ -1,123 +1,103 @@
 #include <WinUI>
-#include <vector>
-#include <string>
-
-class MyThread : public Thread
-{
-public:
-	MyThread()
-	{
-
-	}
-	virtual void run()
-	{
-		if (filter.length() == 0)
-		{
-			filter = "*";
-		}
-		else
-		{
-			filter = "*" + filter;
-		}
-
-		FileSystem system(path, "", FileSystemFilter::NoFilters);
-		if (files.size() != 0)
-		{
-			files.clear();
-		}
-		if (system.isWrongPath())
-		{
-			MessageBox(NULL, "File/Folder not found", "ERROR", MB_OK);
-			return;
-		}
-		else
-		{
-			files.push_back(system.getName());
-		}
-		while (system.next())
-		{
-			files.push_back(system.getName());
-		}
-	}
-	int count;
-	string path;
-	string filter;
-	std::vector<string> files;
-};
 
 class MainWindow : public Window
 {
 public:
-	MainWindow() : Window(), btn_find(this), line_edit(this), line_edit_filter(this){
+	MainWindow(string server_name) : Window(), _client_messages(this), _server_message(this), _send(this)
+	{
+		setMinimumSize(300, 600);
 
-		Label *label = new Label("Find File", this);
+		_server.listen(server_name);
+		_server.onGetMessage([this](string message) {addMessage(message); });
+		_server.onNewConnection([this]() {addMessage("Новый клиент"); });
+		_server.onDisconnect([this]() {addMessage("Клиент отключился"); });
+
+
+		Label *label = new Label("Локальный сервер : " + server_name, this);
 		label->setFont("Times New Roman", 13);
 		label->setGeometry(0, 0, 300, 20);
 		label->setAlignment(Alignment::Center);
 
-		line_edit.setGeometry(0, 30, 280, line_edit.height() + 5);
-		line_edit.setText("");
-		line_edit.setFont("Times New Roman", 13);
+		_client_messages.setReadOnly(true);
+		_client_messages.setGeometry(0, 30, 280, _client_messages.height() + 100);
+		_client_messages.setText("");
+		_client_messages.setFont("Times New Roman", 13);
 
-		line_edit_filter.setGeometry(0, 60, 280, line_edit_filter.height());
-		line_edit_filter.setText("");
-		//line_edit_filter.setReadOnly(true);
+		_server_message.setGeometry(0, 270, 280, _server_message.height());
+		_server_message.setText("Сообщение...");
 
-		btn_find.setGeometry(80, 100, 140, btn_find.height());
-		btn_find.setText("Find");
-		//btn_find.connect([&]() { MyThread thread; thread.path = line_edit.text(); thread.filter = line_edit_filter.text();  thread.start(); thread.wait(); showFiles(thread.files); });
+		_send.setGeometry(80, 300, 140, _send.height());
+		_send.setText("Отправить");
+		_send.connect([this]() {_server.report(_server_message.text()); });
 	}
 
-	void addMessage(const string& message)
+	void addMessage(string mess)
 	{
-		line_edit.setText(line_edit.text() + " " + message);
+		string space = _client_messages.isEmpty() ? "" : "\r\n";
+		_client_messages.setText(_client_messages.text() + space + mess);
 	}
-	Button btn_find;
 
 private:
-	LineEdit line_edit;
-	LineEdit line_edit_filter;
-	std::vector<Label*> vector_files;
+	TextArea _client_messages;
+	LineEdit _server_message;
+	LocalServer _server;
 
-	void showFiles(std::vector<string> files)
+	Button _send;
+};
+
+class ServerNameWindow : public Window
+{
+public:
+	ServerNameWindow() : _wnd(nullptr),  _server_name(this), _accept(this)
 	{
-		if (vector_files.size() != 0)
-		{
-			for (auto val : vector_files)
-			{
-				delete val;
-				vector_files.clear();
-			}
-		}
+		setFixedSize(300, 200);
 
-		int count = 0;
-		for (auto& val : files)
+		Label *label = new Label("Введите название сервера", this);
+		label->setFont("Times New Roman", 13);
+		label->setGeometry(0, 0, 300, 20);
+		label->setAlignment(Alignment::Center);
+
+		_server_name.setGeometry(0, 40, 300, 25);
+		_server_name.setFont("Times New Roman", 13);
+
+		_accept.setGeometry(105, 80, _accept.width(), _accept.height());
+		_accept.setText("Создать");
+		_accept.setFont("Times New Roman", 13);
+		_accept.connect([this]() 
 		{
-			Label *file = new Label(this);
-			file->setGeometry(90, 180 + (count * 40), 120, file->height());
-			file->setText(val);
-			vector_files.push_back(file);
-			count++;
-		}
+			if (_server_name.isEmpty())
+			{
+				MessageBox(NULL, "Введите название сервера", "Ошибка", MB_OK);
+			}
+			else
+			{
+				_wnd = new MainWindow(_server_name.text());
+				_wnd->setWidth(300);
+				_wnd->setHeight(500);
+				_wnd->setMinimumSize(300, 500);
+				_wnd->show();
+
+				hide();
+			}
+		});
 	}
+	~ServerNameWindow()
+	{
+		delete _wnd;
+	}
+
+private:
+	LineEdit _server_name;
+	Button _accept;
+	MainWindow* _wnd;
 };
 
 int main()
 {
 	Application app;
 
-	MainWindow wnd;
-	wnd.setWindowTitle("Find file");
-	wnd.setWidth(300);
-
-	wnd.show();
-
-	LocalServer server;
-	server.listen("fortune");
-	server.onNewConnection([]() {MessageBox(NULL, "New", "New", MB_OK); });
-	server.onDisconnect([&]() {MessageBox(NULL, std::to_string(server.connectsCount()).c_str(), "Disc", MB_OK); });
-	server.onGetMessage([&](string msg) {wnd.addMessage(msg); });
-	wnd.btn_find.connect([&]() {server.report("Message From Server"); });
+	ServerNameWindow name_window;
+	name_window.show();
 
 	app.exec();
 }
