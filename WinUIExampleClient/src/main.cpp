@@ -9,6 +9,7 @@ public:
 
 		_socket.connectToServer(server_name);
 		_socket.onGetReport([this](string msg) {addServerMessage(msg); });
+    _socket.onDisconnect([this]() {string space = _serverMessages.isEmpty() ? "" : "\r\n"; _serverMessages.setText(_serverMessages.text() + space + "Сервер отключен"); });
 
 		Label *label = new Label("Локальный клиент : " + server_name, this);
 		label->setFont("Times New Roman", 13);

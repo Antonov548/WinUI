@@ -12,22 +12,25 @@ AbstractButton::~AbstractButton()
 
 LRESULT AbstractButton::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	switch (HIWORD(wParam))
-	{
-	case BN_CLICKED:
-	{
-		if (bool(m_clickHandler))
-		{
-			m_clickHandler();
-		}
-	}
-	break;
-	default:
-		return DefWindowProc(hwnd, message, wParam, lParam);	
-	}
-
 	switch (message)
 	{
+  case WM_COMMAND:
+  {
+    switch (HIWORD(wParam))
+    {
+    case BN_CLICKED:
+    {
+      if (bool(m_clickHandler))
+      {
+        m_clickHandler();
+      }
+    }
+    break;
+    default:
+      return DefWindowProc(hwnd, message, wParam, lParam);
+    }
+  }
+  break;
 	case WM_DESTROY:
 	{
 		removeWidget(hwnd);
