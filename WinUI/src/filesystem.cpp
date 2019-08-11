@@ -4,7 +4,7 @@ using namespace WinUI;
 
 FileSystem::FileSystem(string path, string patern, FileSystemFilter filter) : m_path(path), m_filter(filter), m_handle(NULL)
 {
-	m_handle = FindFirstFile(str_to_wstr(m_path + patern).c_str(), &m_data);
+	m_handle = FindFirstFile((m_path + patern).c_str(), &m_data);
 	m_isFindError = false;
 	if (int(m_handle) == -1)
 	{
@@ -75,7 +75,7 @@ string FileSystem::getName()
 {
 	if (m_handle)
 	{
-		return wstr_to_str(m_data.cFileName);
+		return m_data.cFileName;
 	}
 	return string();
 }

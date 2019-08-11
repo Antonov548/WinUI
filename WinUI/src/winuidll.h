@@ -1,9 +1,9 @@
 #pragma once
 
 #ifdef WINUI_EXPORTS
-#define WINUI_DLL __declspec(dllexport)
+#define WINUI_DLL
 #else
-#define WINUI_DLL __declspec(dllimport)
+#define WINUI_DLL 
 #endif
 
 #ifdef _MSC_VER

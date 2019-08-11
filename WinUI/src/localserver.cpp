@@ -201,7 +201,7 @@ bool LocalServer::isRun() const
 bool LocalServer::createPipe()
 {
 	m_pipe = CreateNamedPipe(
-		str_to_wstr("\\\\.\\pipe\\" + m_name).c_str(),
+		(string("\\\\.\\pipe\\") + m_name).c_str(),
 		PIPE_ACCESS_DUPLEX,
 		PIPE_TYPE_MESSAGE |
 		PIPE_READMODE_MESSAGE |

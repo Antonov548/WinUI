@@ -4,7 +4,7 @@ using namespace WinUI;
 
 HINSTANCE Application::instance = (HINSTANCE)GetModuleHandle(NULL);
 
-Application::Application() : m_haccel(LoadAccelerators(instance, L"WINAPPLICATION"))
+Application::Application() : m_haccel(LoadAccelerators(instance, "WINAPPLICATION"))
 {
 }
 

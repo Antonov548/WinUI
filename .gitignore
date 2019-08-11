@@ -1,6 +1,4 @@
 bin/
 lib/
-doc/
+build/
 .vs/
-WinUIExample/
-WinUIExampleClient/

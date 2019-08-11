@@ -60,7 +60,7 @@ void Label::setFont(string font_family, int font_size)
 	logFont.lfHeight = -MulDiv(nFontSize, GetDeviceCaps(hdc, LOGPIXELSY), 72);
 	logFont.lfWeight = FW_NORMAL;
 
-	copy_wstr(str_to_wstr(font_family), logFont.lfFaceName, LF_FACESIZE);
+	strcpy(logFont.lfFaceName, font_family.c_str());
 
 	HFONT s_hFont = CreateFontIndirect(&logFont);
 	ReleaseDC(m_hwnd, hdc);

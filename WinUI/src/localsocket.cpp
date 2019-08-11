@@ -90,7 +90,7 @@ bool LocalSocket::connectToServer(string name)
 	{
 		m_name = name;
 		m_pipe = CreateFile(
-			str_to_wstr("\\\\.\\pipe\\" + m_name).c_str(),
+			(std::string("\\\\.\\pipe\\") + m_name).c_str(),
 			GENERIC_READ |
 			GENERIC_WRITE,
 			0,

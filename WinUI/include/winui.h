@@ -13,5 +13,3 @@
 #include "../src/ui/lineedit.h"
 #include "../src/ui/label.h"
 #include "../src/ui/textarea.h"
-
-using namespace WinUI;

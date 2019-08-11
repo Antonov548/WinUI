@@ -148,7 +148,7 @@ LRESULT CALLBACK Widget::GlobalWndProc(HWND hwnd, UINT message, WPARAM wParam, L
 
 void Widget::create()
 {
-	if (!GetClassInfoEx(Application::getInstance(), str_to_wstr(m_style.class_name).c_str(), &m_wndclass))
+	if (!GetClassInfoEx(Application::getInstance(), m_style.class_name.c_str(), &m_wndclass))
 	{
 		registerClass(m_style);
 	}
@@ -163,9 +163,9 @@ void Widget::recreateWidget()
 			m_style.widget_style,
 			m_style.class_style
 	};
-	wchar_t text[1024];
+	char text[1024];
 	GetWindowText(m_hwnd, text, 1024);
-	createWidget(m_style, wstr_to_str(text));
+	createWidget(m_style, text);
 }
 
 void Widget::registerClass(WidgetStyle style)
@@ -175,7 +175,7 @@ void Widget::registerClass(WidgetStyle style)
 	m_wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	m_wndclass.hInstance = (HINSTANCE)GetModuleHandle(NULL);
 	m_wndclass.lpfnWndProc = GlobalWndProc;
-	m_wndclass.lpszClassName = str_to_wstr(m_style.class_name).c_str();
+	m_wndclass.lpszClassName = m_style.class_name.c_str();
 	m_wndclass.style = m_style.class_style;
 	m_wndclass.hIcon = NULL;
 	m_wndclass.hIconSm = NULL;
@@ -190,8 +190,8 @@ void Widget::createWidget(WidgetStyle style, string text)
 {
 	m_hwnd = CreateWindowEx(
 		m_style.widget_style.extended,
-		str_to_wstr(m_style.class_name).c_str(),
-		str_to_wstr(text).c_str(),
+		m_style.class_name.c_str(),
+		text.c_str(),
 		m_style.widget_style.regular,
 		m_style.widget_size.x,
 		m_style.widget_size.y,

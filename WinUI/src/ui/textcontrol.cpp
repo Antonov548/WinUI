@@ -33,16 +33,16 @@ void TextControl::setText(string text)
 
 string TextControl::text() const
 {
-	wchar_t text[1024];
+	char text[1024];
 	GetWindowText(m_hwnd, text, 1024);
-	return to_str_code(wstr_to_str(text), CP_ACP);
+	return to_str_code(text, CP_ACP);
 }
 
 bool TextControl::isEmpty() const
 {
-	wchar_t text[1024];
+	char text[1024];
 	GetWindowText(m_hwnd, text, 1024);
-	string std_text = to_str_code(wstr_to_str(text), CP_ACP);
+	string std_text = to_str_code(text, CP_ACP);
 	return std_text.empty();
 }
 
@@ -55,7 +55,7 @@ void TextControl::setFont(string font_family, int font_size)
 	logFont.lfHeight = -MulDiv(nFontSize, GetDeviceCaps(hdc, LOGPIXELSY), 72);
 	logFont.lfWeight = FW_NORMAL;
 
-	copy_wstr(str_to_wstr(font_family), logFont.lfFaceName, LF_FACESIZE);
+	strcpy(logFont.lfFaceName, font_family.c_str());
 
 	HFONT s_hFont = CreateFontIndirect(&logFont);
 	ReleaseDC(m_hwnd, hdc);
