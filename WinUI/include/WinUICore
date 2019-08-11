@@ -1,0 +1,8 @@
+#pragma once
+
+#include "../src/application.h"
+#include "../src/thread.h"
+#include "../src/winuinamespace.h"
+#include "../src/filesystem.h"
+#include "../src/localserver.h"
+#include "../src/localsocket.h"
