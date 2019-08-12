@@ -1,5 +1,7 @@
 #pragma once
 
+#include <winui_export.h>
+
 namespace WinUI
 {
 	enum class Alignment
@@ -33,7 +35,7 @@ namespace WinUI
 		}
 	};
 
-	struct WINUI_DLL FileSystemFilter : EnumFlags
+	struct WINUILIB_EXPORT FileSystemFilter : EnumFlags
 	{
 		enum
 		{
@@ -50,7 +52,7 @@ namespace WinUI
 		}
 	};
 
-	struct WINUI_DLL FontStyle : EnumFlags
+	struct WINUILIB_EXPORT FontStyle : EnumFlags
 	{
 		enum
 		{

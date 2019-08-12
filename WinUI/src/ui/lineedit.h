@@ -1,11 +1,12 @@
 #pragma once
 
+#include <winui_export.h>
 #include "textcontrol.h"
 
 namespace WinUI
 {
 
-	class WINUI_DLL LineEdit : public TextControl
+	class WINUILIB_EXPORT LineEdit : public TextControl
 	{
 	public:
 		LineEdit(Widget* parent = nullptr);

@@ -1,12 +1,12 @@
 #pragma once
 
+#include <winui_export.h>
 #include <windows.h>
-#include "winuidll.h"
 
 namespace WinUI
 {
 
-	class WINUI_DLL Application
+	class WINUILIB_EXPORT Application
 	{
 	public:
 		Application();

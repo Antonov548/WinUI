@@ -1,5 +1,6 @@
 #pragma once
 
+#include <winui_export.h>
 #include <windows.h>
 #include <map>
 #include <functional>
@@ -9,10 +10,10 @@
 namespace WinUI
 {
 
-	class WINUI_DLL Thread
+	class WINUILIB_EXPORT Thread
 	{
 
-		struct WINUI_DLL CurrentThread
+		struct WINUILIB_EXPORT CurrentThread
 		{
 			void sleep(int msecs);
 			int getId();

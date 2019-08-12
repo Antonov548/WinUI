@@ -1,5 +1,6 @@
 #pragma once
 
+#include <winui_export.h>
 #include <windows.h>
 #include <map>
 #include "../application.h"
@@ -10,7 +11,7 @@
 namespace WinUI
 {
 
-	struct WINUI_DLL Rect
+	struct WINUILIB_EXPORT Rect
 	{
 		int x;
 		int y;
@@ -26,7 +27,7 @@ namespace WinUI
 		UINT class_style;
 	};
 
-	class WINUI_DLL Widget
+	class WINUILIB_EXPORT Widget
 	{
 	public:
 		Widget(WidgetStyle style, Widget* parent);

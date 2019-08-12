@@ -1,12 +1,13 @@
 #pragma once
 
+#include <winui_export.h>
 #include <map>
 #include "widget.h"
 
 namespace WinUI
 {
 
-	class WINUI_DLL Window : public Widget
+	class WINUILIB_EXPORT Window : public Widget
 	{
 	public:
 		Window(Widget* parent = nullptr);

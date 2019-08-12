@@ -1,11 +1,12 @@
 #pragma once
 
+#include <winui_export.h>
 #include "widget.h"
 
 namespace WinUI
 {
 
-	class WINUI_DLL TextControl : public Widget
+	class WINUILIB_EXPORT TextControl : public Widget
 	{
 	public:
 		TextControl(WidgetStyle style, Widget* parent);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <winui_export.h>
 #include <string.h>
 #include <functional>
 #include "window.h"
@@ -8,7 +9,7 @@
 namespace WinUI
 {
 
-	class WINUI_DLL AbstractButton : public Widget
+	class WINUILIB_EXPORT AbstractButton : public Widget
 	{
 	public:
 		AbstractButton(WidgetStyle style, Widget* parent);

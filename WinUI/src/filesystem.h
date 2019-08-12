@@ -1,12 +1,13 @@
 #pragma once
 
+#include <winui_export.h>
 #include "winstring.h"
 #include "winuinamespace.h"
 
 namespace WinUI
 {
 
-	class WINUI_DLL FileSystem
+	class WINUILIB_EXPORT FileSystem
 	{
 	public:
 		FileSystem(string path, string patern, FileSystemFilter filter = FileSystemFilter::NoFilters);

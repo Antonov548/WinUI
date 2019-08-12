@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #include <windows.h>
-#include "winuidll.h"
 
 namespace WinUI
 {

@@ -1,11 +1,12 @@
 #pragma once
 
+#include <winui_export.h>
 #include "abstractbutton.h"
 
 namespace WinUI
 {
 
-	class WINUI_DLL CheckBox : public AbstractButton
+	class WINUILIB_EXPORT CheckBox : public AbstractButton
 	{
 	public:
 		CheckBox(Widget* parent = nullptr);

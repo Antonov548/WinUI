@@ -1,5 +1,6 @@
 #pragma once
 
+#include <winui_export.h>
 #include <functional>
 #include "thread.h"
 #include "winstring.h"
@@ -7,7 +8,7 @@
 namespace WinUI
 {
 
-	class WINUI_DLL LocalSocket
+	class WINUILIB_EXPORT LocalSocket
 	{
 		enum
 		{

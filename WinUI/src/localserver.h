@@ -1,5 +1,6 @@
 #pragma once
 
+#include <winui_export.h>
 #include <map>
 #include <functional>
 #include <strsafe.h>
@@ -9,7 +10,7 @@
 namespace WinUI
 {
 
-	class WINUI_DLL LocalServer
+	class WINUILIB_EXPORT LocalServer
 	{
 		enum
 		{
