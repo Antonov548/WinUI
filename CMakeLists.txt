@@ -7,3 +7,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(WinUI)
 add_subdirectory(WinUILocalServer)
+add_subdirectory(WinUILocalSocket)

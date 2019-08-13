@@ -11,11 +11,10 @@ public:
 
 		_server.listen(server_name);
 		_server.onGetMessage([this](std::string message) {addMessage(message); });
-		_server.onNewConnection([this]() {addMessage("Новый клиент"); });
-		_server.onDisconnect([this]() {addMessage("Клиент отключен"); });
+		_server.onNewConnection([this]() {addMessage("New client connected"); });
+		_server.onDisconnect([this]() {addMessage("Client disconnected"); });
 
-
-		WinUI::Label* label = new WinUI::Label("Имя сервера : " + server_name, this);
+		WinUI::Label* label = new WinUI::Label("Server name : " + server_name, this);
 		label->setFont("Times New Roman", 13);
 		label->setGeometry(0, 0, 300, 20);
 		label->setAlignment(WinUI::Alignment::Center);
@@ -26,10 +25,10 @@ public:
 		_client_messages.setFont("Times New Roman", 13);
 
 		_server_message.setGeometry(0, 270, 280, _server_message.height());
-		_server_message.setText("Сообщение...");
+		_server_message.setText("Message...");
 
 		_send.setGeometry(80, 300, 140, _send.height());
-		_send.setText("Отправить");
+		_send.setText("Send");
 		_send.connect([this]() {_server.report(_server_message.text()); });
 	}
 
@@ -54,7 +53,7 @@ public:
 	{
 		setFixedSize(300, 200);
 
-		WinUI::Label* label = new WinUI::Label("Введите название сервера", this);
+		WinUI::Label* label = new WinUI::Label("Enter server name", this);
 		label->setFont("Times New Roman", 13);
 		label->setGeometry(0, 0, 300, 20);
 		label->setAlignment(WinUI::Alignment::Center);
@@ -63,13 +62,13 @@ public:
 		_server_name.setFont("Times New Roman", 13);
 
 		_accept.setGeometry(105, 80, _accept.width(), _accept.height());
-		_accept.setText("Окей");
+		_accept.setText("Okey");
 		_accept.setFont("Times New Roman", 13);
 		_accept.connect([this]()
 			{
 				if (_server_name.isEmpty())
 				{
-					MessageBox(NULL, "Неверное имя сервера", "Ошибка", MB_OK);
+					MessageBox(NULL, "Invalid server name", "Error", MB_OK);
 				}
 				else
 				{
