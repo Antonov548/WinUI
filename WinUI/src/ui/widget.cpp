@@ -1,4 +1,5 @@
 #include "widget.h"
+#include <iostream>
 
 using namespace WinUI;
 
@@ -17,6 +18,17 @@ m_isMaxInstalled(false), m_isMinInstalled(false), m_size(style.widget_size)
 
 Widget::~Widget()
 {
+	if (m_parent)
+	{
+		m_parent->m_child_widgets.erase(m_hwnd);
+	}
+	if (!m_child_widgets.empty())
+	{
+		for (auto& widget : m_child_widgets)
+		{
+			delete widget.second;
+		}
+	}
 	removeWidget(m_hwnd);
 	DestroyWindow(m_hwnd);
 }
